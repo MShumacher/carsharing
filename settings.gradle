@@ -1,0 +1,4 @@
+rootProject.name = 'carsharing'
+include 'dao-orm', 'service', 'web'
+rootProject.name = 'carsharing'
+

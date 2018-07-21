@@ -1,9 +1,11 @@
 package com.training.carsharing;
 
+import com.training.carsharing.model.ICar;
 import com.training.carsharing.model.ICarsPhoto;
 import com.training.carsharing.model.IModel;
 import com.training.carsharing.model.IUserAccount;
-import com.training.carsharing.model.impl.Car;
+import com.training.carsharing.model.enums.*;
+import com.training.carsharing.model.impl.UserAccount;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,24 +32,12 @@ public abstract class AbstractTest {
     private IUserAccountService userAccountService;
     @Autowired
     private ICarsPhotoService carsPhotoService;
+    @Autowired
+    private ICarService carService;
 
     private static final Random RANDOM = new Random();
 
     private static SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
-
-    protected static boolean assertEqualsDates(Date date1, Date date2) {
-        String d1 = formatter.format(date1);
-        String d2 = formatter.format(date2);
-        return d1.equals(d2);
-    }
-
-    protected int getRandomPrefix() {
-        return RANDOM.nextInt(99999);
-    }
-
-    protected int getRandomObjectsCount() {
-        return RANDOM.nextInt(9) + 1;
-    }
 
     public IUserAccountService getUserAccountService() {
         return userAccountService;
@@ -59,6 +49,10 @@ public abstract class AbstractTest {
 
     public ICarsPhotoService getCarsPhotoService() {
         return carsPhotoService;
+    }
+
+    public ICarService getCarService() {
+        return carService;
     }
 
     protected IModel saveNewModel() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
@@ -83,11 +77,52 @@ public abstract class AbstractTest {
 
     protected ICarsPhoto saveNewCarsPhoto() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final ICarsPhoto entity = getCarsPhotoService().createEntity();
-        //TODO change new Car() to saveNewCar()
-        entity.setCar(new Car());
+        entity.setCar(saveNewCar());
         entity.setLink("Link-" + getRandomPrefix());
         getCarsPhotoService().save(entity);
         return entity;
+    }
+
+    protected ICar saveNewCar() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        final ICar entity = getCarService().createEntity();
+        entity.setUserAccount(saveNewUserAccount());
+        entity.setModel(saveNewModel());
+        entity.setYear(getRandomPrefix());
+        entity.setPlate("Plate-" + getRandomPrefix());
+        entity.setMileage(getRandomPrefix());
+        entity.setSeats(getRandomPrefix());
+
+        final Gearbox[] gearboxes = Gearbox.values();
+        int randomIndex = Math.max(0, RANDOM.nextInt(gearboxes.length) - 1);
+        entity.setGearbox(gearboxes[randomIndex]);
+
+        final BodyType[] bodyTypes = BodyType.values();
+        randomIndex = Math.max(0, RANDOM.nextInt(bodyTypes.length) - 1);
+        entity.setBodyType(bodyTypes[randomIndex]);
+
+        final Drive[] drives = Drive.values();
+        randomIndex = Math.max(0, RANDOM.nextInt(drives.length) - 1);
+        entity.setDrive(drives[randomIndex]);
+
+        final EngineType[] engineTypes = EngineType.values();
+        randomIndex = Math.max(0, RANDOM.nextInt(engineTypes.length) - 1);
+        entity.setEngineType(engineTypes[randomIndex]);
+
+        final Fuel[] fuels = Fuel.values();
+        randomIndex = Math.max(0, RANDOM.nextInt(fuels.length) - 1);
+        entity.setFuel(fuels[randomIndex]);
+
+        entity.setCharge(getRandomDouble());
+        entity.setConditions("Conditions-" + getRandomPrefix());
+        entity.setInsurance("Insurance-" + getRandomPrefix());
+        getCarService().save(entity);
+        return entity;
+    }
+
+    protected static boolean assertEqualsDates(Date date1, Date date2) {
+        String d1 = formatter.format(date1);
+        String d2 = formatter.format(date2);
+        return d1.equals(d2);
     }
 
     protected void assertNotNullAllFields(Object entity) throws IllegalAccessException {
@@ -118,7 +153,7 @@ public abstract class AbstractTest {
             Field field = fields[i];
             field.setAccessible(true);
             if (!"version".equals(field.getName())) {
-//                System.out.println("field: "+field.getName() + " " + field.get(entity)+"=="+field.get(entityFromDB));
+                System.out.println("field: "+field.getName() + " " + field.get(entity)+"=="+field.get(entityFromDB));
                 if ("Date".equals(field.getType().getSimpleName())) {
                     assertEqualsDates((Date) field.get(entity), (Date) field.get(entityFromDB));
                 } else {
@@ -137,5 +172,22 @@ public abstract class AbstractTest {
                     .toArray(Field[]::new);
         }
         return fields;
+    }
+
+    protected int getRandomPrefix() {
+        return RANDOM.nextInt(99999);
+    }
+
+    protected int getRandomObjectsCount() {
+        return RANDOM.nextInt(9) + 1;
+    }
+
+    protected Double getRandomDouble() {
+        final double min = 0;
+        final double max = 100.00;
+        final double diff = max - min;
+        final double randomValue = min + RANDOM.nextDouble() * diff;
+        final double res = Math.floor(randomValue * 100);
+        return res / 100;
     }
 }

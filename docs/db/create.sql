@@ -36,7 +36,7 @@ CREATE TABLE car (
 	drive character varying(50),
 	engine_type character varying(50) NOT NULL,
 	fuel character varying(50) NOT NULL,
-	charge numeric(3,1),
+	charge numeric(4,2),
 	conditions character varying(1000) NOT NULL,
 	insurance character varying(500),
 	version integer NOT NULL,

@@ -51,10 +51,6 @@ public class AbstractServiceImpl<T, DAO, ID> implements IAbstractService<T, DAO,
 
     @Override
     public T select(final ID id) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Method[] methods = dao.getClass().getMethods();
-        for (Method method:methods) {
-            System.out.println(method.getName());
-        }
         Method method = dao.getClass().getMethod("select", Object.class/*id.getClass()*/);
         final T entity = (T) method.invoke(dao,id);
         LOGGER.debug("entityById[{}]: {}", id, entity);

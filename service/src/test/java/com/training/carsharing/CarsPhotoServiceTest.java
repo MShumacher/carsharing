@@ -20,7 +20,7 @@ public class CarsPhotoServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final ICarsPhoto entity = saveNewCarsPhoto();
 
-        final ICarsPhoto entityFromDB = getCarsPhotoService().select(entity.getId());
+        final ICarsPhoto entityFromDB = getCarsPhotoService().selectFullInfo(entity.getId());
 
         assertEqualsAllFields(entity,entityFromDB);
         assertNotNullAllFields(entityFromDB);
@@ -32,13 +32,13 @@ public class CarsPhotoServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final ICarsPhoto entity = saveNewCarsPhoto();
 
-        final ICarsPhoto entityFromDB = getCarsPhotoService().select(entity.getId());
+        final ICarsPhoto entityFromDB = getCarsPhotoService().selectFullInfo(entity.getId());
         final String newLink = "new-link-" + getRandomPrefix();
         entityFromDB.setLink(newLink);
         Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getCarsPhotoService().save(entityFromDB);
 
-        final ICarsPhoto updatedEntityFromDB = getCarsPhotoService().select(entityFromDB.getId());
+        final ICarsPhoto updatedEntityFromDB = getCarsPhotoService().selectFullInfo(entityFromDB.getId());
         assertEqualsAllFieldsExceptUpdatedAndVersionAndLast(entity,updatedEntityFromDB);
         assertEquals(newLink, updatedEntityFromDB.getLink());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());

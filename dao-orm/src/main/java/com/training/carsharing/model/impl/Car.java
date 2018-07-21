@@ -9,10 +9,17 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 public class Car extends BaseEntity implements ICar {
+
+    @JoinTable(name = "car_2_parameter", joinColumns = { @JoinColumn(name = "car_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "parameter_id") })
+    @ManyToMany(targetEntity = Parameter.class, fetch = FetchType.LAZY)
+//    @OrderBy("title ASC")
+    private Set<IParameter> parameters = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserAccount.class)
     private IUserAccount userAccount;
@@ -61,11 +68,15 @@ public class Car extends BaseEntity implements ICar {
     @Column
     private String insurance;
 
-    @JoinTable(name = "car_2_parameter", joinColumns = { @JoinColumn(name = "car_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "parameter_id") })
-    @ManyToMany(targetEntity = Parameter.class, fetch = FetchType.LAZY)
-//    @OrderBy("title ASC")
-    private Set<IParameter> parameters = new HashSet<>();
+    @Override
+    public Set<IParameter> getParameters() {
+        return parameters;
+    }
+
+    @Override
+    public void setParameters(Set<IParameter> parameters) {
+        this.parameters = parameters;
+    }
 
     @Override
     public IUserAccount getUserAccount() {
@@ -208,16 +219,6 @@ public class Car extends BaseEntity implements ICar {
     }
 
     @Override
-    public Set<IParameter> getParameters() {
-        return parameters;
-    }
-
-    @Override
-    public void setParameters(Set<IParameter> parameters) {
-        this.parameters = parameters;
-    }
-
-    @Override
     public String toString() {
         return "Car{" + super.toString() +
                 ", userAccount=" + userAccount.getName() +
@@ -235,5 +236,32 @@ public class Car extends BaseEntity implements ICar {
                 ", conditions='" + conditions + '\'' +
                 ", insurance='" + insurance + '\'' +
                 "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return Objects.equals(userAccount, car.userAccount) &&
+                Objects.equals(model, car.model) &&
+                Objects.equals(year, car.year) &&
+                Objects.equals(plate, car.plate) &&
+                Objects.equals(mileage, car.mileage) &&
+                Objects.equals(seats, car.seats) &&
+                gearbox == car.gearbox &&
+                bodyType == car.bodyType &&
+                drive == car.drive &&
+                engineType == car.engineType &&
+                fuel == car.fuel &&
+                Objects.equals(charge, car.charge) &&
+                Objects.equals(conditions, car.conditions) &&
+                Objects.equals(insurance, car.insurance) &&
+                Objects.equals(parameters, car.parameters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userAccount, model, year, plate, mileage, seats, gearbox, bodyType, drive, engineType, fuel, charge, conditions, insurance, parameters);
     }
 }

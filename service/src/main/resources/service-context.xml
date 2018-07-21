@@ -33,6 +33,6 @@
     <import resource="dao-orm-context.xml" />
 
     <context:component-scan
-            base-package="com.instinctools.carsharing.impl" />
+            base-package="com.training.carsharing.impl" />
 
 </beans>

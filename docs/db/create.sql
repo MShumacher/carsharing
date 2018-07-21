@@ -3,6 +3,7 @@ CREATE TABLE model (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	brand character varying(50) NOT NULL,
+	version integer NOT NULL,
 	created TIMESTAMP NOT NULL,
 	updated TIMESTAMP NOT NULL default now(),
 	CONSTRAINT model_pk PRIMARY KEY (id)
@@ -36,7 +37,7 @@ CREATE TABLE car (
 	engine_type character varying(50) NOT NULL,
 	fuel character varying(50) NOT NULL,
 	charge numeric(3,1),
-	condition character varying NOT NULL,
+	conditions character varying(1000) NOT NULL,
 	insurance character varying(500),
 	version integer NOT NULL,
 	created TIMESTAMP NOT NULL,
@@ -69,6 +70,7 @@ CREATE TABLE car_parameter (
 	drive character varying(50) UNIQUE,
 	engine_type character varying(50) UNIQUE,
 	fuel character varying(50) UNIQUE,
+	version integer NOT NULL,
 	created TIMESTAMP NOT NULL,
 	updated TIMESTAMP NOT NULL default now(),
 	CONSTRAINT car_parameter_pk PRIMARY KEY (id)
@@ -95,6 +97,7 @@ CREATE TABLE user_account (
 CREATE TABLE parameter (
 	id serial NOT NULL,
 	name character varying(300) NOT NULL UNIQUE,
+	version integer NOT NULL,
 	created TIMESTAMP NOT NULL,
 	updated TIMESTAMP NOT NULL default now(),
 	CONSTRAINT parameter_pk PRIMARY KEY (id)
@@ -115,7 +118,7 @@ CREATE TABLE calendar (
 	car_id integer NOT NULL,
 	start DATE NOT NULL,
 	end DATE NOT NULL,
-	total_price bigint NOT NULL,
+	total_price numeric(12,2) NOT NULL,
 	version integer NOT NULL,
 	created TIMESTAMP NOT NULL,
 	updated TIMESTAMP NOT NULL default now(),
@@ -155,7 +158,7 @@ CREATE TABLE passport (
 
 
 
-CREATE TABLE drive_license (
+CREATE TABLE driving_license (
 	id serial NOT NULL,
 	number character varying(50) NOT NULL UNIQUE,
 	expiration_date DATE NOT NULL,

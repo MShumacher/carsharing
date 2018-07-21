@@ -1,9 +1,10 @@
 package com.training.carsharing;
 
-import com.training.carsharing.dao.IUserAccount;
+import com.training.carsharing.model.IUserAccount;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -11,20 +12,18 @@ import static org.junit.Assert.*;
 public class UserAccountServiceTest extends AbstractTest {
 
     @Before
-    public void cleanTables() {
+    public void cleanTables()throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         getUserAccountService().deleteAll();
     }
 
     @Test
-    public void testCreate() throws IllegalAccessException {
+    public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException  {
         System.out.println("Start create test");
         final IUserAccount entity = saveNewUserAccount();
 
-        final IUserAccount entityFromDB = getUserAccountService().get(entity.getId());
+        final IUserAccount entityFromDB = getUserAccountService().select(entity.getId());
 
         assertEqualsAllFields(entity,entityFromDB);
-//        assertEquals(entity.getCreated().getTime(),entityFromDB.getCreated().getTime());
-//        assertEquals(entity.getUpdated().getTime(),entityFromDB.getUpdated().getTime());
         assertNotNullAllFields(entityFromDB);
 
         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
@@ -32,40 +31,35 @@ public class UserAccountServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testUpdate() throws InterruptedException {
+    public void testUpdate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InterruptedException {
         System.out.println("Start update test");
         final IUserAccount entity = saveNewUserAccount();
 
-        final IUserAccount entityFromDB = getUserAccountService().get(entity.getId());
-        final String newEmail = "new-email-" + getRandomPrefix();
-        entityFromDB.setEmail(newEmail);
+        final IUserAccount entityFromDB = getUserAccountService().select(entity.getId());
+        final String newRole = "new-role-" + getRandomPrefix();
+        entityFromDB.setRole(newRole);
         Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getUserAccountService().save(entityFromDB);
 
-        final IUserAccount updatedEntityFromDB = getUserAccountService().get(entityFromDB.getId());
-        assertEquals(entity.getId(), updatedEntityFromDB.getId());
-        assertEquals(newEmail, updatedEntityFromDB.getEmail());
-        assertEquals(entity.getPassword(), updatedEntityFromDB.getPassword());
-        assertEquals(entity.getName(), updatedEntityFromDB.getName());
-        assertEquals(entity.getCity(), updatedEntityFromDB.getCity());
-        assertEquals(entity.getPhone(), updatedEntityFromDB.getPhone());
-        assertEqualsDates(entity.getCreated(),updatedEntityFromDB.getCreated());
+        final IUserAccount updatedEntityFromDB = getUserAccountService().select(entityFromDB.getId());
+        assertEqualsAllFieldsExceptUpdatedAndVersionAndLast(entity, updatedEntityFromDB);
+        assertEquals(newRole, updatedEntityFromDB.getRole());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
         System.out.println("End update test");
      }
 
 
     @Test
-    public void testDelete() {
+    public void testDelete() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         System.out.println("Start delete test");
         final IUserAccount entity = saveNewUserAccount();
         getUserAccountService().delete(entity.getId());
-        assertNull(getUserAccountService().get(entity.getId()));
+        assertNull(getUserAccountService().select(entity.getId()));
         System.out.println("End delete test");
     }
 
     @Test
-    public void testDeleteAll() {
+    public void testDeleteAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         System.out.println("Start delete all test");
         saveNewUserAccount();
         getUserAccountService().deleteAll();
@@ -74,7 +68,7 @@ public class UserAccountServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testGetAll() throws IllegalAccessException {
+    public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         System.out.println("Start get all test");
         final int initialCount = getUserAccountService().selectAll().size();
 

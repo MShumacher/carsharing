@@ -1,34 +1,9 @@
 package com.training.carsharing;
 
-import com.training.carsharing.dao.IUserAccount;
+import com.training.carsharing.dao.IUserAccountDao;
+import com.training.carsharing.model.IUserAccount;
 
-import javax.transaction.Transactional;
-import java.util.List;
+public interface IUserAccountService extends IAbstractService<IUserAccount, IUserAccountDao, Integer> {
 
-public interface IUserAccountService {
-
-        IUserAccount createEntity();
-
-        IUserAccount get(Integer id);
-
-        List<IUserAccount> selectAll();
-
-        List<IUserAccount> selectAllFullInfo();
-
-        @Transactional
-        void save(IUserAccount entity);
-
-        @Transactional
-        void delete(Integer id);
-
-        @Transactional
-        void deleteAll();
-
-
-
-//        List<IUserAccount> find(UserAccountFilter filter);
-//
-//        long getCount(UserAccountFilter filter);
-
-    }
+  }
 

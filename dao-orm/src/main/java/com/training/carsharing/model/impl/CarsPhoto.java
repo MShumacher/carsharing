@@ -6,7 +6,6 @@ import com.training.carsharing.model.ICarsPhoto;
 import javax.persistence.*;
 
 @Entity
-@Table(name="cars_photo")
 public class CarsPhoto extends BaseEntity implements ICarsPhoto {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Car.class)

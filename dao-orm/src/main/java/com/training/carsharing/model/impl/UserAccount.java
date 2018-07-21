@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user_account")
 public class UserAccount extends BaseEntity implements IUserAccount {
 
     @Column
@@ -19,7 +18,6 @@ public class UserAccount extends BaseEntity implements IUserAccount {
     @Column
     private String name;
 
-    @Column(name="photo_link")
     private String photoLink;
 
     @Column

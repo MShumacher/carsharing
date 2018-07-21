@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="model")
 public class Model extends BaseEntity implements IModel {
 
     @Column

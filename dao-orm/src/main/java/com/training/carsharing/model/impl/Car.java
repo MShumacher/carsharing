@@ -4,6 +4,8 @@ import com.training.carsharing.model.ICar;
 import com.training.carsharing.model.IModel;
 import com.training.carsharing.model.IParameter;
 import com.training.carsharing.model.IUserAccount;
+import com.training.carsharing.model.enums.*;
+import jdk.nashorn.internal.objects.annotations.Getter;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -31,19 +33,24 @@ public class Car extends BaseEntity implements ICar {
     private Integer seats;
 
     @Column
-    private String gearbox;
+    @Enumerated(EnumType.STRING)
+    private Gearbox gearbox;
 
     @Column
-    private String bodyType;
+    @Enumerated(EnumType.STRING)
+    private BodyType bodyType;
 
     @Column
-    private String drive;
+    @Enumerated(EnumType.STRING)
+    private Drive drive;
 
     @Column
-    private String engineType;
+    @Enumerated(EnumType.STRING)
+    private EngineType engineType;
 
     @Column
-    private String fuel;
+    @Enumerated(EnumType.STRING)
+    private Fuel fuel;
 
     @Column
     private Double charge;
@@ -121,52 +128,52 @@ public class Car extends BaseEntity implements ICar {
     }
 
     @Override
-    public String getGearbox() {
+    public Gearbox getGearbox() {
         return gearbox;
     }
 
     @Override
-    public void setGearbox(String gearbox) {
+    public void setGearbox(Gearbox gearbox) {
         this.gearbox = gearbox;
     }
 
     @Override
-    public String getBodyType() {
+    public BodyType getBodyType() {
         return bodyType;
     }
 
     @Override
-    public void setBodyType(String bodyType) {
+    public void setBodyType(BodyType bodyType) {
         this.bodyType = bodyType;
     }
 
     @Override
-    public String getDrive() {
+    public Drive getDrive() {
         return drive;
     }
 
     @Override
-    public void setDrive(String drive) {
+    public void setDrive(Drive drive) {
         this.drive = drive;
     }
 
     @Override
-    public String getEngineType() {
+    public EngineType getEngineType() {
         return engineType;
     }
 
     @Override
-    public void setEngineType(String engineType) {
+    public void setEngineType(EngineType engineType) {
         this.engineType = engineType;
     }
 
     @Override
-    public String getFuel() {
+    public Fuel getFuel() {
         return fuel;
     }
 
     @Override
-    public void setFuel(String fuel) {
+    public void setFuel(Fuel fuel) {
         this.fuel = fuel;
     }
 

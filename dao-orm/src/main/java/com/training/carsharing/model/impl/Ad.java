@@ -1,22 +1,26 @@
 package com.training.carsharing.model.impl;
 
 import com.training.carsharing.model.IAd;
+import com.training.carsharing.model.ICar;
 import com.training.carsharing.model.IModel;
 import com.training.carsharing.model.IUserAccount;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-public class Ad extends BaseEntity implements IAd {
+public class Ad implements IAd {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
+
+    @OneToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Car.class)
+    @PrimaryKeyJoinColumn
+    private ICar car;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserAccount.class)
-    private IUserAccount userAccountId;
-
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Model.class)
-    private IModel modelId;
+    private IUserAccount userAccount;
 
     @Column
     private String address;
@@ -30,24 +34,44 @@ public class Ad extends BaseEntity implements IAd {
     @Column
     private boolean active;
 
+    @Column
+    @Version
+    private Integer version;
+
+    @Column(updatable = false)
+    private Date created;
+
+    @Column
+    private Date updated;
+
     @Override
-    public IUserAccount getUserAccountId() {
-        return userAccountId;
+    public Integer getId() {
+        return id;
     }
 
     @Override
-    public void setUserAccountId(IUserAccount userAccountId) {
-        this.userAccountId = userAccountId;
+    public void setId(final Integer id) {
+        this.id = id;
     }
 
     @Override
-    public IModel getModelId() {
-        return modelId;
+    public IUserAccount getUserAccount() {
+        return userAccount;
     }
 
     @Override
-    public void setModelId(IModel modelId) {
-        this.modelId = modelId;
+    public void setUserAccount(IUserAccount userAccount) {
+        this.userAccount = userAccount;
+    }
+
+    @Override
+    public ICar getCar() {
+        return car;
+    }
+
+    @Override
+    public void setCar(ICar car) {
+        this.car = car;
     }
 
     @Override
@@ -91,14 +115,45 @@ public class Ad extends BaseEntity implements IAd {
     }
 
     @Override
+    public Integer getVersion() {
+        return version;
+    }
+
+    @Override
+    public void setVersion(final Integer version) {
+        this.version = version;
+    }
+
+    @Override
+    public Date getCreated() {
+        return created;
+    }
+
+    @Override
+    public void setCreated(final Date created) {
+        this.created = created;
+    }
+
+    @Override
+    public Date getUpdated() {
+        return updated;
+    }
+
+    @Override
+    public void setUpdated(final Date updated) {
+        this.updated = updated;
+    }
+
+    @Override
     public String toString() {
-        return "Ad{" + super.toString() +
-                ", userAccountId=" + userAccountId +
-                ", modelId=" + modelId +
+        return "Ad{" +
+                "id=" + id +
+                ", carId=" + car.getId() +
+                ", userAccountId=" + userAccount.getId() +
                 ", address='" + address + '\'' +
                 ", price=" + price +
                 ", body='" + body + '\'' +
                 ", active=" + active +
-                "}";
+                '}';
     }
 }

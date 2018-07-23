@@ -14,4 +14,8 @@ public interface IDrivingLicense extends IBaseEntity {
     String getCategories();
 
     void setCategories(String categories);
+
+    IUserAccount getUserAccount();
+
+    void setUserAccount(IUserAccount userAccount);
 }

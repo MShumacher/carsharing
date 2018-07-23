@@ -1,8 +1,10 @@
 package com.training.carsharing.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public interface IPassport extends IBaseEntity {
+
     String getFullName();
 
     void setFullName(String fullName);
@@ -26,4 +28,8 @@ public interface IPassport extends IBaseEntity {
     Date getBirthday();
 
     void setBirthday(Date birthday);
+
+    IUserAccount getUserAccount();
+
+    void setUserAccount(IUserAccount userAccount);
 }

@@ -6,13 +6,17 @@ import java.util.Set;
 
 public interface ICar extends IBaseEntity {
 
+    IAd getAd();
+
+    void setAd(IAd ad);
+
     Set<IParameter> getParameters();
 
     void setParameters(Set<IParameter> parameters);
 
-    IUserAccount getUserAccount();
-
-    void setUserAccount(IUserAccount userAccount);
+//    IUserAccount getUserAccount();
+//
+//    void setUserAccount(IUserAccount userAccount);
 
     IModel getModel();
 

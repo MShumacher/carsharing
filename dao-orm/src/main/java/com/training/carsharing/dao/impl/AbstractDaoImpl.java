@@ -44,6 +44,7 @@ public abstract class AbstractDaoImpl<T, ID> implements IAbstractDao<T, ID> {
         try {
             entityManager.persist(entity);
         } catch (PersistenceException e) {
+            e.getCause().printStackTrace();
             throw new PersistenceException();
         }
     }

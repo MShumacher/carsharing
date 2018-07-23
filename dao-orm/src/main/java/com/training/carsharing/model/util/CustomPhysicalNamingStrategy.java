@@ -1,4 +1,4 @@
-package com.training.carsharing.dao.util;
+package com.training.carsharing.model.util;
 
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;

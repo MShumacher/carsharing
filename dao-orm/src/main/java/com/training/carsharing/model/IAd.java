@@ -1,13 +1,14 @@
 package com.training.carsharing.model;
 
 public interface IAd extends IBaseEntity {
-    IUserAccount getUserAccountId();
 
-    void setUserAccountId(IUserAccount userAccountId);
+    IUserAccount getUserAccount();
 
-    IModel getModelId();
+    void setUserAccount(IUserAccount userAccount);
 
-    void setModelId(IModel modelId);
+    ICar getCar();
+
+    void setCar(ICar car);
 
     String getAddress();
 

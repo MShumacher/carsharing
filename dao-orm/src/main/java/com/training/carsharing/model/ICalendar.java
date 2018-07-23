@@ -3,17 +3,14 @@ package com.training.carsharing.model;
 import java.util.Date;
 
 public interface ICalendar extends IBaseEntity {
-    String getMessage();
-
-    void setMessage(String message);
 
     IUserAccount getRenter();
 
     void setRenter(IUserAccount renter);
 
-    IUserAccount getCar();
+    ICar getCar();
 
-    void setCar(IUserAccount car);
+    void setCar(ICar car);
 
     Date getStart();
 

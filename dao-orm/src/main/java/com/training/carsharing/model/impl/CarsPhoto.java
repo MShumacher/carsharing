@@ -37,7 +37,7 @@ public class CarsPhoto extends BaseEntity implements ICarsPhoto {
     @Override
     public String toString() {
         return "CarsPhoto{" + super.toString() +
-//                ", car=" + car.getModel() +
+                ", carId=" + car.getId() +
                 ", link='" + link + '\'' +
                 "}";
     }

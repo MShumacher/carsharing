@@ -82,18 +82,16 @@ public class AbstractServiceImpl<T, DAO, ID> implements IAbstractService<T, DAO,
     }
 
     @Override
+    public void delete(final ID id) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        LOGGER.info("delete {} entity: {}", dao.getClass().getSimpleName(), id);
+        Method method = dao.getClass().getMethod("delete", Object.class);
+        method.invoke(dao, id);
+    }
+
+    @Override
     public void deleteAll() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         LOGGER.info("delete all {} entities", dao.getClass().getSimpleName());
         Method method = dao.getClass().getMethod("deleteAll");
         method.invoke(dao);
         }
-
-    @Override
-    public void delete(final ID id) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-            LOGGER.info("delete {} entity: {}", dao.getClass().getSimpleName(), id);
-            Method method = dao.getClass().getMethod("delete", Object.class);
-        method.invoke(dao, id);
-    }
-
-
 }

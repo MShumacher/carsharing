@@ -1,10 +1,10 @@
 package com.training.carsharing.model.impl;
 
+import com.training.carsharing.model.IDrivingLicense;
+import com.training.carsharing.model.IPassport;
 import com.training.carsharing.model.IUserAccount;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -26,6 +26,12 @@ public class UserAccount extends BaseEntity implements IUserAccount {
 
     @Column
     private String role;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userAccount", targetEntity = Passport.class)
+    private IPassport passport;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userAccount", targetEntity = DrivingLicense.class)
+    private IDrivingLicense drivingLicense;
 
     @Override
     public String getEmail() {
@@ -86,6 +92,26 @@ public class UserAccount extends BaseEntity implements IUserAccount {
     }
 
     @Override
+    public IPassport getPassport() {
+        return passport;
+    }
+
+    @Override
+    public void setPassport(final IPassport passport) {
+        this.passport = passport;
+    }
+
+    @Override
+    public IDrivingLicense getDrivingLicense() {
+        return drivingLicense;
+    }
+
+    @Override
+    public void setDrivingLicense(final IDrivingLicense drivingLicense) {
+        this.drivingLicense = drivingLicense;
+    }
+
+    @Override
     public String toString() {
         return "UserAccount{" + super.toString() +
                 ", email='" + email + '\'' +
@@ -94,25 +120,6 @@ public class UserAccount extends BaseEntity implements IUserAccount {
                 ", photoLink='" + photoLink + '\'' +
                 ", phone='" + phone + '\'' +
                 ", role='" + role + '\'' +
-                "} " + super.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserAccount that = (UserAccount) o;
-        return Objects.equals(email, that.email) &&
-                Objects.equals(password, that.password) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(photoLink, that.photoLink) &&
-                Objects.equals(phone, that.phone) &&
-                Objects.equals(role, that.role);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(email, password, name, photoLink, phone, role);
+                "}";
     }
 }

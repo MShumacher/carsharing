@@ -1,6 +1,7 @@
 package com.training.carsharing;
 
 import com.training.carsharing.model.IUserAccount;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,6 +13,7 @@ import static org.junit.Assert.*;
 public class UserAccountServiceTest extends AbstractTest {
 
     @Before
+    @After
     public void cleanTables()throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         getUserAccountService().deleteAll();
     }
@@ -23,8 +25,8 @@ public class UserAccountServiceTest extends AbstractTest {
 
         final IUserAccount entityFromDB = getUserAccountService().select(entity.getId());
 
-        assertEqualsAllFields(entity,entityFromDB);
-        assertNotNullAllFields(entityFromDB);
+        assertEqualsFieldsExcept(entity,entityFromDB);
+        assertNotNullFieldsExcept(entityFromDB);
 
         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
         System.out.println("End create test");
@@ -42,7 +44,7 @@ public class UserAccountServiceTest extends AbstractTest {
         getUserAccountService().save(entityFromDB);
 
         final IUserAccount updatedEntityFromDB = getUserAccountService().select(entityFromDB.getId());
-        assertEqualsAllFieldsExceptUpdatedAndVersionAndLast(entity, updatedEntityFromDB);
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version", "updated","role");
         assertEquals(newRole, updatedEntityFromDB.getRole());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
         System.out.println("End update test");
@@ -80,7 +82,7 @@ public class UserAccountServiceTest extends AbstractTest {
         final List<IUserAccount> allEntities = getUserAccountService().selectAll();
 
         for (final IUserAccount entityFromDB : allEntities) {
-            assertNotNullAllFields(entityFromDB);
+            assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());
         System.out.println("End get all test");

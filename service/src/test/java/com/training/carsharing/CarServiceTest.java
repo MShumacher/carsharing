@@ -17,7 +17,11 @@ public class CarServiceTest extends AbstractTest {
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+//        getAdService().deleteAll();
         getCarService().deleteAll();
+        getUserAccountService().deleteAll();
+        getModelService().deleteAll();
+        getParameterService().deleteAll();
     }
 
     @Test
@@ -26,8 +30,11 @@ public class CarServiceTest extends AbstractTest {
 
         final ICar entityFromDB = getCarService().selectFullInfo(entity.getId());
 
-        assertEqualsAllFields(entity,entityFromDB);
-        assertNotNullAllFields(entityFromDB);
+        assertEqualsFieldsExcept(entity, entityFromDB,"model", "parameters");
+        assertEquals(entity.getModel().getId(), entityFromDB.getModel().getId());
+//        assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
+
+        assertNotNullFieldsExcept(entityFromDB, "ad");
 
         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
@@ -39,13 +46,14 @@ public class CarServiceTest extends AbstractTest {
         final ICar entityFromDB = getCarService().selectFullInfo(entity.getId());
         final String newInsurance = "new-insurance-" + getRandomPrefix();
         entityFromDB.setInsurance(newInsurance);
-        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
+        Thread.sleep(2000); // make a short delay to see a new date in 'updated' column
         getCarService().save(entityFromDB);
 
         final ICar updatedEntityFromDB = getCarService().selectFullInfo(entityFromDB.getId());
-        assertEqualsAllFieldsExceptUpdatedAndVersionAndLast(entity,updatedEntityFromDB);
+     //   assertEqualsAllFieldsExceptUpdatedAndVersionAndLast(entity,updatedEntityFromDB);
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version","update","insurance", "model", "parameters");
         assertEquals(newInsurance, updatedEntityFromDB.getInsurance());
-        assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
+        assertTrue(updatedEntityFromDB.getUpdated().getTime() > entity.getUpdated().getTime());
      }
 
     @Test
@@ -63,7 +71,7 @@ public class CarServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testSelectAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final int initialCount = getCarService().selectAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
@@ -74,7 +82,7 @@ public class CarServiceTest extends AbstractTest {
         final List<ICar> allEntities = getCarService().selectAllFullInfo();
 
         for (final ICar entityFromDB : allEntities) {
-            assertNotNullAllFields(entityFromDB);
+            assertNotNullFieldsExcept(entityFromDB, "ad", "parameters");
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());
     }

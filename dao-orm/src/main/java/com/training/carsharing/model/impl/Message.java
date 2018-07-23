@@ -80,8 +80,8 @@ public class Message extends BaseEntity implements IMessage {
         return "Message{" + super.toString() +
                 ", message='" + message + '\'' +
                 ", ad=" + ad.getBody() +
-                ", sender=" + sender.getName() +
-                ", recipient=" + recipient.getName() +
+                ", senderId=" + sender.getId() +
+                ", recipientId=" + recipient.getId() +
                 ", viewed=" + viewed +
                 '}';
     }

@@ -1,6 +1,7 @@
 package com.training.carsharing.model.impl;
 
 import com.training.carsharing.model.ICalendar;
+import com.training.carsharing.model.ICar;
 import com.training.carsharing.model.IUserAccount;
 
 import javax.persistence.Column;
@@ -12,14 +13,11 @@ import java.util.Date;
 @Entity
 public class Calendar extends BaseEntity implements ICalendar {
 
-    @Column
-    private String message;
-
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserAccount.class)
     private IUserAccount renter;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Car.class)
-    private IUserAccount car;
+    private ICar car;
 
     @Column
     private Date start;
@@ -30,15 +28,6 @@ public class Calendar extends BaseEntity implements ICalendar {
     @Column
     private Double totalPrice;
 
-    @Override
-    public String getMessage() {
-        return message;
-    }
-
-    @Override
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     @Override
     public IUserAccount getRenter() {
@@ -51,12 +40,12 @@ public class Calendar extends BaseEntity implements ICalendar {
     }
 
     @Override
-    public IUserAccount getCar() {
+    public ICar getCar() {
         return car;
     }
 
     @Override
-    public void setCar(IUserAccount car) {
+    public void setCar(ICar car) {
         this.car = car;
     }
 
@@ -93,9 +82,8 @@ public class Calendar extends BaseEntity implements ICalendar {
     @Override
     public String toString() {
         return "Calendar{" + super.toString() +
-                ", message='" + message + '\'' +
-                ", renter=" + renter.getName() +
-                ", car=" + car.getName() +
+                ", renterId=" + renter.getId() +
+                ", carId=" + car.getId() +
                 ", start=" + start +
                 ", end=" + end +
                 ", totalPrice=" + totalPrice +

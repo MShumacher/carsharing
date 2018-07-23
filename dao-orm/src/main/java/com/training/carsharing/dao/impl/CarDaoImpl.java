@@ -36,7 +36,7 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
         cq.select(from);
 
         from.fetch(Car_.model, JoinType.LEFT);
-        from.fetch(Car_.userAccount, JoinType.LEFT);
+//        from.fetch(Car_.parameters, JoinType.LEFT);
 
         cq.where(cb.equal(from.get(Car_.id),id));
 
@@ -53,11 +53,40 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
         cq.select(from);
 
         from.fetch(Car_.model, JoinType.LEFT);
-        from.fetch(Car_.userAccount, JoinType.LEFT);
+//        from.fetch(Car_.parameters, JoinType.LEFT);
 
         final TypedQuery<ICar> q = em.createQuery(cq);
-        return q.getResultList();
+        List<ICar> resultList = q.getResultList();
+//        Set<ICar> targetSet = new HashSet<ICar>(resultList);
+//        resultList = targetSet.stream().collect(Collectors.toList());;
+        return resultList;
     }
+
+
+
+//    @Override
+//    public List<Book> getBooksByAuthors(List<Author> authors)
+//    {
+//        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Book> query = builder.createQuery(Book.class);
+//
+//        Root<Book> rootBook = query.from(Book.class);
+//        ListJoin<Book, Author> joinBookAuthors = rootBook.join(Book_.authors);
+//
+//        Expression<List<Author>> bookAuthors = rootBook.get(Book_.authors);
+//        Expression<Integer> countOfBookAuthors = builder.size(bookAuthors);
+//        Expression<Long> countOfBooksInGroup = builder.count(rootBook);
+//
+//        Predicate predicateCountOfBookAuthorsEqualsInputListSize = builder.equal(countOfBookAuthors, authors.size());
+//        Predicate predicateBookAuthorsInInputList = joinBookAuthors.in(authors);
+//
+//
+//        query.where(builder.and(predicateCountOfBookAuthorsEqualsInputListSize, predicateBookAuthorsInInputList))
+//                .groupBy(rootBook)
+//                .having(builder.equal(countOfBooksInGroup, authors.size()));
+//
+//        return entityManager.createQuery(query).getResultList();
+//    }
 
 
 //    @Override

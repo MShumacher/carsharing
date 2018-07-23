@@ -24,4 +24,12 @@ public interface IUserAccount extends IBaseEntity {
     String getRole();
 
     void setRole(String role);
+
+    IPassport getPassport();
+
+    void setPassport(IPassport passport);
+
+    IDrivingLicense getDrivingLicense();
+
+    void setDrivingLicense(IDrivingLicense drivingLicense);
 }

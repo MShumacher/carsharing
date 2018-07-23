@@ -114,7 +114,7 @@ CREATE TABLE car_2_parameter (
 
 CREATE TABLE calendar (
 	id serial NOT NULL,
-	renter integer NOT NULL,
+	renter_id integer NOT NULL,
 	car_id integer NOT NULL,
 	start DATE NOT NULL,
 	end DATE NOT NULL,
@@ -147,11 +147,11 @@ CREATE TABLE passport (
 	full_name character varying(100) NOT NULL,
 	number character varying(50) NOT NULL UNIQUE,
 	issue_place character varying(100) NOT NULL,
-	issue_date DATE NOT NULL,
+	issue_date TIMESTAMP NOT NULL,
 	birth_place character varying(500) NOT NULL,
-	birhtday DATE NOT NULL,
+	birthday TIMESTAMP NOT NULL default now(),
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
+	created TIMESTAMP NOT NULL default now(),
 	updated TIMESTAMP NOT NULL default now(),
 	CONSTRAINT passport_pk PRIMARY KEY (id)
 );
@@ -161,10 +161,10 @@ CREATE TABLE passport (
 CREATE TABLE driving_license (
 	id serial NOT NULL,
 	number character varying(50) NOT NULL UNIQUE,
-	expiration_date DATE NOT NULL,
+	expiration_date TIMESTAMP NOT NULL,
 	categories character varying(50) NOT NULL,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
+	created TIMESTAMP NOT NULL default now(),
 	updated TIMESTAMP NOT NULL default now(),
 	CONSTRAINT drive_license_pk PRIMARY KEY (id)
 );

@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IModel;
+import com.training.carsharing.model.IPassport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,21 +10,21 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ModelServiceTest extends AbstractTest {
+public class PassportServiceTest extends AbstractTest {
 
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getModelService().deleteAll();
+        getPassportService().deleteAll();
     }
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IModel entity = saveNewModel();
+        final IPassport entity = saveNewPassport();
 
-        final IModel entityFromDB = getModelService().select(entity.getId());
+        final IPassport entityFromDB = getPassportService().select(entity.getId());
 
-        assertEqualsFieldsExcept(entity,entityFromDB);
+        assertEqualsFieldsExcept(entity,entityFromDB,"userAccount");
         assertNotNullFieldsExcept(entityFromDB);
 
         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
@@ -32,48 +32,48 @@ public class ModelServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IModel entity = saveNewModel();
+        final IPassport entity = saveNewPassport();
 
-        final IModel entityFromDB = getModelService().select(entity.getId());
-        final String newBrand = "new-brand-" + getRandomPrefix();
-        entityFromDB.setBrand(newBrand);
+        final IPassport entityFromDB = getPassportService().select(entity.getId());
+        final String newFullName = "new-name-" + getRandomPrefix();
+        entityFromDB.setFullName(newFullName);
         Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
-        getModelService().save(entityFromDB);
+        getPassportService().save(entityFromDB);
 
-        final IModel updatedEntityFromDB = getModelService().select(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "brand");
-        assertEquals(newBrand, updatedEntityFromDB.getBrand());
+        final IPassport updatedEntityFromDB = getPassportService().select(entityFromDB.getId());
+        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "fullName");
+        assertEquals(newFullName, updatedEntityFromDB.getFullName());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
      }
 
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IModel entity = saveNewModel();
-        getModelService().delete(entity.getId());
-        assertNull(getModelService().select(entity.getId()));
+        final IPassport entity = saveNewPassport();
+        getPassportService().delete(entity.getId());
+        assertNull(getPassportService().select(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        saveNewModel();
-        getModelService().deleteAll();
-        assertEquals(0, getModelService().selectAll().size());
+        saveNewPassport();
+        getPassportService().deleteAll();
+        assertEquals(0, getPassportService().selectAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getModelService().selectAllFullInfo().size();
+        final int initialCount = getPassportService().selectAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
-            saveNewModel();
+            saveNewPassport();
         }
 
-        final List<IModel> allEntities = getModelService().selectAllFullInfo();
+        final List<IPassport> allEntities = getPassportService().selectAllFullInfo();
 
-        for (final IModel entityFromDB : allEntities) {
-            assertNotNullFieldsExcept(entityFromDB);
+        for (final IPassport entityFromDB : allEntities) {
+            assertNotNullFieldsExcept(entityFromDB, "userAccount");
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());
     }

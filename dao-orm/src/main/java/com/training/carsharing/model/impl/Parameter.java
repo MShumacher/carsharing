@@ -24,7 +24,6 @@ public class Parameter extends BaseEntity implements IParameter {
     @Override
     public String toString() {
         return "Parameter{" + super.toString() +
-                ", id='" + getId() + '\'' +
                 ", name='" + name + '\'' +
                 "}";
     }

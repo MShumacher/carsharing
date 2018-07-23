@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IModel;
+import com.training.carsharing.model.IParameter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,19 +10,19 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ModelServiceTest extends AbstractTest {
+public class ParameterServiceTest extends AbstractTest {
 
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getModelService().deleteAll();
+        getParameterService().deleteAll();
     }
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IModel entity = saveNewModel();
+        final IParameter entity = saveNewParameter();
 
-        final IModel entityFromDB = getModelService().select(entity.getId());
+        final IParameter entityFromDB = getParameterService().select(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -32,47 +32,47 @@ public class ModelServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IModel entity = saveNewModel();
+        final IParameter entity = saveNewParameter();
 
-        final IModel entityFromDB = getModelService().select(entity.getId());
-        final String newBrand = "new-brand-" + getRandomPrefix();
-        entityFromDB.setBrand(newBrand);
+        final IParameter entityFromDB = getParameterService().select(entity.getId());
+        final String newName = "new-name-" + getRandomPrefix();
+        entityFromDB.setName(newName);
         Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
-        getModelService().save(entityFromDB);
+        getParameterService().save(entityFromDB);
 
-        final IModel updatedEntityFromDB = getModelService().select(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "brand");
-        assertEquals(newBrand, updatedEntityFromDB.getBrand());
+        final IParameter updatedEntityFromDB = getParameterService().select(entityFromDB.getId());
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version", "updated","name");
+        assertEquals(newName, updatedEntityFromDB.getName());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
      }
 
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IModel entity = saveNewModel();
-        getModelService().delete(entity.getId());
-        assertNull(getModelService().select(entity.getId()));
+        final IParameter entity = saveNewParameter();
+        getParameterService().delete(entity.getId());
+        assertNull(getParameterService().select(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        saveNewModel();
-        getModelService().deleteAll();
-        assertEquals(0, getModelService().selectAll().size());
+        saveNewParameter();
+        getParameterService().deleteAll();
+        assertEquals(0, getParameterService().selectAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getModelService().selectAllFullInfo().size();
+        final int initialCount = getParameterService().selectAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
-            saveNewModel();
+            saveNewParameter();
         }
 
-        final List<IModel> allEntities = getModelService().selectAllFullInfo();
+        final List<IParameter> allEntities = getParameterService().selectAllFullInfo();
 
-        for (final IModel entityFromDB : allEntities) {
+        for (final IParameter entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

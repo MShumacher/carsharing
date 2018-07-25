@@ -7,6 +7,7 @@ import com.training.carsharing.model.impl.Car_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -36,6 +37,7 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
         cq.select(from);
 
         from.fetch(Car_.model, JoinType.LEFT);
+//        from.fetch(Car_.ad, JoinType.LEFT);
 //        from.fetch(Car_.parameters, JoinType.LEFT);
 
         cq.where(cb.equal(from.get(Car_.id),id));
@@ -53,6 +55,7 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
         cq.select(from);
 
         from.fetch(Car_.model, JoinType.LEFT);
+//        from.fetch(Car_.ad, JoinType.LEFT);
 //        from.fetch(Car_.parameters, JoinType.LEFT);
 
         final TypedQuery<ICar> q = em.createQuery(cq);
@@ -61,8 +64,6 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
 //        resultList = targetSet.stream().collect(Collectors.toList());;
         return resultList;
     }
-
-
 
 //    @Override
 //    public List<Book> getBooksByAuthors(List<Author> authors)

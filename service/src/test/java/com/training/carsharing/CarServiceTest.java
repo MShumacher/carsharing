@@ -34,7 +34,7 @@ public class CarServiceTest extends AbstractTest {
         assertEquals(entity.getModel().getId(), entityFromDB.getModel().getId());
 //        assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
 
-        assertNotNullFieldsExcept(entityFromDB, "ad");
+        assertNotNullFieldsExcept(entityFromDB, "ad", "parameters");
 
         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }

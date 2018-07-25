@@ -1,6 +1,8 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IAbstractDao;
+import com.training.carsharing.model.IAd;
+import com.training.carsharing.model.impl.Ad;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,7 +26,6 @@ public abstract class AbstractDaoImpl<T, ID> implements IAbstractDao<T, ID> {
 //    }
 
     protected EntityManager getEntityManager() { return entityManager; }
-
 
     @Override
     public T select(final ID id) {

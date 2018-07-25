@@ -12,8 +12,8 @@ import java.util.Set;
 @Entity
 public class Car extends BaseEntity implements ICar {
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "car", targetEntity = Ad.class)
-    private IAd ad;
+//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "car", targetEntity = Ad.class)
+//    private IAd ad;
 
     @JoinTable(name = "car_2_parameter", joinColumns = { @JoinColumn(name = "car_id") }, inverseJoinColumns = {
             @JoinColumn(name = "parameter_id") })
@@ -68,15 +68,15 @@ public class Car extends BaseEntity implements ICar {
     @Column
     private String insurance;
 
-    @Override
-    public IAd getAd() {
-        return ad;
-    }
-
-    @Override
-    public void setAd(IAd ad) {
-        this.ad = ad;
-    }
+//    @Override
+//    public IAd getAd() {
+//        return ad;
+//    }
+//
+//    @Override
+//    public void setAd(IAd ad) {
+//        this.ad = ad;
+//    }
 
     @Override
     public Set<IParameter> getParameters() {

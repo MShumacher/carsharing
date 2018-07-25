@@ -2,11 +2,13 @@ package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IAdDao;
 import com.training.carsharing.model.IAd;
+import com.training.carsharing.model.ICar;
 import com.training.carsharing.model.impl.Ad;
 import com.training.carsharing.model.impl.Ad_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -57,7 +59,6 @@ public class AdDaoImpl extends AbstractDaoImpl<IAd, Integer> implements IAdDao {
         final TypedQuery<IAd> q = em.createQuery(cq);
         return q.getResultList();
     }
-
 
 //    @Override
 //    public long getCount(final AdFilter filter) {

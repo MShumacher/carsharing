@@ -2,7 +2,7 @@ package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IParameterDao;
 import com.training.carsharing.model.IParameter;
-import com.training.carsharing.model.impl.Parameter;
+import com.training.carsharing.model.impl.CarParameter;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,11 +11,11 @@ import java.util.List;
 @Repository
 public class ParameterDaoImpl extends AbstractDaoImpl<IParameter, Integer> implements IParameterDao {
 
-    protected ParameterDaoImpl() { super(Parameter.class); }
+    protected ParameterDaoImpl() { super(CarParameter.class); }
 
     @Override
     public IParameter createEntity() {
-        final IParameter parameter = new Parameter();
+        final IParameter parameter = new CarParameter();
         parameter.setVersion(IParameter.DEFAULT_VERSION);
         return parameter;
     }

@@ -16,9 +16,9 @@ public class AdServiceTest extends AbstractTest {
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getAdService().deleteAll();
         getCarService().deleteAll();
         getUserAccountService().deleteAll();
+        getAdService().deleteAll();
     }
 
     @Test
@@ -42,11 +42,12 @@ public class AdServiceTest extends AbstractTest {
         final IAd entityFromDB = getAdService().selectFullInfo(entity.getId());
         final String newAddress = "new-address-"+getRandomPrefix();
         entityFromDB.setAddress(newAddress);
-        Thread.sleep(5000); // make a short delay to see a new date in 'updated' column
+//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getAdService().save(entityFromDB);
 
         final IAd updatedEntityFromDB = getAdService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version","updated","address", "car", "userAccount");
+        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
         assertEquals(newAddress, updatedEntityFromDB.getAddress());

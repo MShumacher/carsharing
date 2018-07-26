@@ -42,14 +42,15 @@ public class CalendarServiceTest extends AbstractTest {
         final ICalendar entityFromDB = getCalendarService().selectFullInfo(entity.getId());
         final Date newStart = getRandomDate();
         entityFromDB.setStart(newStart);
-        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
+//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getCalendarService().save(entityFromDB);
 
         final ICalendar updatedEntityFromDB = getCalendarService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version","updated","start", "car", "renter");
+        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(entity.getRenter().getId(), entityFromDB.getRenter().getId());
-        assertEquals(newStart, updatedEntityFromDB.getStart());
+        assertEqualsDates(newStart, updatedEntityFromDB.getStart());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
      }
 

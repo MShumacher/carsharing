@@ -23,10 +23,10 @@ public class UserAccountServiceTest extends AbstractTest {
         System.out.println("Start create test");
         final IUserAccount entity = saveNewUserAccount();
 
-        final IUserAccount entityFromDB = getUserAccountService().select(entity.getId());
+        final IUserAccount entityFromDB = getUserAccountService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
-        assertNotNullFieldsExcept(entityFromDB);
+        assertNotNullFieldsExcept(entityFromDB, "passport", "drivingLicense");
 
         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
         System.out.println("End create test");
@@ -37,14 +37,15 @@ public class UserAccountServiceTest extends AbstractTest {
         System.out.println("Start update test");
         final IUserAccount entity = saveNewUserAccount();
 
-        final IUserAccount entityFromDB = getUserAccountService().select(entity.getId());
+        final IUserAccount entityFromDB = getUserAccountService().selectFullInfo(entity.getId());
         final String newRole = "new-role-" + getRandomPrefix();
         entityFromDB.setRole(newRole);
-        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
+//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getUserAccountService().save(entityFromDB);
 
-        final IUserAccount updatedEntityFromDB = getUserAccountService().select(entityFromDB.getId());
+        final IUserAccount updatedEntityFromDB = getUserAccountService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version", "updated","role");
+        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newRole, updatedEntityFromDB.getRole());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
         System.out.println("End update test");
@@ -65,24 +66,24 @@ public class UserAccountServiceTest extends AbstractTest {
         System.out.println("Start delete all test");
         saveNewUserAccount();
         getUserAccountService().deleteAll();
-        assertEquals(0, getUserAccountService().selectAll().size());
+        assertEquals(0, getUserAccountService().selectAllFullInfo().size());
         System.out.println("End delete all test");
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         System.out.println("Start get all test");
-        final int initialCount = getUserAccountService().selectAll().size();
+        final int initialCount = getUserAccountService().selectAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewUserAccount();
         }
 
-        final List<IUserAccount> allEntities = getUserAccountService().selectAll();
+        final List<IUserAccount> allEntities = getUserAccountService().selectAllFullInfo();
 
         for (final IUserAccount entityFromDB : allEntities) {
-            assertNotNullFieldsExcept(entityFromDB);
+            assertNotNullFieldsExcept(entityFromDB, "passport", "drivingLicense");
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());
         System.out.println("End get all test");

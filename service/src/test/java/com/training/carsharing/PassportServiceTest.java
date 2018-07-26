@@ -37,11 +37,13 @@ public class PassportServiceTest extends AbstractTest {
         final IPassport entityFromDB = getPassportService().select(entity.getId());
         final String newFullName = "new-name-" + getRandomPrefix();
         entityFromDB.setFullName(newFullName);
-        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
+//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getPassportService().save(entityFromDB);
 
         final IPassport updatedEntityFromDB = getPassportService().select(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "fullName");
+        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "fullName", "userAccount");
+        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
+        assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
         assertEquals(newFullName, updatedEntityFromDB.getFullName());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
      }

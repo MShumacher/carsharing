@@ -2,8 +2,9 @@ package com.training.carsharing.model.impl;
 
 import com.training.carsharing.model.IAd;
 import com.training.carsharing.model.ICar;
-import com.training.carsharing.model.IModel;
 import com.training.carsharing.model.IUserAccount;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,8 +12,11 @@ import java.util.Date;
 @Entity
 public class Ad implements IAd {
 
+    @GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "car"))
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "generator")
+//    @Id
+//    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Car.class)
@@ -39,10 +43,10 @@ public class Ad implements IAd {
     private Integer version;
 
     @Column(updatable = false)
-    private Date created;
+    private Long created;
 
     @Column
-    private Date updated;
+    private Long updated;
 
     @Override
     public Integer getId() {
@@ -126,28 +130,29 @@ public class Ad implements IAd {
 
     @Override
     public Date getCreated() {
-        return created;
+        return new Date(created);
     }
 
     @Override
     public void setCreated(final Date created) {
-        this.created = created;
+        this.created = created.getTime();
     }
 
     @Override
     public Date getUpdated() {
-        return updated;
+        return new Date(updated);
     }
 
     @Override
     public void setUpdated(final Date updated) {
-        this.updated = updated;
+        this.updated = updated.getTime();
     }
 
     @Override
     public String toString() {
         return "Ad{" +
                 "id=" + id +
+                super.toString() +
                 ", carId=" + car.getId() +
                 ", userAccountId=" + userAccount.getId() +
                 ", address='" + address + '\'' +

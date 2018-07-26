@@ -46,14 +46,20 @@ public class CarServiceTest extends AbstractTest {
         final ICar entityFromDB = getCarService().selectFullInfo(entity.getId());
         final String newInsurance = "new-insurance-" + getRandomPrefix();
         entityFromDB.setInsurance(newInsurance);
-        Thread.sleep(2000); // make a short delay to see a new date in 'updated' column
+//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getCarService().save(entityFromDB);
 
         final ICar updatedEntityFromDB = getCarService().selectFullInfo(entityFromDB.getId());
      //   assertEqualsAllFieldsExceptUpdatedAndVersionAndLast(entity,updatedEntityFromDB);
-        assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version","update","insurance", "model", "parameters");
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version","updated","insurance", "model", "parameters");
+        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
+        assertEquals(entity.getModel().getId(), entityFromDB.getModel().getId());
+        //TODO check all params
+       // System.out.println(entity.getParameters()+" "+updatedEntityFromDB.getParameters());
         assertEquals(newInsurance, updatedEntityFromDB.getInsurance());
-        assertTrue(updatedEntityFromDB.getUpdated().getTime() > entity.getUpdated().getTime());
+        long time = updatedEntityFromDB.getUpdated().getTime();
+        final long time1 = entity.getUpdated().getTime();
+        assertTrue(time > time1);
      }
 
     @Test

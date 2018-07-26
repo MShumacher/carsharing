@@ -1,23 +1,27 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.*;
+import com.training.carsharing.model.IAd;
+import com.training.carsharing.model.ICar;
+import com.training.carsharing.model.IModel;
+import com.training.carsharing.model.IParameter;
 import com.training.carsharing.model.enums.*;
-import jdk.nashorn.internal.objects.annotations.Getter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 public class Car extends BaseEntity implements ICar {
 
-//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "car", targetEntity = Ad.class)
-//    private IAd ad;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "car", targetEntity = Ad.class)
+    private IAd ad;
 
     @JoinTable(name = "car_2_parameter", joinColumns = { @JoinColumn(name = "car_id") }, inverseJoinColumns = {
             @JoinColumn(name = "parameter_id") })
-    @ManyToMany(targetEntity = Parameter.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = CarParameter.class, fetch = FetchType.LAZY)
 //    @OrderBy("title ASC")
     private Set<IParameter> parameters = new HashSet<>();
 
@@ -68,15 +72,15 @@ public class Car extends BaseEntity implements ICar {
     @Column
     private String insurance;
 
-//    @Override
-//    public IAd getAd() {
-//        return ad;
-//    }
-//
-//    @Override
-//    public void setAd(IAd ad) {
-//        this.ad = ad;
-//    }
+    @Override
+    public IAd getAd() {
+        return ad;
+    }
+
+    @Override
+    public void setAd(final IAd ad) {
+        this.ad = ad;
+    }
 
     @Override
     public Set<IParameter> getParameters() {
@@ -228,7 +232,7 @@ public class Car extends BaseEntity implements ICar {
         this.insurance = insurance;
     }
 
-    @Override
+     @Override
     public String toString() {
         return "Car{" + super.toString() +
 //                ", userAccount=" + userAccount.getName() +

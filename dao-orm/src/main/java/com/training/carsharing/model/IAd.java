@@ -25,4 +25,5 @@ public interface IAd extends IBaseEntity {
     boolean isActive();
 
     void setActive(boolean active);
+
 }

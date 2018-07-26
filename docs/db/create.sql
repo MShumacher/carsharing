@@ -4,8 +4,8 @@ CREATE TABLE model (
 	name character varying(50) NOT NULL UNIQUE,
 	brand character varying(50) NOT NULL,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT model_pk PRIMARY KEY (id)
 );
 
@@ -16,8 +16,8 @@ CREATE TABLE cars_photo (
 	car_id integer NOT NULL,
 	link character varying(300) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT cars_photo_pk PRIMARY KEY (id)
 );
 
@@ -40,8 +40,8 @@ CREATE TABLE car (
 	conditions character varying(1000) NOT NULL,
 	insurance character varying(500),
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT car_pk PRIMARY KEY (id)
 );
 
@@ -55,14 +55,14 @@ CREATE TABLE message (
 	recipient_id integer NOT NULL,
 	viewed BOOLEAN NOT NULL,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT message_pk PRIMARY KEY (id)
 );
 
 
 
-CREATE TABLE car_parameter (
+CREATE TABLE enum_parameter (
 	id serial NOT NULL,
 	brand character varying(50) UNIQUE,
 	gearbox character varying(50) UNIQUE,
@@ -71,8 +71,8 @@ CREATE TABLE car_parameter (
 	engine_type character varying(50) UNIQUE,
 	fuel character varying(50) UNIQUE,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT car_parameter_pk PRIMARY KEY (id)
 );
 
@@ -87,19 +87,19 @@ CREATE TABLE user_account (
 	phone character varying(50) NOT NULL UNIQUE,
 	role character varying(50) NOT NULL,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT user_account_pk PRIMARY KEY (id)
 );
 
 
 
-CREATE TABLE parameter (
+CREATE TABLE car_parameter (
 	id serial NOT NULL,
 	name character varying(300) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT parameter_pk PRIMARY KEY (id)
 );
 
@@ -116,12 +116,12 @@ CREATE TABLE calendar (
 	id serial NOT NULL,
 	renter_id integer NOT NULL,
 	car_id integer NOT NULL,
-	start DATE NOT NULL,
-	end DATE NOT NULL,
+	start DATETIME NOT NULL,
+	end DATETIME NOT NULL,
 	total_price numeric(12,2) NOT NULL,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT calendar_pk PRIMARY KEY (id)
 );
 
@@ -135,8 +135,8 @@ CREATE TABLE ad (
 	body character varying(1000) NOT NULL,
 	active BOOLEAN NOT NULL,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL,
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT ad_pk PRIMARY KEY (id)
 );
 
@@ -147,12 +147,12 @@ CREATE TABLE passport (
 	full_name character varying(100) NOT NULL,
 	number character varying(50) NOT NULL UNIQUE,
 	issue_place character varying(100) NOT NULL,
-	issue_date TIMESTAMP NOT NULL,
+	issue_date DATETIME NOT NULL,
 	birth_place character varying(500) NOT NULL,
-	birthday TIMESTAMP NOT NULL default now(),
+	birthday DATETIME NOT NULL,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL default now(),
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT passport_pk PRIMARY KEY (id)
 );
 
@@ -161,11 +161,11 @@ CREATE TABLE passport (
 CREATE TABLE driving_license (
 	id serial NOT NULL,
 	number character varying(50) NOT NULL UNIQUE,
-	expiration_date TIMESTAMP NOT NULL,
+	expiration_date DATETIME NOT NULL,
 	categories character varying(50) NOT NULL,
 	version integer NOT NULL,
-	created TIMESTAMP NOT NULL default now(),
-	updated TIMESTAMP NOT NULL default now(),
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
 	CONSTRAINT drive_license_pk PRIMARY KEY (id)
 );
 
@@ -174,7 +174,7 @@ CREATE TABLE driving_license (
 
 ALTER TABLE cars_photo ADD CONSTRAINT cars_photo_fk0 FOREIGN KEY (car_id) REFERENCES car(id);
 
-ALTER TABLE car ADD CONSTRAINT car_fk0 FOREIGN KEY (user_account_id) REFERENCES user_account(id);
+--ALTER TABLE car ADD CONSTRAINT car_fk0 FOREIGN KEY (user_account_id) REFERENCES user_account(id);
 ALTER TABLE car ADD CONSTRAINT car_fk1 FOREIGN KEY (model_id) REFERENCES model(id);
 
 ALTER TABLE message ADD CONSTRAINT message_fk0 FOREIGN KEY (ad_id) REFERENCES ad(id);

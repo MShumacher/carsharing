@@ -19,6 +19,7 @@ public class UserAccount extends BaseEntity implements IUserAccount {
     @Column
     private String name;
 
+    @Column
     private String photoLink;
 
     @Column

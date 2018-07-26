@@ -6,9 +6,9 @@ import java.util.Set;
 
 public interface ICar extends IBaseEntity {
 
-//    IAd getAd();
-//
-//    void setAd(IAd ad);
+    IAd getAd();
+
+    void setAd(IAd ad);
 
     Set<IParameter> getParameters();
 

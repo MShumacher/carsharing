@@ -5,6 +5,7 @@ import com.training.carsharing.model.IAd;
 import com.training.carsharing.model.ICar;
 import com.training.carsharing.model.impl.Ad;
 import com.training.carsharing.model.impl.Ad_;
+import com.training.carsharing.model.impl.Car_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

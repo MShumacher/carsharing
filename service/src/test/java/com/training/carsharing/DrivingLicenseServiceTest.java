@@ -37,11 +37,13 @@ public class DrivingLicenseServiceTest extends AbstractTest {
         final IDrivingLicense entityFromDB = getDrivingLicenseService().select(entity.getId());
         final String newNumber = "new-number-" + getRandomPrefix();
         entityFromDB.setNumber(newNumber);
-        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
+//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getDrivingLicenseService().save(entityFromDB);
 
         final IDrivingLicense updatedEntityFromDB = getDrivingLicenseService().select(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "number");
+        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "number", "userAccount");
+        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
+        assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
         assertEquals(newNumber, updatedEntityFromDB.getNumber());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
      }

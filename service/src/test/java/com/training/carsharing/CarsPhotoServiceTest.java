@@ -39,11 +39,12 @@ public class CarsPhotoServiceTest extends AbstractTest {
         final ICarsPhoto entityFromDB = getCarsPhotoService().selectFullInfo(entity.getId());
         final String newLink = "new-link-" + getRandomPrefix();
         entityFromDB.setLink(newLink);
-        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
+//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getCarsPhotoService().save(entityFromDB);
 
         final ICarsPhoto updatedEntityFromDB = getCarsPhotoService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version","updated","link", "car");
+        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(newLink, updatedEntityFromDB.getLink());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());

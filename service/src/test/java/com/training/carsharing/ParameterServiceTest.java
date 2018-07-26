@@ -37,11 +37,12 @@ public class ParameterServiceTest extends AbstractTest {
         final IParameter entityFromDB = getParameterService().select(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
-        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
+//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getParameterService().save(entityFromDB);
 
         final IParameter updatedEntityFromDB = getParameterService().select(entityFromDB.getId());
         assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version", "updated","name");
+        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
      }

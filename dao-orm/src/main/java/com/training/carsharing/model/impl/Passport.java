@@ -3,6 +3,7 @@ package com.training.carsharing.model.impl;
 import com.training.carsharing.model.ICar;
 import com.training.carsharing.model.IPassport;
 import com.training.carsharing.model.IUserAccount;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -11,8 +12,9 @@ import java.util.Date;
 @Entity
 public class Passport implements IPassport {
 
+    @GenericGenerator(name = "generator", strategy = "foreign", parameters = @org.hibernate.annotations.Parameter(name = "property", value = "userAccount"))
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "generator")
     private Integer id;
 
     @Column
@@ -38,10 +40,10 @@ public class Passport implements IPassport {
     private Integer version;
 
     @Column(updatable = false)
-    private Date created;
+    private Long created;
 
     @Column
-    private Date updated;
+    private Long updated;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false, targetEntity = UserAccount.class)
     @PrimaryKeyJoinColumn
@@ -139,22 +141,22 @@ public class Passport implements IPassport {
 
     @Override
     public Date getCreated() {
-        return created;
+        return new Date(created);
     }
 
     @Override
     public void setCreated(final Date created) {
-        this.created = created;
+        this.created = created.getTime();
     }
 
     @Override
     public Date getUpdated() {
-        return updated;
+        return new Date(updated);
     }
 
     @Override
     public void setUpdated(final Date updated) {
-        this.updated = updated;
+        this.updated = updated.getTime();
     }
 
     @Override

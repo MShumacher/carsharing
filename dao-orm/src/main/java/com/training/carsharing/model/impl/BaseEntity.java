@@ -17,10 +17,10 @@ public abstract class BaseEntity implements IBaseEntity {
     private Integer version;
 
     @Column(updatable = false)
-    private Date created;
+    private Long created;
 
     @Column
-    private Date updated;
+    private Long updated;
 
     @Override
     public Integer getId() {
@@ -44,22 +44,22 @@ public abstract class BaseEntity implements IBaseEntity {
 
     @Override
     public Date getCreated() {
-        return created;
+        return new Date(created);
     }
 
     @Override
     public void setCreated(final Date created) {
-        this.created = created;
+        this.created = created.getTime();
     }
 
     @Override
     public Date getUpdated() {
-        return updated;
+        return new Date(updated);
     }
 
     @Override
     public void setUpdated(final Date updated) {
-        this.updated = updated;
+        this.updated = updated.getTime();
     }
 
     @Override

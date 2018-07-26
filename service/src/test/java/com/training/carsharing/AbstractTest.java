@@ -2,7 +2,6 @@ package com.training.carsharing;
 
 import com.training.carsharing.model.*;
 import com.training.carsharing.model.enums.*;
-import com.training.carsharing.model.impl.UserAccount;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -10,16 +9,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.function.IntFunction;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:test-context.xml")
@@ -46,7 +40,7 @@ public abstract class AbstractTest {
 
     private static final Random RANDOM = new Random();
 
-    private static SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+    private static SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
     private static final String[] UNVERIFIABLE_FIELDS = {"updated", "version"};
 
@@ -84,6 +78,8 @@ public abstract class AbstractTest {
 
     protected IUserAccount saveNewUserAccount() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final IUserAccount entity = getUserAccountService().createEntity();
+//        entity.setPassport(saveNewPassport());
+//        entity.setDrivingLicense(saveNewDrivingLicense());
         entity.setEmail("Email-" + getRandomPrefix());
         entity.setPassword("Password-" + getRandomPrefix());
         entity.setName("Name-" + getRandomPrefix());
@@ -219,18 +215,6 @@ public abstract class AbstractTest {
         }
     }
 
-//    protected void assertEqualsAllFields(Object entity, Object entityFromDB) throws IllegalAccessException {
-//        Field[] fields = getAllFields(entity);
-//        for (Field field : fields) {
-//            field.setAccessible(true);
-////            System.out.println("field: "+field.getName() + " " + field.get(entity)+"=="+field.get(entityFromDB));
-//            if ("Date".equalsIgnoreCase(field.getType().getSimpleName())) {
-//                assertEqualsDates((Date) field.get(entity), (Date) field.get(entityFromDB));
-//            } else {
-//                assertEquals(field.get(entity), field.get(entityFromDB));
-//            }
-//        }
-//    }
 
     protected void assertEqualsFieldsExcept(Object entity, Object entityFromDB, String... unverifiableFields) throws IllegalAccessException {
         Collection<String> unverifiableFieldsCollection = Arrays.asList(unverifiableFields);
@@ -240,14 +224,12 @@ public abstract class AbstractTest {
             final String fieldName = field.getName();
             if (!unverifiableFieldsCollection.stream().anyMatch(fieldName::equalsIgnoreCase)) {
 //                System.out.println("field: "+ fieldName + " " + field.get(entity)+"=="+field.get(entityFromDB));
-                if ("Date".equalsIgnoreCase(field.getType().getSimpleName())) {
-                    final Object entityDate = field.get(entity);
-                    Object entityFromDBDate = field.get(entityFromDB);
-                    assertEqualsDates((Date) entityDate, (Date) entityFromDBDate);
-                } else {
+//                if ("Date".equalsIgnoreCase(field.getType().getSimpleName())) {
+//                    assertEquals((Date) field.get(entity), (Date) field.get(entityFromDB));
+//                } else {
                     assertEquals(field.get(entity), field.get(entityFromDB));
                 }
-            }
+//            }
         }
     }
 
@@ -284,9 +266,11 @@ public abstract class AbstractTest {
     }
 
     protected Date getRandomDate() {
+        final long millisInDay = 60 * 60 * 24 * 1000;
         final long rand = RANDOM.nextInt(17600);
-        final long dateMillis = Math.abs(System.currentTimeMillis() - rand * 24 * 60 * 60 * 1000);
-        final Date date = new Date(dateMillis);
+        final long dateMillis = Math.abs(System.currentTimeMillis() - rand * millisInDay);
+        final long dateOnly = (dateMillis / millisInDay) * millisInDay;
+        final Date date = new Date(dateOnly);
         return date;
     }
 }

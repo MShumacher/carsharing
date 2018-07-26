@@ -37,7 +37,6 @@ public class PassportServiceTest extends AbstractTest {
         final IPassport entityFromDB = getPassportService().select(entity.getId());
         final String newFullName = "new-name-" + getRandomPrefix();
         entityFromDB.setFullName(newFullName);
-//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getPassportService().save(entityFromDB);
 
         final IPassport updatedEntityFromDB = getPassportService().select(entityFromDB.getId());

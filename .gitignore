@@ -21,3 +21,5 @@
 
 .iml
 .idea/*
+/.project
+/metamodel

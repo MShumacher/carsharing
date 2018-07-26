@@ -42,7 +42,6 @@ public class CalendarServiceTest extends AbstractTest {
         final ICalendar entityFromDB = getCalendarService().selectFullInfo(entity.getId());
         final Date newStart = getRandomDate();
         entityFromDB.setStart(newStart);
-//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getCalendarService().save(entityFromDB);
 
         final ICalendar updatedEntityFromDB = getCalendarService().selectFullInfo(entityFromDB.getId());

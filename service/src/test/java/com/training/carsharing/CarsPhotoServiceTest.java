@@ -39,7 +39,6 @@ public class CarsPhotoServiceTest extends AbstractTest {
         final ICarsPhoto entityFromDB = getCarsPhotoService().selectFullInfo(entity.getId());
         final String newLink = "new-link-" + getRandomPrefix();
         entityFromDB.setLink(newLink);
-//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getCarsPhotoService().save(entityFromDB);
 
         final ICarsPhoto updatedEntityFromDB = getCarsPhotoService().selectFullInfo(entityFromDB.getId());

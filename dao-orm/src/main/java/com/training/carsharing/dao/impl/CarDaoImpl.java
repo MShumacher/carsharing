@@ -37,7 +37,7 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
         cq.select(from);
 
         from.fetch(Car_.model, JoinType.LEFT);
-//        from.fetch(Car_.ad, JoinType.LEFT);
+        from.fetch(Car_.ad, JoinType.LEFT);
 //        from.fetch(Car_.parameters, JoinType.LEFT);
 
         cq.where(cb.equal(from.get(Car_.id),id));
@@ -55,7 +55,7 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
         cq.select(from);
 
         from.fetch(Car_.model, JoinType.LEFT);
-//        from.fetch(Car_.ad, JoinType.LEFT);
+        from.fetch(Car_.ad, JoinType.LEFT);
 //        from.fetch(Car_.parameters, JoinType.LEFT);
 
         final TypedQuery<ICar> q = em.createQuery(cq);

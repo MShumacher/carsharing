@@ -37,7 +37,6 @@ public class ModelServiceTest extends AbstractTest {
         final IModel entityFromDB = getModelService().select(entity.getId());
         final String newBrand = "new-brand-" + getRandomPrefix();
         entityFromDB.setBrand(newBrand);
-//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getModelService().save(entityFromDB);
 
         final IModel updatedEntityFromDB = getModelService().select(entityFromDB.getId());

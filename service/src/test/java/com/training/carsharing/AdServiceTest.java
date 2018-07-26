@@ -42,7 +42,6 @@ public class AdServiceTest extends AbstractTest {
         final IAd entityFromDB = getAdService().selectFullInfo(entity.getId());
         final String newAddress = "new-address-"+getRandomPrefix();
         entityFromDB.setAddress(newAddress);
-//        Thread.sleep(1000); // make a short delay to see a new date in 'updated' column
         getAdService().save(entityFromDB);
 
         final IAd updatedEntityFromDB = getAdService().selectFullInfo(entityFromDB.getId());

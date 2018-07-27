@@ -2,10 +2,8 @@ package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IDrivingLicenseDao;
 import com.training.carsharing.model.IDrivingLicense;
-import com.training.carsharing.model.IDrivingLicense;
 import com.training.carsharing.model.impl.DrivingLicense;
 import com.training.carsharing.model.impl.DrivingLicense_;
-import com.training.carsharing.model.impl.DrivingLicense;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

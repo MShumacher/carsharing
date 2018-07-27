@@ -1,6 +1,6 @@
 package com.training.carsharing.model;
 
-public interface ICarParameter extends IBaseEntity {
+public interface IDrive extends IBaseEntity {
 
     String getName();
 

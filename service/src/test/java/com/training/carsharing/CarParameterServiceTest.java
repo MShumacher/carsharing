@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IParameter;
+import com.training.carsharing.model.ICarParameter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,19 +10,19 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ParameterServiceTest extends AbstractTest {
+public class CarParameterServiceTest extends AbstractTest {
 
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getParameterService().deleteAll();
+        getCarParameterService().deleteAll();
     }
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IParameter entity = saveNewParameter();
+        final ICarParameter entity = saveNewCarParameter();
 
-        final IParameter entityFromDB = getParameterService().select(entity.getId());
+        final ICarParameter entityFromDB = getCarParameterService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -32,14 +32,14 @@ public class ParameterServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IParameter entity = saveNewParameter();
+        final ICarParameter entity = saveNewCarParameter();
 
-        final IParameter entityFromDB = getParameterService().select(entity.getId());
+        final ICarParameter entityFromDB = getCarParameterService().selectFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
-        getParameterService().save(entityFromDB);
+        getCarParameterService().save(entityFromDB);
 
-        final IParameter updatedEntityFromDB = getParameterService().select(entityFromDB.getId());
+        final ICarParameter updatedEntityFromDB = getCarParameterService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version", "updated","name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -49,30 +49,30 @@ public class ParameterServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IParameter entity = saveNewParameter();
-        getParameterService().delete(entity.getId());
-        assertNull(getParameterService().select(entity.getId()));
+        final ICarParameter entity = saveNewCarParameter();
+        getCarParameterService().delete(entity.getId());
+        assertNull(getCarParameterService().select(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        saveNewParameter();
-        getParameterService().deleteAll();
-        assertEquals(0, getParameterService().selectAll().size());
+        saveNewCarParameter();
+        getCarParameterService().deleteAll();
+        assertEquals(0, getCarParameterService().selectAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getParameterService().selectAllFullInfo().size();
+        final int initialCount = getCarParameterService().selectAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
-            saveNewParameter();
+            saveNewCarParameter();
         }
 
-        final List<IParameter> allEntities = getParameterService().selectAllFullInfo();
+        final List<ICarParameter> allEntities = getCarParameterService().selectAllFullInfo();
 
-        for (final IParameter entityFromDB : allEntities) {
+        for (final ICarParameter entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

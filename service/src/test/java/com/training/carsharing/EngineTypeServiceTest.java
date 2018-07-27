@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IModel;
+import com.training.carsharing.model.IEngineType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,23 +10,23 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ModelServiceTest extends AbstractTest {
+public class EngineTypeServiceTest extends AbstractTest {
 
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getBrandService().deleteAll();
-        getModelService().deleteAll();
+        getFuelService().deleteAll();
+        getEngineTypeService().deleteAll();
     }
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IModel entity = saveNewModel();
+        final IEngineType entity = saveNewEngineType();
 
-        final IModel entityFromDB = getModelService().selectFullInfo(entity.getId());
+        final IEngineType entityFromDB = getEngineTypeService().selectFullInfo(entity.getId());
 
-        assertEqualsFieldsExcept(entity,entityFromDB, "brand");
-        assertEquals(entity.getBrand().getId(),entityFromDB.getBrand().getId());
+        assertEqualsFieldsExcept(entity,entityFromDB, "fuel");
+        assertEquals(entity.getFuel().getId(),entityFromDB.getFuel().getId());
         assertNotNullFieldsExcept(entityFromDB);
 
         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
@@ -34,17 +34,17 @@ public class ModelServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IModel entity = saveNewModel();
+        final IEngineType entity = saveNewEngineType();
 
-        final IModel entityFromDB = getModelService().selectFullInfo(entity.getId());
+        final IEngineType entityFromDB = getEngineTypeService().selectFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
-        getModelService().save(entityFromDB);
+        getEngineTypeService().save(entityFromDB);
 
-        final IModel updatedEntityFromDB = getModelService().selectFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "brand", "name");
+        final IEngineType updatedEntityFromDB = getEngineTypeService().selectFullInfo(entityFromDB.getId());
+        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "fuel", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
-        assertEquals(entity.getBrand().getId(),updatedEntityFromDB.getBrand().getId());
+        assertEquals(entity.getFuel().getId(),updatedEntityFromDB.getFuel().getId());
         assertEquals(newName, updatedEntityFromDB.getName());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
      }
@@ -52,30 +52,30 @@ public class ModelServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IModel entity = saveNewModel();
-        getModelService().delete(entity.getId());
-        assertNull(getModelService().select(entity.getId()));
+        final IEngineType entity = saveNewEngineType();
+        getEngineTypeService().delete(entity.getId());
+        assertNull(getEngineTypeService().select(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        saveNewModel();
-        getModelService().deleteAll();
-        assertEquals(0, getModelService().selectAll().size());
+        saveNewEngineType();
+        getEngineTypeService().deleteAll();
+        assertEquals(0, getEngineTypeService().selectAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getModelService().selectAllFullInfo().size();
+        final int initialCount = getEngineTypeService().selectAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
-            saveNewModel();
+            saveNewEngineType();
         }
 
-        final List<IModel> allEntities = getModelService().selectAllFullInfo();
+        final List<IEngineType> allEntities = getEngineTypeService().selectAllFullInfo();
 
-        for (final IModel entityFromDB : allEntities) {
+        for (final IEngineType entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

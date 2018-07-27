@@ -22,7 +22,7 @@ public class DrivingLicenseServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final IDrivingLicense entity = saveNewDrivingLicense();
 
-        final IDrivingLicense entityFromDB = getDrivingLicenseService().select(entity.getId());
+        final IDrivingLicense entityFromDB = getDrivingLicenseService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB, "userAccount");
         assertNotNullFieldsExcept(entityFromDB);
@@ -34,12 +34,12 @@ public class DrivingLicenseServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final IDrivingLicense entity = saveNewDrivingLicense();
 
-        final IDrivingLicense entityFromDB = getDrivingLicenseService().select(entity.getId());
+        final IDrivingLicense entityFromDB = getDrivingLicenseService().selectFullInfo(entity.getId());
         final String newNumber = "new-number-" + getRandomPrefix();
         entityFromDB.setNumber(newNumber);
         getDrivingLicenseService().save(entityFromDB);
 
-        final IDrivingLicense updatedEntityFromDB = getDrivingLicenseService().select(entityFromDB.getId());
+        final IDrivingLicense updatedEntityFromDB = getDrivingLicenseService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "number", "userAccount");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());

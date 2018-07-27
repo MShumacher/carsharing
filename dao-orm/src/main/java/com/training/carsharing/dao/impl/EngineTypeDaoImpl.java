@@ -1,13 +1,9 @@
 package com.training.carsharing.dao.impl;
 
-import com.training.carsharing.dao.IModelDao;
-import com.training.carsharing.model.IModel;
-import com.training.carsharing.model.IModel;
-import com.training.carsharing.model.IModel;
-import com.training.carsharing.model.impl.*;
-import com.training.carsharing.model.impl.Model_;
-import com.training.carsharing.model.impl.Model;
-import com.training.carsharing.model.impl.Model_;
+import com.training.carsharing.dao.IEngineTypeDao;
+import com.training.carsharing.model.IEngineType;
+import com.training.carsharing.model.impl.EngineType;
+import com.training.carsharing.model.impl.EngineType_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -20,50 +16,50 @@ import java.util.List;
 
 
 @Repository
-public class ModelDaoImpl extends AbstractDaoImpl<IModel, Integer> implements IModelDao {
+public class EngineTypeDaoImpl extends AbstractDaoImpl<IEngineType, Integer> implements IEngineTypeDao {
 
-    protected ModelDaoImpl() { super(Model.class); }
+    protected EngineTypeDaoImpl() { super(EngineType.class); }
 
     @Override
-    public IModel createEntity() {
-        final IModel model = new Model();
-        model.setVersion(IModel.DEFAULT_VERSION);
+    public IEngineType createEntity() {
+        final IEngineType model = new EngineType();
+        model.setVersion(IEngineType.DEFAULT_VERSION);
         return model;
     }
 
     @Override
-    public IModel selectFullInfo(Integer id) {
+    public IEngineType selectFullInfo(Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IModel> cq = cb.createQuery(IModel.class);
-        final Root<Model> from = cq.from(Model.class);
+        final CriteriaQuery<IEngineType> cq = cb.createQuery(IEngineType.class);
+        final Root<EngineType> from = cq.from(EngineType.class);
         cq.select(from);
 
-        from.fetch(Model_.brand, JoinType.LEFT);
+        from.fetch(EngineType_.fuel, JoinType.LEFT);
 
-        cq.where(cb.equal(from.get(Model_.id),id));
+        cq.where(cb.equal(from.get(EngineType_.id),id));
 
-        final List <IModel> resultList = em.createQuery(cq).getResultList();
+        final List <IEngineType> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<IModel> selectAllFullInfo() {
+    public List<IEngineType> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IModel> cq = cb.createQuery(IModel.class);
-        final Root<Model> from = cq.from(Model.class);
+        final CriteriaQuery<IEngineType> cq = cb.createQuery(IEngineType.class);
+        final Root<EngineType> from = cq.from(EngineType.class);
         cq.select(from);
 
-        from.fetch(Model_.brand, JoinType.LEFT);
+        from.fetch(EngineType_.fuel, JoinType.LEFT);
 
-        final TypedQuery<IModel> q = em.createQuery(cq);
-        List<IModel> resultList = q.getResultList();
+        final TypedQuery<IEngineType> q = em.createQuery(cq);
+        List<IEngineType> resultList = q.getResultList();
         return resultList;
     }
 
 //    @Override
-//    public long getCount(final ModelFilter filter) {
+//    public long getCount(final EngineTypeFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
 //        final CriteriaQuery<Long> cq = cb.createQuery(Long.class);
@@ -74,10 +70,10 @@ public class ModelDaoImpl extends AbstractDaoImpl<IModel, Integer> implements IM
 //    }
 //
 //    @Override
-//    public List<IModel> find(final ModelFilter filter) {
+//    public List<IEngineType> find(final EngineTypeFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IModel> cq = cb.createQuery(IModel.class);
+//        final CriteriaQuery<IEngineType> cq = cb.createQuery(IEngineType.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -87,7 +83,7 @@ public class ModelDaoImpl extends AbstractDaoImpl<IModel, Integer> implements IM
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IModel> q = em.createQuery(cq);
+//        final TypedQuery<IEngineType> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }
@@ -95,13 +91,13 @@ public class ModelDaoImpl extends AbstractDaoImpl<IModel, Integer> implements IM
 //    private SingularAttribute<? super model, ?> toMetamodelFormat(final String sortColumn) {
 //        switch (sortColumn) {
 //            case "created":
-//                return Model_.created;
+//                return EngineType_.created;
 //            case "updated":
-//                return Model_.updated;
+//                return EngineType_.updated;
 //            case "id":
-//                return Model_.id;
+//                return EngineType_.id;
 //            case "name":
-//                return Model_.name;
+//                return EngineType_.name;
 //            default:
 //                throw new UnsupportedOperationException("sorting is not supported by column:" + sortColumn);
 //        }

@@ -28,9 +28,9 @@ public class CalendarServiceTest extends AbstractTest {
         final ICalendar entityFromDB = getCalendarService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB, "car", "renter");
-        assertNotNullFieldsExcept(entityFromDB);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(entity.getRenter().getId(), entityFromDB.getRenter().getId());
+        assertNotNullFieldsExcept(entityFromDB);
 
         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }

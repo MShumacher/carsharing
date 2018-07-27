@@ -21,7 +21,8 @@ allprojects {
 task wrapper(type: Wrapper) {
     gradleVersion = '4.8.1'
 }
-group 'training'
+
+group 'com.training'
 version '1.0.0'
 
 sourceCompatibility = 1.8

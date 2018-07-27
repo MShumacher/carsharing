@@ -21,7 +21,7 @@ public class CarServiceTest extends AbstractTest {
         getCarService().deleteAll();
         getUserAccountService().deleteAll();
         getModelService().deleteAll();
-        getParameterService().deleteAll();
+        getCarParameterService().deleteAll();
     }
 
     @Test
@@ -30,9 +30,13 @@ public class CarServiceTest extends AbstractTest {
 
         final ICar entityFromDB = getCarService().selectFullInfo(entity.getId());
 
-        assertEqualsFieldsExcept(entity, entityFromDB,"model", "parameters");
+        assertEqualsFieldsExcept(entity, entityFromDB,"ad", "model", "carParameter", "gearbox", "bodyType", "drive", "engineType");
         assertEquals(entity.getModel().getId(), entityFromDB.getModel().getId());
-        assertNotNullFieldsExcept(entityFromDB, "ad", "parameters");
+        assertEquals(entity.getGearbox().getId(), entityFromDB.getGearbox().getId());
+        assertEquals(entity.getBodyType().getId(), entityFromDB.getBodyType().getId());
+        assertEquals(entity.getDrive().getId(), entityFromDB.getDrive().getId());
+        assertEquals(entity.getEngineType().getId(), entityFromDB.getEngineType().getId());
+        assertNotNullFieldsExcept(entityFromDB, "ad", "carParameter");
 
         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
@@ -47,9 +51,13 @@ public class CarServiceTest extends AbstractTest {
         getCarService().save(entityFromDB);
 
         final ICar updatedEntityFromDB = getCarService().selectFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version","updated","insurance", "model", "parameters");
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version","updated","insurance", "ad", "model", "carParameter", "gearbox", "bodyType", "drive", "engineType");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getModel().getId(), entityFromDB.getModel().getId());
+        assertEquals(entity.getGearbox().getId(), entityFromDB.getGearbox().getId());
+        assertEquals(entity.getBodyType().getId(), entityFromDB.getBodyType().getId());
+        assertEquals(entity.getDrive().getId(), entityFromDB.getDrive().getId());
+        assertEquals(entity.getEngineType().getId(), entityFromDB.getEngineType().getId());
         assertEquals(newInsurance, updatedEntityFromDB.getInsurance());
         long time = updatedEntityFromDB.getUpdated().getTime();
         final long time1 = entity.getUpdated().getTime();
@@ -82,7 +90,7 @@ public class CarServiceTest extends AbstractTest {
         final List<ICar> allEntities = getCarService().selectAllFullInfo();
 
         for (final ICar entityFromDB : allEntities) {
-            assertNotNullFieldsExcept(entityFromDB, "ad", "parameters");
+            assertNotNullFieldsExcept(entityFromDB, "ad", "carParameter");
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());
     }

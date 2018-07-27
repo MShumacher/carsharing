@@ -22,7 +22,7 @@ public class PassportServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final IPassport entity = saveNewPassport();
 
-        final IPassport entityFromDB = getPassportService().select(entity.getId());
+        final IPassport entityFromDB = getPassportService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB,"userAccount");
         assertNotNullFieldsExcept(entityFromDB);
@@ -34,12 +34,12 @@ public class PassportServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final IPassport entity = saveNewPassport();
 
-        final IPassport entityFromDB = getPassportService().select(entity.getId());
+        final IPassport entityFromDB = getPassportService().selectFullInfo(entity.getId());
         final String newFullName = "new-name-" + getRandomPrefix();
         entityFromDB.setFullName(newFullName);
         getPassportService().save(entityFromDB);
 
-        final IPassport updatedEntityFromDB = getPassportService().select(entityFromDB.getId());
+        final IPassport updatedEntityFromDB = getPassportService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "fullName", "userAccount");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());

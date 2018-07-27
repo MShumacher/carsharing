@@ -1,8 +1,9 @@
 
+
 CREATE TABLE model (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
-	brand character varying(50) NOT NULL,
+	brand_id integer NOT NULL,
 	version integer NOT NULL,
 	created BIGINT NOT NULL,
 	updated BIGINT NOT NULL,
@@ -25,17 +26,15 @@ CREATE TABLE cars_photo (
 
 CREATE TABLE car (
 	id serial NOT NULL,
-	user_account_id integer,
 	model_id integer NOT NULL,
 	year integer NOT NULL,
 	plate character varying(50) NOT NULL,
 	mileage integer,
 	seats integer,
-	gearbox character varying(50),
-	body_type character varying(50),
-	drive character varying(50),
-	engine_type character varying(50) NOT NULL,
-	fuel character varying(50) NOT NULL,
+	gearbox_id integer,
+	body_type_id integer,
+	drive_id integer,
+	engine_type_id integer NOT NULL,
 	charge numeric(4,2),
 	conditions character varying(1000) NOT NULL,
 	insurance character varying(500),
@@ -58,22 +57,6 @@ CREATE TABLE message (
 	created BIGINT NOT NULL,
 	updated BIGINT NOT NULL,
 	CONSTRAINT message_pk PRIMARY KEY (id)
-);
-
-
-
-CREATE TABLE enum_parameter (
-	id serial NOT NULL,
-	brand character varying(50) UNIQUE,
-	gearbox character varying(50) UNIQUE,
-	body_type character varying(50) UNIQUE,
-	drive character varying(50) UNIQUE,
-	engine_type character varying(50) UNIQUE,
-	fuel character varying(50) UNIQUE,
-	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
-	CONSTRAINT car_parameter_pk PRIMARY KEY (id)
 );
 
 
@@ -105,8 +88,8 @@ CREATE TABLE car_parameter (
 
 
 
-CREATE TABLE car_2_parameter (
-	parameter_id integer NOT NULL,
+CREATE TABLE car_2_car_parameter (
+	car_parameter_id integer NOT NULL,
 	car_id integer NOT NULL
 );
 
@@ -166,16 +149,87 @@ CREATE TABLE driving_license (
 	version integer NOT NULL,
 	created BIGINT NOT NULL,
 	updated BIGINT NOT NULL,
-	CONSTRAINT drive_license_pk PRIMARY KEY (id)
+	CONSTRAINT driving_license_pk PRIMARY KEY (id)
 );
 
 
 
+CREATE TABLE brand (
+	id serial NOT NULL,
+	name character varying(50) NOT NULL UNIQUE,
+	version integer NOT NULL,
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
+	CONSTRAINT brand_pk PRIMARY KEY (id)
+);
+
+
+
+CREATE TABLE gearbox (
+	id serial NOT NULL,
+	name character varying(50) NOT NULL UNIQUE,
+	version integer NOT NULL,
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
+	CONSTRAINT gearbox_pk PRIMARY KEY (id)
+);
+
+
+
+CREATE TABLE body_type (
+	id serial NOT NULL,
+	name character varying(50) NOT NULL UNIQUE,
+	version integer NOT NULL,
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
+	CONSTRAINT body_type_pk PRIMARY KEY (id)
+);
+
+
+
+CREATE TABLE drive (
+	id serial NOT NULL,
+	name character varying(50) NOT NULL UNIQUE,
+	version integer NOT NULL,
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
+	CONSTRAINT drive_pk PRIMARY KEY (id)
+);
+
+
+
+CREATE TABLE engine_type (
+	id serial NOT NULL,
+	name character varying(50) NOT NULL UNIQUE,
+	fuel_id integer NOT NULL,
+	version integer NOT NULL,
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
+	CONSTRAINT engine_type_pk PRIMARY KEY (id)
+);
+
+
+
+CREATE TABLE fuel (
+	id serial NOT NULL,
+	name character varying(50) NOT NULL UNIQUE,
+	version integer NOT NULL,
+	created BIGINT NOT NULL,
+	updated BIGINT NOT NULL,
+	CONSTRAINT fuel_pk PRIMARY KEY (id)
+);
+
+
+
+ALTER TABLE model ADD CONSTRAINT model_fk0 FOREIGN KEY (brand_id) REFERENCES brand(id);
 
 ALTER TABLE cars_photo ADD CONSTRAINT cars_photo_fk0 FOREIGN KEY (car_id) REFERENCES car(id);
 
---ALTER TABLE car ADD CONSTRAINT car_fk0 FOREIGN KEY (user_account_id) REFERENCES user_account(id);
-ALTER TABLE car ADD CONSTRAINT car_fk1 FOREIGN KEY (model_id) REFERENCES model(id);
+ALTER TABLE car ADD CONSTRAINT car_fk0 FOREIGN KEY (model_id) REFERENCES model(id);
+ALTER TABLE car ADD CONSTRAINT car_fk1 FOREIGN KEY (gearbox_id) REFERENCES gearbox(id);
+ALTER TABLE car ADD CONSTRAINT car_fk2 FOREIGN KEY (body_type_id) REFERENCES body_type(id);
+ALTER TABLE car ADD CONSTRAINT car_fk3 FOREIGN KEY (drive_id) REFERENCES drive(id);
+ALTER TABLE car ADD CONSTRAINT car_fk4 FOREIGN KEY (engine_type_id) REFERENCES engine_type(id);
 
 ALTER TABLE message ADD CONSTRAINT message_fk0 FOREIGN KEY (ad_id) REFERENCES ad(id);
 ALTER TABLE message ADD CONSTRAINT message_fk1 FOREIGN KEY (sender_id) REFERENCES user_account(id);
@@ -183,11 +237,10 @@ ALTER TABLE message ADD CONSTRAINT message_fk2 FOREIGN KEY (recipient_id) REFERE
 
 
 
+ALTER TABLE car_2_car_parameter ADD CONSTRAINT car_2_car_parameter_fk0 FOREIGN KEY (car_parameter_id) REFERENCES car_parameter(id);
+ALTER TABLE car_2_car_parameter ADD CONSTRAINT car_2_car_parameter_fk1 FOREIGN KEY (car_id) REFERENCES car(id);
 
-ALTER TABLE car_2_parameter ADD CONSTRAINT car_2_parameter_fk0 FOREIGN KEY (parameter_id) REFERENCES parameter(id);
-ALTER TABLE car_2_parameter ADD CONSTRAINT car_2_parameter_fk1 FOREIGN KEY (car_id) REFERENCES car(id);
-
-ALTER TABLE calendar ADD CONSTRAINT calendar_fk0 FOREIGN KEY (renter) REFERENCES user_account(id);
+ALTER TABLE calendar ADD CONSTRAINT calendar_fk0 FOREIGN KEY (renter_id) REFERENCES user_account(id);
 ALTER TABLE calendar ADD CONSTRAINT calendar_fk1 FOREIGN KEY (car_id) REFERENCES car(id);
 
 ALTER TABLE ad ADD CONSTRAINT ad_fk0 FOREIGN KEY (id) REFERENCES car(id);
@@ -195,4 +248,11 @@ ALTER TABLE ad ADD CONSTRAINT ad_fk1 FOREIGN KEY (user_account_id) REFERENCES us
 
 ALTER TABLE passport ADD CONSTRAINT passport_fk0 FOREIGN KEY (id) REFERENCES user_account(id);
 
-ALTER TABLE drive_license ADD CONSTRAINT drive_license_fk0 FOREIGN KEY (id) REFERENCES user_account(id);
+ALTER TABLE driving_license ADD CONSTRAINT driving_license_fk0 FOREIGN KEY (id) REFERENCES user_account(id);
+
+
+
+
+
+ALTER TABLE engine_type ADD CONSTRAINT engine_type_fk0 FOREIGN KEY (fuel_id) REFERENCES fuel(id);
+

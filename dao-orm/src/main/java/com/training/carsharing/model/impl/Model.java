@@ -1,10 +1,9 @@
 package com.training.carsharing.model.impl;
 
+import com.training.carsharing.model.IBrand;
 import com.training.carsharing.model.IModel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -13,8 +12,8 @@ public class Model extends BaseEntity implements IModel {
     @Column
     private String name;
 
-    @Column
-    private String brand;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Brand.class)
+    private IBrand brand;
 
     @Override
     public String getName() {
@@ -27,12 +26,12 @@ public class Model extends BaseEntity implements IModel {
     }
 
     @Override
-    public String getBrand() {
+    public IBrand getBrand() {
         return brand;
     }
 
     @Override
-    public void setBrand(String brand) {
+    public void setBrand(IBrand brand) {
         this.brand = brand;
     }
 
@@ -40,7 +39,7 @@ public class Model extends BaseEntity implements IModel {
     public String toString() {
         return "model{" + super.toString() +
                 ", name='" + name + '\'' +
-                ", brand='" + brand + '\'' +
+                ", brandId='" + brand.getId() + '\'' +
                 "}";
     }
 }

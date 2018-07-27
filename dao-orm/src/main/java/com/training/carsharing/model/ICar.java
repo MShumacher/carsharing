@@ -1,7 +1,5 @@
 package com.training.carsharing.model;
 
-import com.training.carsharing.model.enums.*;
-
 import java.util.Set;
 
 public interface ICar extends IBaseEntity {
@@ -10,13 +8,13 @@ public interface ICar extends IBaseEntity {
 
     void setAd(IAd ad);
 
-    Set<IParameter> getParameters();
-
-    void setParameters(Set<IParameter> parameters);
-
 //    IUserAccount getUserAccount();
 //
 //    void setUserAccount(IUserAccount userAccount);
+
+    Set<ICarParameter> getCarParameter();
+
+    void setCarParameter(Set<ICarParameter> carParameter);
 
     IModel getModel();
 
@@ -38,25 +36,21 @@ public interface ICar extends IBaseEntity {
 
     void setSeats(Integer seats);
 
-    Gearbox getGearbox();
+    IGearbox getGearbox();
 
-    void setGearbox(Gearbox gearbox);
+    void setGearbox(IGearbox gearbox);
 
-    BodyType getBodyType();
+    IBodyType getBodyType();
 
-    void setBodyType(BodyType bodyType);
+    void setBodyType(IBodyType bodyType);
 
-    Drive getDrive();
+    IDrive getDrive();
 
-    void setDrive(Drive drive);
+    void setDrive(IDrive drive);
 
-    EngineType getEngineType();
+    IEngineType getEngineType();
 
-    void setEngineType(EngineType engineType);
-
-    Fuel getFuel();
-
-    void setFuel(Fuel fuel);
+    void setEngineType(IEngineType engineType);
 
     Double getCharge();
 

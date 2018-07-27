@@ -6,7 +6,7 @@ public interface IModel extends IBaseEntity {
 
     void setName(String name);
 
-    String getBrand();
+    IBrand getBrand();
 
-    void setBrand(String brand);
+    void setBrand(IBrand brand);
 }

@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IModel;
+import com.training.carsharing.model.IFuel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,23 +10,21 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ModelServiceTest extends AbstractTest {
+public class FuelServiceTest extends AbstractTest {
 
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getBrandService().deleteAll();
-        getModelService().deleteAll();
+        getFuelService().deleteAll();
     }
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IModel entity = saveNewModel();
+        final IFuel entity = saveNewFuel();
 
-        final IModel entityFromDB = getModelService().selectFullInfo(entity.getId());
+        final IFuel entityFromDB = getFuelService().selectFullInfo(entity.getId());
 
-        assertEqualsFieldsExcept(entity,entityFromDB, "brand");
-        assertEquals(entity.getBrand().getId(),entityFromDB.getBrand().getId());
+        assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
 
         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
@@ -34,17 +32,16 @@ public class ModelServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IModel entity = saveNewModel();
+        final IFuel entity = saveNewFuel();
 
-        final IModel entityFromDB = getModelService().selectFullInfo(entity.getId());
+        final IFuel entityFromDB = getFuelService().selectFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
-        getModelService().save(entityFromDB);
+        getFuelService().save(entityFromDB);
 
-        final IModel updatedEntityFromDB = getModelService().selectFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "brand", "name");
+        final IFuel updatedEntityFromDB = getFuelService().selectFullInfo(entityFromDB.getId());
+        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
-        assertEquals(entity.getBrand().getId(),updatedEntityFromDB.getBrand().getId());
         assertEquals(newName, updatedEntityFromDB.getName());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
      }
@@ -52,30 +49,30 @@ public class ModelServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IModel entity = saveNewModel();
-        getModelService().delete(entity.getId());
-        assertNull(getModelService().select(entity.getId()));
+        final IFuel entity = saveNewFuel();
+        getFuelService().delete(entity.getId());
+        assertNull(getFuelService().select(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        saveNewModel();
-        getModelService().deleteAll();
-        assertEquals(0, getModelService().selectAll().size());
+        saveNewFuel();
+        getFuelService().deleteAll();
+        assertEquals(0, getFuelService().selectAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getModelService().selectAllFullInfo().size();
+        final int initialCount = getFuelService().selectAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
-            saveNewModel();
+            saveNewFuel();
         }
 
-        final List<IModel> allEntities = getModelService().selectAllFullInfo();
+        final List<IFuel> allEntities = getFuelService().selectAllFullInfo();
 
-        for (final IModel entityFromDB : allEntities) {
+        for (final IFuel entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

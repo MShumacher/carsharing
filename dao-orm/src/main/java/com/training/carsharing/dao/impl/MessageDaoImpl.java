@@ -1,13 +1,12 @@
 package com.training.carsharing.dao.impl;
 
-import com.training.carsharing.dao.ICarDao;
-import com.training.carsharing.model.ICar;
-import com.training.carsharing.model.impl.Car;
-import com.training.carsharing.model.impl.Car_;
+import com.training.carsharing.dao.IMessageDao;
+import com.training.carsharing.model.IMessage;
+import com.training.carsharing.model.impl.Message;
+import com.training.carsharing.model.impl.Message_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,59 +16,49 @@ import java.util.List;
 
 
 @Repository
-public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDao {
+public class MessageDaoImpl extends AbstractDaoImpl<IMessage, Integer> implements IMessageDao {
 
- protected CarDaoImpl() { super(Car.class); }
+ protected MessageDaoImpl() { super(Message.class); }
 
     @Override
-    public ICar createEntity() {
-        final ICar car = new Car();
-        car.setVersion(ICar.DEFAULT_VERSION);
+    public IMessage createEntity() {
+        final IMessage car = new Message();
+        car.setVersion(IMessage.DEFAULT_VERSION);
         return car;
     }
 
     @Override
-    public ICar selectFullInfo(final Integer id) {
+    public IMessage selectFullInfo(final Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<ICar> cq = cb.createQuery(ICar.class);
-        final Root<Car> from = cq.from(Car.class);
+        final CriteriaQuery<IMessage> cq = cb.createQuery(IMessage.class);
+        final Root<Message> from = cq.from(Message.class);
         cq.select(from);
 
-        from.fetch(Car_.ad, JoinType.LEFT);
-        from.fetch(Car_.model, JoinType.LEFT);
-        from.fetch(Car_.gearbox, JoinType.LEFT);
-        from.fetch(Car_.bodyType, JoinType.LEFT);
-        from.fetch(Car_.drive, JoinType.LEFT);
-        from.fetch(Car_.engineType, JoinType.LEFT);
-//        from.fetch(Car_.parameters, JoinType.LEFT);
+        from.fetch(Message_.ad, JoinType.LEFT);
+        from.fetch(Message_.sender, JoinType.LEFT);
+        from.fetch(Message_.recipient, JoinType.LEFT);
 
-        cq.where(cb.equal(from.get(Car_.id),id));
+        cq.where(cb.equal(from.get(Message_.id),id));
 
-        final List <ICar> resultList = em.createQuery(cq).getResultList();
+        final List <IMessage> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<ICar> selectAllFullInfo() {
+    public List<IMessage> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<ICar> cq = cb.createQuery(ICar.class);
-        final Root<Car> from = cq.from(Car.class);
+        final CriteriaQuery<IMessage> cq = cb.createQuery(IMessage.class);
+        final Root<Message> from = cq.from(Message.class);
         cq.select(from);
 
-        from.fetch(Car_.ad, JoinType.LEFT);
-        from.fetch(Car_.model, JoinType.LEFT);
-        from.fetch(Car_.gearbox, JoinType.LEFT);
-        from.fetch(Car_.bodyType, JoinType.LEFT);
-        from.fetch(Car_.drive, JoinType.LEFT);
-        from.fetch(Car_.engineType, JoinType.LEFT);
-//        from.fetch(Car_.parameters, JoinType.LEFT);
+        from.fetch(Message_.ad, JoinType.LEFT);
+        from.fetch(Message_.sender, JoinType.LEFT);
+        from.fetch(Message_.recipient, JoinType.LEFT);
 
-        final TypedQuery<ICar> q = em.createQuery(cq);
-        List<ICar> resultList = q.getResultList();
-//        Set<ICar> targetSet = new HashSet<ICar>(resultList);
-//        resultList = targetSet.stream().collect(Collectors.toList());
+        final TypedQuery<IMessage> q = em.createQuery(cq);
+        List<IMessage> resultList = q.getResultList();
         return resultList;
     }
 
@@ -99,7 +88,7 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
 
 
 //    @Override
-//    public long getCount(final CarFilter filter) {
+//    public long getCount(final MessageFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
 //        final CriteriaQuery<Long> cq = cb.createQuery(Long.class);
@@ -110,10 +99,10 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
 //    }
 //
 //    @Override
-//    public List<ICar> find(final CarFilter filter) {
+//    public List<IMessage> find(final MessageFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<ICar> cq = cb.createQuery(ICar.class);
+//        final CriteriaQuery<IMessage> cq = cb.createQuery(IMessage.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -123,7 +112,7 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<ICar> q = em.createQuery(cq);
+//        final TypedQuery<IMessage> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }
@@ -131,13 +120,13 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
 //    private SingularAttribute<? super model, ?> toMetamodelFormat(final String sortColumn) {
 //        switch (sortColumn) {
 //            case "created":
-//                return Car_.created;
+//                return Message_.created;
 //            case "updated":
-//                return Car_.updated;
+//                return Message_.updated;
 //            case "id":
-//                return Car_.id;
+//                return Message_.id;
 //            case "name":
-//                return Car_.name;
+//                return Message_.name;
 //            default:
 //                throw new UnsupportedOperationException("sorting is not supported by column:" + sortColumn);
 //        }

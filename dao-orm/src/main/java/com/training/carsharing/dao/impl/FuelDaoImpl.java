@@ -1,32 +1,32 @@
 package com.training.carsharing.dao.impl;
 
-import com.training.carsharing.dao.IParameterDao;
-import com.training.carsharing.model.IParameter;
-import com.training.carsharing.model.impl.CarParameter;
+import com.training.carsharing.dao.IFuelDao;
+import com.training.carsharing.model.IFuel;
+import com.training.carsharing.model.impl.Fuel;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 
 @Repository
-public class ParameterDaoImpl extends AbstractDaoImpl<IParameter, Integer> implements IParameterDao {
+public class FuelDaoImpl extends AbstractDaoImpl<IFuel, Integer> implements IFuelDao {
 
-    protected ParameterDaoImpl() { super(CarParameter.class); }
+    protected FuelDaoImpl() { super(Fuel.class); }
 
     @Override
-    public IParameter createEntity() {
-        final IParameter parameter = new CarParameter();
-        parameter.setVersion(IParameter.DEFAULT_VERSION);
+    public IFuel createEntity() {
+        final IFuel parameter = new Fuel();
+        parameter.setVersion(IFuel.DEFAULT_VERSION);
         return parameter;
     }
 
     @Override
-    public IParameter selectFullInfo(Integer id) {
+    public IFuel selectFullInfo(Integer id) {
         return select(id);
     }
 
     @Override
-    public List<IParameter> selectAllFullInfo() {
+    public List<IFuel> selectAllFullInfo() {
         return selectAll();
     }
 
@@ -42,10 +42,10 @@ public class ParameterDaoImpl extends AbstractDaoImpl<IParameter, Integer> imple
 //    }
 //
 //    @Override
-//    public List<IParameter> find(final ParameterFilter filter) {
+//    public List<IFuel> find(final ParameterFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IParameter> cq = cb.createQuery(IParameter.class);
+//        final CriteriaQuery<IFuel> cq = cb.createQuery(IFuel.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -55,7 +55,7 @@ public class ParameterDaoImpl extends AbstractDaoImpl<IParameter, Integer> imple
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IParameter> q = em.createQuery(cq);
+//        final TypedQuery<IFuel> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

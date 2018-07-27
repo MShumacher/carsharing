@@ -28,7 +28,7 @@ public abstract class AbstractTest {
     @Autowired
     private ICarService carService;
     @Autowired
-    private IParameterService parameterService;
+    private ICarParameterService carParameterService;
     @Autowired
     private ICalendarService calendarService;
     @Autowired
@@ -37,42 +37,111 @@ public abstract class AbstractTest {
     private IPassportService passportService;
     @Autowired
     private IDrivingLicenseService drivingLicenseService;
+    @Autowired
+    private IBrandService brandService;
+    @Autowired
+    private IGearboxService gearboxService;
+    @Autowired
+    private IBodyTypeService bodyTypeService;
+    @Autowired
+    private IDriveService driveService;
+    @Autowired
+    private IEngineTypeService engineTypeService;
+    @Autowired
+    private IFuelService fuelService;
+    @Autowired
+    private IMessageService messageService;
 
     private static final Random RANDOM = new Random();
 
     private static SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
-    private static final String[] UNVERIFIABLE_FIELDS = {"updated", "version"};
-
     public IUserAccountService getUserAccountService() {
         return userAccountService;
     }
-
     public IModelService getModelService() {
         return modelService;
     }
-
     public ICarsPhotoService getCarsPhotoService() {
         return carsPhotoService;
     }
-
     public ICarService getCarService() { return carService; }
-
-    public IParameterService getParameterService() { return parameterService; }
-
+    public ICarParameterService getCarParameterService() { return carParameterService; }
     public ICalendarService getCalendarService() { return calendarService; }
-
     public IAdService getAdService() { return adService; }
-
     public IPassportService getPassportService() { return passportService; }
-
     public IDrivingLicenseService getDrivingLicenseService() { return drivingLicenseService; }
+    public IBrandService getBrandService() {
+        return brandService;
+    }
+    public IGearboxService getGearboxService() {
+        return gearboxService;
+    }
+    public IBodyTypeService getBodyTypeService() {
+        return bodyTypeService;
+    }
+    public IDriveService getDriveService() {
+        return driveService;
+    }
+    public IEngineTypeService getEngineTypeService() {
+        return engineTypeService;
+    }
+    public IFuelService getFuelService() {
+        return fuelService;
+    }
+    public IMessageService getMessageService() {
+        return messageService;
+    }
+
 
     protected IModel saveNewModel() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final IModel entity = getModelService().createEntity();
         entity.setName("Name-" + getRandomPrefix());
-        entity.setBrand("Brand-" + getRandomPrefix());
+        entity.setBrand(saveNewBrand());
         getModelService().save(entity);
+        return entity;
+    }
+
+    protected IBrand saveNewBrand() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        final IBrand entity = getBrandService().createEntity();
+        entity.setName("Name-" + getRandomPrefix());
+        getBrandService().save(entity);
+        return entity;
+    }
+
+    protected IGearbox saveNewGearbox() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        final IGearbox entity = getGearboxService().createEntity();
+        entity.setName("Name-" + getRandomPrefix());
+        getGearboxService().save(entity);
+        return entity;
+    }
+
+    protected IBodyType saveNewBodyType() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        final IBodyType entity = getBodyTypeService().createEntity();
+        entity.setName("Name-" + getRandomPrefix());
+        getBodyTypeService().save(entity);
+        return entity;
+    }
+
+    protected IDrive saveNewDrive() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        final IDrive entity = getDriveService().createEntity();
+        entity.setName("Name-" + getRandomPrefix());
+        getDriveService().save(entity);
+        return entity;
+    }
+
+    protected IEngineType saveNewEngineType() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+       final IEngineType entity = getEngineTypeService().createEntity();
+       entity.setName("Name-" + getRandomPrefix());
+       entity.setFuel(saveNewFuel());
+       getEngineTypeService().save(entity);
+       return entity;
+    }
+
+    protected IFuel saveNewFuel() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        final IFuel entity = getFuelService().createEntity();
+        entity.setName("Name-" + getRandomPrefix());
+        getFuelService().save(entity);
         return entity;
     }
 
@@ -125,11 +194,11 @@ public abstract class AbstractTest {
         final ICar entity = getCarService().createEntity();
 
         final int randomObjectsCount = getRandomObjectsCount();
-        final List<IParameter> parameters = new ArrayList<>();
+        final List<ICarParameter> parameters = new ArrayList<>();
         for (int i = 0; i < randomObjectsCount; i++) {
-            parameters.add(saveNewParameter());
+            parameters.add(saveNewCarParameter());
         }
-        entity.getParameters().addAll(parameters);
+        entity.getCarParameter().addAll(parameters);
 
 //        entity.setUserAccount(saveNewUserAccount());
         entity.setModel(saveNewModel());
@@ -137,27 +206,10 @@ public abstract class AbstractTest {
         entity.setPlate("Plate-" + getRandomPrefix());
         entity.setMileage(getRandomPrefix());
         entity.setSeats(getRandomPrefix());
-
-        final Gearbox[] gearboxes = Gearbox.values();
-        int randomIndex = Math.max(0, RANDOM.nextInt(gearboxes.length) - 1);
-        entity.setGearbox(gearboxes[randomIndex]);
-
-        final BodyType[] bodyTypes = BodyType.values();
-        randomIndex = Math.max(0, RANDOM.nextInt(bodyTypes.length) - 1);
-        entity.setBodyType(bodyTypes[randomIndex]);
-
-        final Drive[] drives = Drive.values();
-        randomIndex = Math.max(0, RANDOM.nextInt(drives.length) - 1);
-        entity.setDrive(drives[randomIndex]);
-
-        final EngineType[] engineTypes = EngineType.values();
-        randomIndex = Math.max(0, RANDOM.nextInt(engineTypes.length) - 1);
-        entity.setEngineType(engineTypes[randomIndex]);
-
-        final Fuel[] fuels = Fuel.values();
-        randomIndex = Math.max(0, RANDOM.nextInt(fuels.length) - 1);
-        entity.setFuel(fuels[randomIndex]);
-
+        entity.setGearbox(saveNewGearbox());
+        entity.setBodyType(saveNewBodyType());
+        entity.setDrive(saveNewDrive());
+        entity.setEngineType(saveNewEngineType());
         entity.setCharge(getRandomDouble());
         entity.setConditions("Conditions-" + getRandomPrefix());
         entity.setInsurance("Insurance-" + getRandomPrefix());
@@ -165,10 +217,21 @@ public abstract class AbstractTest {
         return entity;
     }
 
-    protected IParameter saveNewParameter() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IParameter entity = getParameterService().createEntity();
+    protected IMessage saveNewMessage() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        final IMessage entity = getMessageService().createEntity();
+        entity.setMessage("Message"+getRandomPrefix());
+        entity.setAd(saveNewAd());
+        entity.setSender(saveNewUserAccount());
+        entity.setRecipient(saveNewUserAccount());
+        entity.setViewed(getRandomBoolean());
+        getMessageService().save(entity);
+        return entity;
+    }
+
+    protected ICarParameter saveNewCarParameter() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        final ICarParameter entity = getCarParameterService().createEntity();
         entity.setName("Name-" + getRandomPrefix());
-        getParameterService().save(entity);
+        getCarParameterService().save(entity);
         return entity;
     }
 

@@ -1,15 +1,17 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.ICarParameter;
+import com.training.carsharing.model.IBrand;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-public class CarParameter extends BaseEntity implements ICarParameter {
+public class Brand extends BaseEntity implements IBrand {
 
     @Column
+
     private String name;
+
 
     @Override
     public String getName() {
@@ -23,7 +25,7 @@ public class CarParameter extends BaseEntity implements ICarParameter {
 
     @Override
     public String toString() {
-        return "CarParameter{" + super.toString() +
+        return "brand{" + super.toString() +
                 ", name='" + name + '\'' +
                 "}";
     }

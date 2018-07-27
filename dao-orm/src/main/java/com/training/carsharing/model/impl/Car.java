@@ -1,15 +1,8 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.IAd;
-import com.training.carsharing.model.ICar;
-import com.training.carsharing.model.IModel;
-import com.training.carsharing.model.IParameter;
-import com.training.carsharing.model.enums.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
+import com.training.carsharing.model.*;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,11 +12,11 @@ public class Car extends BaseEntity implements ICar {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "car", targetEntity = Ad.class)
     private IAd ad;
 
-    @JoinTable(name = "car_2_parameter", joinColumns = { @JoinColumn(name = "car_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "parameter_id") })
+    @JoinTable(name = "car_2_car_parameter", joinColumns = { @JoinColumn(name = "car_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "car_parameter_id") })
     @ManyToMany(targetEntity = CarParameter.class, fetch = FetchType.LAZY)
 //    @OrderBy("title ASC")
-    private Set<IParameter> parameters = new HashSet<>();
+    private Set<ICarParameter> carParameter = new HashSet<>();
 
 //    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserAccount.class)
 //    private IUserAccount userAccount;
@@ -43,25 +36,17 @@ public class Car extends BaseEntity implements ICar {
     @Column
     private Integer seats;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Gearbox gearbox;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gearbox.class)
+    private IGearbox gearbox;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private BodyType bodyType;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = BodyType.class)
+    private IBodyType bodyType;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Drive drive;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Drive.class)
+    private IDrive drive;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private EngineType engineType;
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Fuel fuel;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = EngineType.class)
+    private IEngineType engineType;
 
     @Column
     private Double charge;
@@ -83,13 +68,13 @@ public class Car extends BaseEntity implements ICar {
     }
 
     @Override
-    public Set<IParameter> getParameters() {
-        return parameters;
+    public Set<ICarParameter> getCarParameter() {
+        return carParameter;
     }
 
     @Override
-    public void setParameters(Set<IParameter> parameters) {
-        this.parameters = parameters;
+    public void setCarParameter(Set<ICarParameter> carParameter) {
+        this.carParameter = carParameter;
     }
 
 //    @Override
@@ -153,53 +138,43 @@ public class Car extends BaseEntity implements ICar {
     }
 
     @Override
-    public Gearbox getGearbox() {
+    public IGearbox getGearbox() {
         return gearbox;
     }
 
     @Override
-    public void setGearbox(Gearbox gearbox) {
+    public void setGearbox(IGearbox gearbox) {
         this.gearbox = gearbox;
     }
 
     @Override
-    public BodyType getBodyType() {
+    public IBodyType getBodyType() {
         return bodyType;
     }
 
     @Override
-    public void setBodyType(BodyType bodyType) {
+    public void setBodyType(IBodyType bodyType) {
         this.bodyType = bodyType;
     }
 
     @Override
-    public Drive getDrive() {
+    public IDrive getDrive() {
         return drive;
     }
 
     @Override
-    public void setDrive(Drive drive) {
+    public void setDrive(IDrive drive) {
         this.drive = drive;
     }
 
     @Override
-    public EngineType getEngineType() {
+    public IEngineType getEngineType() {
         return engineType;
     }
 
     @Override
-    public void setEngineType(EngineType engineType) {
+    public void setEngineType(IEngineType engineType) {
         this.engineType = engineType;
-    }
-
-    @Override
-    public Fuel getFuel() {
-        return fuel;
-    }
-
-    @Override
-    public void setFuel(Fuel fuel) {
-        this.fuel = fuel;
     }
 
     @Override
@@ -241,11 +216,10 @@ public class Car extends BaseEntity implements ICar {
                 ", plate='" + plate + '\'' +
                 ", mileage=" + mileage +
                 ", seats=" + seats +
-                ", gearbox='" + gearbox + '\'' +
-                ", bodyType='" + bodyType + '\'' +
-                ", drive='" + drive + '\'' +
-                ", engineType='" + engineType + '\'' +
-                ", fuel='" + fuel + '\'' +
+                ", gearboxId='" + gearbox.getId() + '\'' +
+                ", bodyTypeId='" + bodyType.getId() + '\'' +
+                ", driveId='" + drive.getId() + '\'' +
+                ", engineTypeId='" + engineType.getId() + '\'' +
                 ", charge=" + charge +
                 ", conditions='" + conditions + '\'' +
                 ", insurance='" + insurance + '\'' +

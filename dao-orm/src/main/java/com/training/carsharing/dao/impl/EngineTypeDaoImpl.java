@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IEngineTypeDao;
-import com.training.carsharing.model.IEngineType;
 import com.training.carsharing.model.impl.EngineType;
 import com.training.carsharing.model.impl.EngineType_;
 import org.springframework.stereotype.Repository;
@@ -16,45 +15,47 @@ import java.util.List;
 
 
 @Repository
-public class EngineTypeDaoImpl extends AbstractDaoImpl<IEngineType, Integer> implements IEngineTypeDao {
+public class EngineTypeDaoImpl extends AbstractDaoImpl<EngineType, Integer> implements IEngineTypeDao {
 
-    protected EngineTypeDaoImpl() { super(EngineType.class); }
+    protected EngineTypeDaoImpl() {
+        super(EngineType.class);
+    }
 
     @Override
-    public IEngineType createEntity() {
-        final IEngineType model = new EngineType();
-        model.setVersion(IEngineType.DEFAULT_VERSION);
+    public EngineType createEntity() {
+        final EngineType model = new EngineType();
+        model.setVersion(EngineType.DEFAULT_VERSION);
         return model;
     }
 
     @Override
-    public IEngineType selectFullInfo(Integer id) {
+    public EngineType selectFullInfo(Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IEngineType> cq = cb.createQuery(IEngineType.class);
+        final CriteriaQuery<EngineType> cq = cb.createQuery(EngineType.class);
         final Root<EngineType> from = cq.from(EngineType.class);
         cq.select(from);
 
         from.fetch(EngineType_.fuel, JoinType.LEFT);
 
-        cq.where(cb.equal(from.get(EngineType_.id),id));
+        cq.where(cb.equal(from.get(EngineType_.id), id));
 
-        final List <IEngineType> resultList = em.createQuery(cq).getResultList();
+        final List<EngineType> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<IEngineType> selectAllFullInfo() {
+    public List<EngineType> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IEngineType> cq = cb.createQuery(IEngineType.class);
+        final CriteriaQuery<EngineType> cq = cb.createQuery(EngineType.class);
         final Root<EngineType> from = cq.from(EngineType.class);
         cq.select(from);
 
         from.fetch(EngineType_.fuel, JoinType.LEFT);
 
-        final TypedQuery<IEngineType> q = em.createQuery(cq);
-        List<IEngineType> resultList = q.getResultList();
+        final TypedQuery<EngineType> q = em.createQuery(cq);
+        List<EngineType> resultList = q.getResultList();
         return resultList;
     }
 
@@ -70,10 +71,10 @@ public class EngineTypeDaoImpl extends AbstractDaoImpl<IEngineType, Integer> imp
 //    }
 //
 //    @Override
-//    public List<IEngineType> find(final EngineTypeFilter filter) {
+//    public List<EngineType> find(final EngineTypeFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IEngineType> cq = cb.createQuery(IEngineType.class);
+//        final CriteriaQuery<EngineType> cq = cb.createQuery(EngineType.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -83,7 +84,7 @@ public class EngineTypeDaoImpl extends AbstractDaoImpl<IEngineType, Integer> imp
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IEngineType> q = em.createQuery(cq);
+//        final TypedQuery<EngineType> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

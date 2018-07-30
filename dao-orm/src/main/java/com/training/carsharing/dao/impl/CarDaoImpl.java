@@ -1,13 +1,11 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.ICarDao;
-import com.training.carsharing.model.ICar;
 import com.training.carsharing.model.impl.Car;
 import com.training.carsharing.model.impl.Car_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,22 +15,24 @@ import java.util.List;
 
 
 @Repository
-public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDao {
+public class CarDaoImpl extends AbstractDaoImpl<Car, Integer> implements ICarDao {
 
- protected CarDaoImpl() { super(Car.class); }
+    protected CarDaoImpl() {
+        super(Car.class);
+    }
 
     @Override
-    public ICar createEntity() {
-        final ICar car = new Car();
-        car.setVersion(ICar.DEFAULT_VERSION);
+    public Car createEntity() {
+        final Car car = new Car();
+        car.setVersion(Car.DEFAULT_VERSION);
         return car;
     }
 
     @Override
-    public ICar selectFullInfo(final Integer id) {
+    public Car selectFullInfo(final Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<ICar> cq = cb.createQuery(ICar.class);
+        final CriteriaQuery<Car> cq = cb.createQuery(Car.class);
         final Root<Car> from = cq.from(Car.class);
         cq.select(from);
 
@@ -44,17 +44,17 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
         from.fetch(Car_.engineType, JoinType.LEFT);
 //        from.fetch(Car_.parameters, JoinType.LEFT);
 
-        cq.where(cb.equal(from.get(Car_.id),id));
+        cq.where(cb.equal(from.get(Car_.id), id));
 
-        final List <ICar> resultList = em.createQuery(cq).getResultList();
+        final List<Car> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<ICar> selectAllFullInfo() {
+    public List<Car> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<ICar> cq = cb.createQuery(ICar.class);
+        final CriteriaQuery<Car> cq = cb.createQuery(Car.class);
         final Root<Car> from = cq.from(Car.class);
         cq.select(from);
 
@@ -66,9 +66,9 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
         from.fetch(Car_.engineType, JoinType.LEFT);
 //        from.fetch(Car_.parameters, JoinType.LEFT);
 
-        final TypedQuery<ICar> q = em.createQuery(cq);
-        List<ICar> resultList = q.getResultList();
-//        Set<ICar> targetSet = new HashSet<ICar>(resultList);
+        final TypedQuery<Car> q = em.createQuery(cq);
+        List<Car> resultList = q.getResultList();
+//        Set<Car> targetSet = new HashSet<Car>(resultList);
 //        resultList = targetSet.stream().collect(Collectors.toList());
         return resultList;
     }
@@ -110,10 +110,10 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
 //    }
 //
 //    @Override
-//    public List<ICar> find(final CarFilter filter) {
+//    public List<Car> find(final CarFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<ICar> cq = cb.createQuery(ICar.class);
+//        final CriteriaQuery<Car> cq = cb.createQuery(Car.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -123,7 +123,7 @@ public class CarDaoImpl extends AbstractDaoImpl<ICar, Integer> implements ICarDa
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<ICar> q = em.createQuery(cq);
+//        final TypedQuery<Car> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

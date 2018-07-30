@@ -1,11 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IModelDao;
-import com.training.carsharing.model.IModel;
-import com.training.carsharing.model.IModel;
-import com.training.carsharing.model.IModel;
-import com.training.carsharing.model.impl.*;
-import com.training.carsharing.model.impl.Model_;
 import com.training.carsharing.model.impl.Model;
 import com.training.carsharing.model.impl.Model_;
 import org.springframework.stereotype.Repository;
@@ -20,45 +15,47 @@ import java.util.List;
 
 
 @Repository
-public class ModelDaoImpl extends AbstractDaoImpl<IModel, Integer> implements IModelDao {
+public class ModelDaoImpl extends AbstractDaoImpl<Model, Integer> implements IModelDao {
 
-    protected ModelDaoImpl() { super(Model.class); }
+    protected ModelDaoImpl() {
+        super(Model.class);
+    }
 
     @Override
-    public IModel createEntity() {
-        final IModel model = new Model();
-        model.setVersion(IModel.DEFAULT_VERSION);
+    public Model createEntity() {
+        final Model model = new Model();
+        model.setVersion(Model.DEFAULT_VERSION);
         return model;
     }
 
     @Override
-    public IModel selectFullInfo(Integer id) {
+    public Model selectFullInfo(Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IModel> cq = cb.createQuery(IModel.class);
+        final CriteriaQuery<Model> cq = cb.createQuery(Model.class);
         final Root<Model> from = cq.from(Model.class);
         cq.select(from);
 
         from.fetch(Model_.brand, JoinType.LEFT);
 
-        cq.where(cb.equal(from.get(Model_.id),id));
+        cq.where(cb.equal(from.get(Model_.id), id));
 
-        final List <IModel> resultList = em.createQuery(cq).getResultList();
+        final List<Model> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<IModel> selectAllFullInfo() {
+    public List<Model> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IModel> cq = cb.createQuery(IModel.class);
+        final CriteriaQuery<Model> cq = cb.createQuery(Model.class);
         final Root<Model> from = cq.from(Model.class);
         cq.select(from);
 
         from.fetch(Model_.brand, JoinType.LEFT);
 
-        final TypedQuery<IModel> q = em.createQuery(cq);
-        List<IModel> resultList = q.getResultList();
+        final TypedQuery<Model> q = em.createQuery(cq);
+        List<Model> resultList = q.getResultList();
         return resultList;
     }
 
@@ -74,10 +71,10 @@ public class ModelDaoImpl extends AbstractDaoImpl<IModel, Integer> implements IM
 //    }
 //
 //    @Override
-//    public List<IModel> find(final ModelFilter filter) {
+//    public List<Model> find(final ModelFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IModel> cq = cb.createQuery(IModel.class);
+//        final CriteriaQuery<Model> cq = cb.createQuery(Model.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -87,7 +84,7 @@ public class ModelDaoImpl extends AbstractDaoImpl<IModel, Integer> implements IM
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IModel> q = em.createQuery(cq);
+//        final TypedQuery<Model> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

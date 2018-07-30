@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IMessageDao;
-import com.training.carsharing.model.IMessage;
 import com.training.carsharing.model.impl.Message;
 import com.training.carsharing.model.impl.Message_;
 import org.springframework.stereotype.Repository;
@@ -16,22 +15,24 @@ import java.util.List;
 
 
 @Repository
-public class MessageDaoImpl extends AbstractDaoImpl<IMessage, Integer> implements IMessageDao {
+public class MessageDaoImpl extends AbstractDaoImpl<Message, Integer> implements IMessageDao {
 
- protected MessageDaoImpl() { super(Message.class); }
+    protected MessageDaoImpl() {
+        super(Message.class);
+    }
 
     @Override
-    public IMessage createEntity() {
-        final IMessage car = new Message();
-        car.setVersion(IMessage.DEFAULT_VERSION);
+    public Message createEntity() {
+        final Message car = new Message();
+        car.setVersion(Message.DEFAULT_VERSION);
         return car;
     }
 
     @Override
-    public IMessage selectFullInfo(final Integer id) {
+    public Message selectFullInfo(final Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IMessage> cq = cb.createQuery(IMessage.class);
+        final CriteriaQuery<Message> cq = cb.createQuery(Message.class);
         final Root<Message> from = cq.from(Message.class);
         cq.select(from);
 
@@ -39,17 +40,17 @@ public class MessageDaoImpl extends AbstractDaoImpl<IMessage, Integer> implement
         from.fetch(Message_.sender, JoinType.LEFT);
         from.fetch(Message_.recipient, JoinType.LEFT);
 
-        cq.where(cb.equal(from.get(Message_.id),id));
+        cq.where(cb.equal(from.get(Message_.id), id));
 
-        final List <IMessage> resultList = em.createQuery(cq).getResultList();
+        final List<Message> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<IMessage> selectAllFullInfo() {
+    public List<Message> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IMessage> cq = cb.createQuery(IMessage.class);
+        final CriteriaQuery<Message> cq = cb.createQuery(Message.class);
         final Root<Message> from = cq.from(Message.class);
         cq.select(from);
 
@@ -57,8 +58,8 @@ public class MessageDaoImpl extends AbstractDaoImpl<IMessage, Integer> implement
         from.fetch(Message_.sender, JoinType.LEFT);
         from.fetch(Message_.recipient, JoinType.LEFT);
 
-        final TypedQuery<IMessage> q = em.createQuery(cq);
-        List<IMessage> resultList = q.getResultList();
+        final TypedQuery<Message> q = em.createQuery(cq);
+        List<Message> resultList = q.getResultList();
         return resultList;
     }
 
@@ -99,10 +100,10 @@ public class MessageDaoImpl extends AbstractDaoImpl<IMessage, Integer> implement
 //    }
 //
 //    @Override
-//    public List<IMessage> find(final MessageFilter filter) {
+//    public List<Message> find(final MessageFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IMessage> cq = cb.createQuery(IMessage.class);
+//        final CriteriaQuery<Message> cq = cb.createQuery(Message.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -112,7 +113,7 @@ public class MessageDaoImpl extends AbstractDaoImpl<IMessage, Integer> implement
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IMessage> q = em.createQuery(cq);
+//        final TypedQuery<Message> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

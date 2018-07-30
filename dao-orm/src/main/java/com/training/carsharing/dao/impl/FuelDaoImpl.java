@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IFuelDao;
-import com.training.carsharing.model.IFuel;
 import com.training.carsharing.model.impl.Fuel;
 import org.springframework.stereotype.Repository;
 
@@ -9,24 +8,26 @@ import java.util.List;
 
 
 @Repository
-public class FuelDaoImpl extends AbstractDaoImpl<IFuel, Integer> implements IFuelDao {
+public class FuelDaoImpl extends AbstractDaoImpl<Fuel, Integer> implements IFuelDao {
 
-    protected FuelDaoImpl() { super(Fuel.class); }
+    protected FuelDaoImpl() {
+        super(Fuel.class);
+    }
 
     @Override
-    public IFuel createEntity() {
-        final IFuel parameter = new Fuel();
-        parameter.setVersion(IFuel.DEFAULT_VERSION);
+    public Fuel createEntity() {
+        final Fuel parameter = new Fuel();
+        parameter.setVersion(Fuel.DEFAULT_VERSION);
         return parameter;
     }
 
     @Override
-    public IFuel selectFullInfo(Integer id) {
+    public Fuel selectFullInfo(Integer id) {
         return select(id);
     }
 
     @Override
-    public List<IFuel> selectAllFullInfo() {
+    public List<Fuel> selectAllFullInfo() {
         return selectAll();
     }
 
@@ -42,10 +43,10 @@ public class FuelDaoImpl extends AbstractDaoImpl<IFuel, Integer> implements IFue
 //    }
 //
 //    @Override
-//    public List<IFuel> find(final ParameterFilter filter) {
+//    public List<Fuel> find(final ParameterFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IFuel> cq = cb.createQuery(IFuel.class);
+//        final CriteriaQuery<Fuel> cq = cb.createQuery(Fuel.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -55,7 +56,7 @@ public class FuelDaoImpl extends AbstractDaoImpl<IFuel, Integer> implements IFue
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IFuel> q = em.createQuery(cq);
+//        final TypedQuery<Fuel> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

@@ -1,14 +1,11 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.IDrivingLicense;
-import com.training.carsharing.model.IPassport;
-import com.training.carsharing.model.IUserAccount;
+import com.training.carsharing.model.enums.Role;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
-public class UserAccount extends BaseEntity implements IUserAccount {
+public class UserAccount extends BaseEntity {
 
     @Column
     private String email;
@@ -26,89 +23,76 @@ public class UserAccount extends BaseEntity implements IUserAccount {
     private String phone;
 
     @Column
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "userAccount", targetEntity = Passport.class)
-    private IPassport passport;
+    private Passport passport;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "userAccount", targetEntity = DrivingLicense.class)
-    private IDrivingLicense drivingLicense;
+    private DrivingLicense drivingLicense;
 
-    @Override
     public String getEmail() {
         return email;
     }
 
-    @Override
     public void setEmail(String email) {
         this.email = email;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
 
-    @Override
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Override
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
     public String getPhotoLink() {
         return photoLink;
     }
 
-    @Override
     public void setPhotoLink(String photoLink) {
         this.photoLink = photoLink;
     }
 
-    @Override
     public String getPhone() {
         return phone;
     }
 
-    @Override
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    @Override
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    @Override
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    @Override
-    public IPassport getPassport() {
+    public Passport getPassport() {
         return passport;
     }
 
-    @Override
-    public void setPassport(final IPassport passport) {
+    public void setPassport(final Passport passport) {
         this.passport = passport;
     }
 
-    @Override
-    public IDrivingLicense getDrivingLicense() {
+    public DrivingLicense getDrivingLicense() {
         return drivingLicense;
     }
 
-    @Override
-    public void setDrivingLicense(final IDrivingLicense drivingLicense) {
+    public void setDrivingLicense(final DrivingLicense drivingLicense) {
         this.drivingLicense = drivingLicense;
     }
 

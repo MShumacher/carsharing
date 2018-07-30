@@ -1,15 +1,11 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IAdDao;
-import com.training.carsharing.model.IAd;
-import com.training.carsharing.model.ICar;
 import com.training.carsharing.model.impl.Ad;
 import com.training.carsharing.model.impl.Ad_;
-import com.training.carsharing.model.impl.Car_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,45 +15,47 @@ import java.util.List;
 
 
 @Repository
-public class AdDaoImpl extends AbstractDaoImpl<IAd, Integer> implements IAdDao {
+public class AdDaoImpl extends AbstractDaoImpl<Ad, Integer> implements IAdDao {
 
- protected AdDaoImpl() { super(Ad.class); }
+    protected AdDaoImpl() {
+        super(Ad.class);
+    }
 
     @Override
-    public IAd createEntity() {
-        final IAd ad = new Ad();
-        ad.setVersion(IAd.DEFAULT_VERSION);
+    public Ad createEntity() {
+        final Ad ad = new Ad();
+        ad.setVersion(Ad.DEFAULT_VERSION);
         return ad;
     }
 
     @Override
-    public IAd selectFullInfo(final Integer id) {
+    public Ad selectFullInfo(final Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IAd> cq = cb.createQuery(IAd.class);
+        final CriteriaQuery<Ad> cq = cb.createQuery(Ad.class);
         final Root<Ad> from = cq.from(Ad.class);
         cq.select(from);
 
         from.fetch(Ad_.car, JoinType.LEFT);
         from.fetch(Ad_.userAccount, JoinType.LEFT);
-        cq.where(cb.equal(from.get(Ad_.id),id));
+        cq.where(cb.equal(from.get(Ad_.id), id));
 
-        final List <IAd> resultList = em.createQuery(cq).getResultList();
+        final List<Ad> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<IAd> selectAllFullInfo() {
+    public List<Ad> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IAd> cq = cb.createQuery(IAd.class);
+        final CriteriaQuery<Ad> cq = cb.createQuery(Ad.class);
         final Root<Ad> from = cq.from(Ad.class);
         cq.select(from);
 
         from.fetch(Ad_.car, JoinType.LEFT);
         from.fetch(Ad_.userAccount, JoinType.LEFT);
 
-        final TypedQuery<IAd> q = em.createQuery(cq);
+        final TypedQuery<Ad> q = em.createQuery(cq);
         return q.getResultList();
     }
 
@@ -73,10 +71,10 @@ public class AdDaoImpl extends AbstractDaoImpl<IAd, Integer> implements IAdDao {
 //    }
 //
 //    @Override
-//    public List<IAd> find(final AdFilter filter) {
+//    public List<Ad> find(final AdFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IAd> cq = cb.createQuery(IAd.class);
+//        final CriteriaQuery<Ad> cq = cb.createQuery(Ad.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -86,7 +84,7 @@ public class AdDaoImpl extends AbstractDaoImpl<IAd, Integer> implements IAdDao {
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IAd> q = em.createQuery(cq);
+//        final TypedQuery<Ad> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

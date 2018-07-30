@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IModel;
+import com.training.carsharing.model.impl.Model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,9 +21,9 @@ public class ModelServiceTest extends AbstractTest {
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IModel entity = saveNewModel();
+        final Model entity = saveNewModel();
 
-        final IModel entityFromDB = getModelService().selectFullInfo(entity.getId());
+        final Model entityFromDB = getModelService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB, "brand");
         assertEquals(entity.getBrand().getId(),entityFromDB.getBrand().getId());
@@ -34,14 +34,14 @@ public class ModelServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IModel entity = saveNewModel();
+        final Model entity = saveNewModel();
 
-        final IModel entityFromDB = getModelService().selectFullInfo(entity.getId());
+        final Model entityFromDB = getModelService().selectFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getModelService().save(entityFromDB);
 
-        final IModel updatedEntityFromDB = getModelService().selectFullInfo(entityFromDB.getId());
+        final Model updatedEntityFromDB = getModelService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "brand", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getBrand().getId(),updatedEntityFromDB.getBrand().getId());
@@ -52,7 +52,7 @@ public class ModelServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IModel entity = saveNewModel();
+        final Model entity = saveNewModel();
         getModelService().delete(entity.getId());
         assertNull(getModelService().select(entity.getId()));
     }
@@ -73,9 +73,9 @@ public class ModelServiceTest extends AbstractTest {
             saveNewModel();
         }
 
-        final List<IModel> allEntities = getModelService().selectAllFullInfo();
+        final List<Model> allEntities = getModelService().selectAllFullInfo();
 
-        for (final IModel entityFromDB : allEntities) {
+        for (final Model entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

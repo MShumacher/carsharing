@@ -1,8 +1,8 @@
 package com.training.carsharing;
 
 import com.training.carsharing.dao.ICalendarDao;
-import com.training.carsharing.model.ICalendar;
+import com.training.carsharing.model.impl.Calendar;
 
-public interface ICalendarService extends IAbstractService<ICalendar, ICalendarDao, Integer> {
+public interface ICalendarService extends IAbstractService<Calendar, ICalendarDao, Integer> {
 
 }

@@ -1,7 +1,7 @@
 package com.training.carsharing.dao;
 
-import com.training.carsharing.model.IPassport;
+import com.training.carsharing.model.impl.Passport;
 
-public interface IPassportDao extends IAbstractDao<IPassport, Integer> {
+public interface IPassportDao extends IAbstractDao<Passport, Integer> {
 
 }

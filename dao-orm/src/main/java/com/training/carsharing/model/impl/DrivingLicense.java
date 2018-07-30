@@ -1,14 +1,14 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.IDrivingLicense;
-import com.training.carsharing.model.IUserAccount;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class DrivingLicense implements IDrivingLicense {
+public class DrivingLicense {
+
+    public static int DEFAULT_VERSION = 1;
 
     @GenericGenerator(name = "generator", strategy = "foreign", parameters = @org.hibernate.annotations.Parameter(name = "property", value = "userAccount"))
     @Id
@@ -36,84 +36,68 @@ public class DrivingLicense implements IDrivingLicense {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false, targetEntity = UserAccount.class)
     @PrimaryKeyJoinColumn
-    private IUserAccount userAccount;
+    private UserAccount userAccount;
 
-    @Override
     public Integer getId() {
         return id;
     }
 
-    @Override
     public void setId(final Integer id) {
         this.id = id;
     }
 
-    @Override
     public String getNumber() {
         return number;
     }
 
-    @Override
     public void setNumber(String number) {
         this.number = number;
     }
 
-    @Override
     public Date getExpirationDate() {
         return expirationDate;
     }
 
-    @Override
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
 
-    @Override
     public String getCategories() {
         return categories;
     }
 
-    @Override
     public void setCategories(String categories) {
         this.categories = categories;
     }
 
-    @Override
-    public IUserAccount getUserAccount() {
+    public UserAccount getUserAccount() {
         return userAccount;
     }
 
-    @Override
-    public void setUserAccount(final IUserAccount userAccount) {
+    public void setUserAccount(final UserAccount userAccount) {
         this.userAccount = userAccount;
     }
 
-    @Override
     public Integer getVersion() {
         return version;
     }
 
-    @Override
     public void setVersion(final Integer version) {
         this.version = version;
     }
 
-    @Override
     public Date getCreated() {
         return new Date(created);
     }
 
-    @Override
     public void setCreated(final Date created) {
         this.created = created.getTime();
     }
 
-    @Override
     public Date getUpdated() {
         return new Date(updated);
     }
 
-    @Override
     public void setUpdated(final Date updated) {
         this.updated = updated.getTime();
     }

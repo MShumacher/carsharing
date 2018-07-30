@@ -1,7 +1,7 @@
 package com.training.carsharing.dao;
 
-import com.training.carsharing.model.IGearbox;
+import com.training.carsharing.model.impl.Gearbox;
 
-public interface IGearboxDao extends IAbstractDao<IGearbox, Integer> {
+public interface IGearboxDao extends IAbstractDao<Gearbox, Integer> {
 
 }

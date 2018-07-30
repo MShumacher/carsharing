@@ -1,7 +1,7 @@
 package com.training.carsharing.dao;
 
-import com.training.carsharing.model.IEngineType;
+import com.training.carsharing.model.impl.EngineType;
 
-public interface IEngineTypeDao extends IAbstractDao<IEngineType, Integer> {
+public interface IEngineTypeDao extends IAbstractDao<EngineType, Integer> {
 
 }

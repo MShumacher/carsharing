@@ -1,28 +1,26 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.*;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Car extends BaseEntity implements ICar {
+public class Car extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "car", targetEntity = Ad.class)
-    private IAd ad;
+    private Ad ad;
 
-    @JoinTable(name = "car_2_car_parameter", joinColumns = { @JoinColumn(name = "car_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "car_parameter_id") })
+    @JoinTable(name = "car_2_car_parameter", joinColumns = {@JoinColumn(name = "car_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "car_parameter_id")})
     @ManyToMany(targetEntity = CarParameter.class, fetch = FetchType.LAZY)
 //    @OrderBy("title ASC")
-    private Set<ICarParameter> carParameter = new HashSet<>();
+    private Set<CarParameter> carParameter = new HashSet<>();
 
 //    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserAccount.class)
 //    private IUserAccount userAccount;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Model.class)
-    private IModel model;
+    private Model model;
 
     @Column
     private Integer year;
@@ -37,16 +35,16 @@ public class Car extends BaseEntity implements ICar {
     private Integer seats;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gearbox.class)
-    private IGearbox gearbox;
+    private Gearbox gearbox;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = BodyType.class)
-    private IBodyType bodyType;
+    private BodyType bodyType;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Drive.class)
-    private IDrive drive;
+    private Drive drive;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = EngineType.class)
-    private IEngineType engineType;
+    private EngineType engineType;
 
     @Column
     private Double charge;
@@ -57,23 +55,19 @@ public class Car extends BaseEntity implements ICar {
     @Column
     private String insurance;
 
-    @Override
-    public IAd getAd() {
+    public Ad getAd() {
         return ad;
     }
 
-    @Override
-    public void setAd(final IAd ad) {
+    public void setAd(final Ad ad) {
         this.ad = ad;
     }
 
-    @Override
-    public Set<ICarParameter> getCarParameter() {
+    public Set<CarParameter> getCarParameter() {
         return carParameter;
     }
 
-    @Override
-    public void setCarParameter(Set<ICarParameter> carParameter) {
+    public void setCarParameter(Set<CarParameter> carParameter) {
         this.carParameter = carParameter;
     }
 
@@ -87,127 +81,103 @@ public class Car extends BaseEntity implements ICar {
 //        this.userAccount = userAccount;
 //    }
 
-    @Override
-    public IModel getModel() {
+    public Model getModel() {
         return model;
     }
 
-    @Override
-    public void setModel(IModel model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
-    @Override
     public Integer getYear() {
         return year;
     }
 
-    @Override
     public void setYear(Integer year) {
         this.year = year;
     }
 
-    @Override
     public String getPlate() {
         return plate;
     }
 
-    @Override
     public void setPlate(String plate) {
         this.plate = plate;
     }
 
-    @Override
     public Integer getMileage() {
         return mileage;
     }
 
-    @Override
     public void setMileage(Integer mileage) {
         this.mileage = mileage;
     }
 
-    @Override
     public Integer getSeats() {
         return seats;
     }
 
-    @Override
     public void setSeats(Integer seats) {
         this.seats = seats;
     }
 
-    @Override
-    public IGearbox getGearbox() {
+    public Gearbox getGearbox() {
         return gearbox;
     }
 
-    @Override
-    public void setGearbox(IGearbox gearbox) {
+    public void setGearbox(Gearbox gearbox) {
         this.gearbox = gearbox;
     }
 
-    @Override
-    public IBodyType getBodyType() {
+    public BodyType getBodyType() {
         return bodyType;
     }
 
-    @Override
-    public void setBodyType(IBodyType bodyType) {
+    public void setBodyType(BodyType bodyType) {
         this.bodyType = bodyType;
     }
 
-    @Override
-    public IDrive getDrive() {
+    public Drive getDrive() {
         return drive;
     }
 
-    @Override
-    public void setDrive(IDrive drive) {
+    public void setDrive(Drive drive) {
         this.drive = drive;
     }
 
-    @Override
-    public IEngineType getEngineType() {
+    public EngineType getEngineType() {
         return engineType;
     }
 
-    @Override
-    public void setEngineType(IEngineType engineType) {
+    public void setEngineType(EngineType engineType) {
         this.engineType = engineType;
     }
 
-    @Override
     public Double getCharge() {
         return charge;
     }
 
-    @Override
     public void setCharge(Double charge) {
         this.charge = charge;
     }
 
-    @Override
     public String getConditions() {
         return conditions;
     }
 
-    @Override
     public void setConditions(String conditions) {
         this.conditions = conditions;
     }
 
-    @Override
     public String getInsurance() {
         return insurance;
     }
 
-    @Override
     public void setInsurance(String insurance) {
         this.insurance = insurance;
     }
 
-     @Override
+    @Override
     public String toString() {
         return "Car{" + super.toString() +
 //                ", userAccount=" + userAccount.getName() +

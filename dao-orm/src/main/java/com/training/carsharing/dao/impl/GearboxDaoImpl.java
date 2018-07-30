@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IGearboxDao;
-import com.training.carsharing.model.IGearbox;
 import com.training.carsharing.model.impl.Gearbox;
 import org.springframework.stereotype.Repository;
 
@@ -9,24 +8,26 @@ import java.util.List;
 
 
 @Repository
-public class GearboxDaoImpl extends AbstractDaoImpl<IGearbox, Integer> implements IGearboxDao {
+public class GearboxDaoImpl extends AbstractDaoImpl<Gearbox, Integer> implements IGearboxDao {
 
-    protected GearboxDaoImpl() { super(Gearbox.class); }
+    protected GearboxDaoImpl() {
+        super(Gearbox.class);
+    }
 
     @Override
-    public IGearbox createEntity() {
-        final IGearbox parameter = new Gearbox();
-        parameter.setVersion(IGearbox.DEFAULT_VERSION);
+    public Gearbox createEntity() {
+        final Gearbox parameter = new Gearbox();
+        parameter.setVersion(Gearbox.DEFAULT_VERSION);
         return parameter;
     }
 
     @Override
-    public IGearbox selectFullInfo(Integer id) {
+    public Gearbox selectFullInfo(Integer id) {
         return select(id);
     }
 
     @Override
-    public List<IGearbox> selectAllFullInfo() {
+    public List<Gearbox> selectAllFullInfo() {
         return selectAll();
     }
 
@@ -42,10 +43,10 @@ public class GearboxDaoImpl extends AbstractDaoImpl<IGearbox, Integer> implement
 //    }
 //
 //    @Override
-//    public List<IGearbox> find(final ParameterFilter filter) {
+//    public List<Gearbox> find(final ParameterFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IGearbox> cq = cb.createQuery(IGearbox.class);
+//        final CriteriaQuery<Gearbox> cq = cb.createQuery(Gearbox.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -55,7 +56,7 @@ public class GearboxDaoImpl extends AbstractDaoImpl<IGearbox, Integer> implement
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IGearbox> q = em.createQuery(cq);
+//        final TypedQuery<Gearbox> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

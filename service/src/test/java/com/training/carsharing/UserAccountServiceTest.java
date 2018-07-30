@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IUserAccount;
+import com.training.carsharing.model.impl.UserAccount;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +20,9 @@ public class UserAccountServiceTest extends AbstractTest {
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException  {
-        final IUserAccount entity = saveNewUserAccount();
+        final UserAccount entity = saveNewUserAccount();
 
-        final IUserAccount entityFromDB = getUserAccountService().selectFullInfo(entity.getId());
+        final UserAccount entityFromDB = getUserAccountService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB, "passport", "drivingLicense");
@@ -32,24 +32,24 @@ public class UserAccountServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InterruptedException {
-        final IUserAccount entity = saveNewUserAccount();
+        final UserAccount entity = saveNewUserAccount();
 
-        final IUserAccount entityFromDB = getUserAccountService().selectFullInfo(entity.getId());
-        final String newRole = "new-role-" + getRandomPrefix();
-        entityFromDB.setRole(newRole);
+        final UserAccount entityFromDB = getUserAccountService().selectFullInfo(entity.getId());
+        final String email = "new-email-" + getRandomPrefix();
+        entityFromDB.setEmail(email);
         getUserAccountService().save(entityFromDB);
 
-        final IUserAccount updatedEntityFromDB = getUserAccountService().selectFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version", "updated","role");
+        final UserAccount updatedEntityFromDB = getUserAccountService().selectFullInfo(entityFromDB.getId());
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version", "updated","email");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
-        assertEquals(newRole, updatedEntityFromDB.getRole());
+        assertEquals(email, updatedEntityFromDB.getEmail());
         assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
      }
 
 
     @Test
     public void testDelete() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IUserAccount entity = saveNewUserAccount();
+        final UserAccount entity = saveNewUserAccount();
         getUserAccountService().delete(entity.getId());
         assertNull(getUserAccountService().select(entity.getId()));
     }
@@ -70,9 +70,9 @@ public class UserAccountServiceTest extends AbstractTest {
             saveNewUserAccount();
         }
 
-        final List<IUserAccount> allEntities = getUserAccountService().selectAllFullInfo();
+        final List<UserAccount> allEntities = getUserAccountService().selectAllFullInfo();
 
-        for (final IUserAccount entityFromDB : allEntities) {
+        for (final UserAccount entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB, "passport", "drivingLicense");
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

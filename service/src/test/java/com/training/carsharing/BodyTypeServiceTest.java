@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IBodyType;
+import com.training.carsharing.model.impl.BodyType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +20,9 @@ public class BodyTypeServiceTest extends AbstractTest {
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IBodyType entity = saveNewBodyType();
+        final BodyType entity = saveNewBodyType();
 
-        final IBodyType entityFromDB = getBodyTypeService().select(entity.getId());
+        final BodyType entityFromDB = getBodyTypeService().select(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -32,14 +32,14 @@ public class BodyTypeServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IBodyType entity = saveNewBodyType();
+        final BodyType entity = saveNewBodyType();
 
-        final IBodyType entityFromDB = getBodyTypeService().selectFullInfo(entity.getId());
+        final BodyType entityFromDB = getBodyTypeService().selectFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getBodyTypeService().save(entityFromDB);
 
-        final IBodyType updatedEntityFromDB = getBodyTypeService().selectFullInfo(entityFromDB.getId());
+        final BodyType updatedEntityFromDB = getBodyTypeService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -49,7 +49,7 @@ public class BodyTypeServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IBodyType entity = saveNewBodyType();
+        final BodyType entity = saveNewBodyType();
         getBodyTypeService().delete(entity.getId());
         assertNull(getBodyTypeService().select(entity.getId()));
     }
@@ -70,9 +70,9 @@ public class BodyTypeServiceTest extends AbstractTest {
             saveNewBodyType();
         }
 
-        final List<IBodyType> allEntities = getBodyTypeService().selectAllFullInfo();
+        final List<BodyType> allEntities = getBodyTypeService().selectAllFullInfo();
 
-        for (final IBodyType entityFromDB : allEntities) {
+        for (final BodyType entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

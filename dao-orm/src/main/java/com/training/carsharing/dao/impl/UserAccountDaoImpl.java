@@ -1,12 +1,8 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IUserAccountDao;
-import com.training.carsharing.model.IUserAccount;
-import com.training.carsharing.model.IModel;
-import com.training.carsharing.model.IUserAccount;
 import com.training.carsharing.model.impl.UserAccount;
 import com.training.carsharing.model.impl.UserAccount_;
-import com.training.carsharing.model.impl.UserAccount;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -19,47 +15,47 @@ import java.util.List;
 
 
 @Repository
-public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> implements IUserAccountDao {
+public class UserAccountDaoImpl extends AbstractDaoImpl<UserAccount, Integer> implements IUserAccountDao {
 
     protected UserAccountDaoImpl() {
         super(UserAccount.class);
     }
 
     @Override
-    public IUserAccount createEntity() {
-        final IUserAccount userAccount = new UserAccount();
-        userAccount.setVersion(IModel.DEFAULT_VERSION);
+    public UserAccount createEntity() {
+        final UserAccount userAccount = new UserAccount();
+        userAccount.setVersion(userAccount.DEFAULT_VERSION);
         return userAccount;
     }
 
     @Override
-    public IUserAccount selectFullInfo(final Integer id) {
+    public UserAccount selectFullInfo(final Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IUserAccount> cq = cb.createQuery(IUserAccount.class);
+        final CriteriaQuery<UserAccount> cq = cb.createQuery(UserAccount.class);
         final Root<UserAccount> from = cq.from(UserAccount.class);
         cq.select(from);
 
         from.fetch(UserAccount_.passport, JoinType.LEFT);
         from.fetch(UserAccount_.drivingLicense, JoinType.LEFT);
-        cq.where(cb.equal(from.get(UserAccount_.id),id));
+        cq.where(cb.equal(from.get(UserAccount_.id), id));
 
-        final List <IUserAccount> resultList = em.createQuery(cq).getResultList();
+        final List<UserAccount> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<IUserAccount> selectAllFullInfo() {
+    public List<UserAccount> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IUserAccount> cq = cb.createQuery(IUserAccount.class);
+        final CriteriaQuery<UserAccount> cq = cb.createQuery(UserAccount.class);
         final Root<UserAccount> from = cq.from(UserAccount.class);
         cq.select(from);
 
         from.fetch(UserAccount_.passport, JoinType.LEFT);
         from.fetch(UserAccount_.drivingLicense, JoinType.LEFT);
 
-        final TypedQuery<IUserAccount> q = em.createQuery(cq);
+        final TypedQuery<UserAccount> q = em.createQuery(cq);
         return q.getResultList();
     }
 
@@ -75,10 +71,10 @@ public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> i
 //    }
 //
 //    @Override
-//    public List<IUserAccount> find(final UserAccountFilter filter) {
+//    public List<UserAccount> find(final UserAccountFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IUserAccount> cq = cb.createQuery(IUserAccount.class);
+//        final CriteriaQuery<UserAccount> cq = cb.createQuery(UserAccount.class);
 //        final Root<UserAccount> from = cq.from(UserAccount.class);
 //        cq.select(from);
 //
@@ -88,7 +84,7 @@ public class UserAccountDaoImpl extends AbstractDaoImpl<IUserAccount, Integer> i
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IUserAccount> q = em.createQuery(cq);
+//        final TypedQuery<UserAccount> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

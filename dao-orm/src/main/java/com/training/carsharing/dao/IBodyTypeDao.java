@@ -1,7 +1,7 @@
 package com.training.carsharing.dao;
 
-import com.training.carsharing.model.IBodyType;
+import com.training.carsharing.model.impl.BodyType;
 
-public interface IBodyTypeDao extends IAbstractDao<IBodyType, Integer> {
+public interface IBodyTypeDao extends IAbstractDao<BodyType, Integer> {
 
 }

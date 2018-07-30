@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IPassport;
+import com.training.carsharing.model.impl.Passport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +20,9 @@ public class PassportServiceTest extends AbstractTest {
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IPassport entity = saveNewPassport();
+        final Passport entity = saveNewPassport();
 
-        final IPassport entityFromDB = getPassportService().selectFullInfo(entity.getId());
+        final Passport entityFromDB = getPassportService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB,"userAccount");
         assertNotNullFieldsExcept(entityFromDB);
@@ -32,14 +32,14 @@ public class PassportServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IPassport entity = saveNewPassport();
+        final Passport entity = saveNewPassport();
 
-        final IPassport entityFromDB = getPassportService().selectFullInfo(entity.getId());
+        final Passport entityFromDB = getPassportService().selectFullInfo(entity.getId());
         final String newFullName = "new-name-" + getRandomPrefix();
         entityFromDB.setFullName(newFullName);
         getPassportService().save(entityFromDB);
 
-        final IPassport updatedEntityFromDB = getPassportService().selectFullInfo(entityFromDB.getId());
+        final Passport updatedEntityFromDB = getPassportService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "fullName", "userAccount");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
@@ -50,7 +50,7 @@ public class PassportServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IPassport entity = saveNewPassport();
+        final Passport entity = saveNewPassport();
         getPassportService().delete(entity.getId());
         assertNull(getPassportService().select(entity.getId()));
     }
@@ -71,9 +71,9 @@ public class PassportServiceTest extends AbstractTest {
             saveNewPassport();
         }
 
-        final List<IPassport> allEntities = getPassportService().selectAllFullInfo();
+        final List<Passport> allEntities = getPassportService().selectAllFullInfo();
 
-        for (final IPassport entityFromDB : allEntities) {
+        for (final Passport entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB, "userAccount");
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

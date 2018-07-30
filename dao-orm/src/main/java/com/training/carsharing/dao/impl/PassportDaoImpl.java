@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IPassportDao;
-import com.training.carsharing.model.IPassport;
 import com.training.carsharing.model.impl.Passport;
 import com.training.carsharing.model.impl.Passport_;
 import org.springframework.stereotype.Repository;
@@ -16,43 +15,45 @@ import java.util.List;
 
 
 @Repository
-public class PassportDaoImpl extends AbstractDaoImpl<IPassport, Integer> implements IPassportDao {
+public class PassportDaoImpl extends AbstractDaoImpl<Passport, Integer> implements IPassportDao {
 
-    protected PassportDaoImpl() { super(Passport.class); }
+    protected PassportDaoImpl() {
+        super(Passport.class);
+    }
 
     @Override
-    public IPassport createEntity() {
-        final IPassport passport = new Passport();
-        passport.setVersion(IPassport.DEFAULT_VERSION);
+    public Passport createEntity() {
+        final Passport passport = new Passport();
+        passport.setVersion(Passport.DEFAULT_VERSION);
         return passport;
     }
 
     @Override
-    public IPassport selectFullInfo(final Integer id) {
+    public Passport selectFullInfo(final Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IPassport> cq = cb.createQuery(IPassport.class);
+        final CriteriaQuery<Passport> cq = cb.createQuery(Passport.class);
         final Root<Passport> from = cq.from(Passport.class);
         cq.select(from);
 
         from.fetch(Passport_.userAccount, JoinType.LEFT);
-        cq.where(cb.equal(from.get(Passport_.id),id));
+        cq.where(cb.equal(from.get(Passport_.id), id));
 
-        final List <IPassport> resultList = em.createQuery(cq).getResultList();
+        final List<Passport> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<IPassport> selectAllFullInfo() {
+    public List<Passport> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<IPassport> cq = cb.createQuery(IPassport.class);
+        final CriteriaQuery<Passport> cq = cb.createQuery(Passport.class);
         final Root<Passport> from = cq.from(Passport.class);
         cq.select(from);
 
         from.fetch(Passport_.userAccount, JoinType.LEFT);
 
-        final TypedQuery<IPassport> q = em.createQuery(cq);
+        final TypedQuery<Passport> q = em.createQuery(cq);
         return q.getResultList();
     }
 
@@ -68,10 +69,10 @@ public class PassportDaoImpl extends AbstractDaoImpl<IPassport, Integer> impleme
 //    }
 //
 //    @Override
-//    public List<IPassport> find(final PassportFilter filter) {
+//    public List<Passport> find(final PassportFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IPassport> cq = cb.createQuery(IPassport.class);
+//        final CriteriaQuery<Passport> cq = cb.createQuery(Passport.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -81,7 +82,7 @@ public class PassportDaoImpl extends AbstractDaoImpl<IPassport, Integer> impleme
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IPassport> q = em.createQuery(cq);
+//        final TypedQuery<Passport> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

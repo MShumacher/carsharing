@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IBrand;
+import com.training.carsharing.model.impl.Brand;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +20,9 @@ public class BrandServiceTest extends AbstractTest {
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IBrand entity = saveNewBrand();
+        final Brand entity = saveNewBrand();
 
-        final IBrand entityFromDB = getBrandService().select(entity.getId());
+        final Brand entityFromDB = getBrandService().select(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -32,14 +32,14 @@ public class BrandServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IBrand entity = saveNewBrand();
+        final Brand entity = saveNewBrand();
 
-        final IBrand entityFromDB = getBrandService().select(entity.getId());
+        final Brand entityFromDB = getBrandService().select(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getBrandService().save(entityFromDB);
 
-        final IBrand updatedEntityFromDB = getBrandService().select(entityFromDB.getId());
+        final Brand updatedEntityFromDB = getBrandService().select(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -49,7 +49,7 @@ public class BrandServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IBrand entity = saveNewBrand();
+        final Brand entity = saveNewBrand();
         getBrandService().delete(entity.getId());
         assertNull(getBrandService().select(entity.getId()));
     }
@@ -70,9 +70,9 @@ public class BrandServiceTest extends AbstractTest {
             saveNewBrand();
         }
 
-        final List<IBrand> allEntities = getBrandService().selectAllFullInfo();
+        final List<Brand> allEntities = getBrandService().selectAllFullInfo();
 
-        for (final IBrand entityFromDB : allEntities) {
+        for (final Brand entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

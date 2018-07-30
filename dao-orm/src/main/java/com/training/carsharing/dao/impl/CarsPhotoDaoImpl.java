@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.ICarsPhotoDao;
-import com.training.carsharing.model.ICarsPhoto;
 import com.training.carsharing.model.impl.CarsPhoto;
 import com.training.carsharing.model.impl.CarsPhoto_;
 import org.springframework.stereotype.Repository;
@@ -16,43 +15,43 @@ import java.util.List;
 
 
 @Repository
-public class CarsPhotoDaoImpl extends AbstractDaoImpl<ICarsPhoto, Integer> implements ICarsPhotoDao {
+public class CarsPhotoDaoImpl extends AbstractDaoImpl<CarsPhoto, Integer> implements ICarsPhotoDao {
 
  protected CarsPhotoDaoImpl() { super(CarsPhoto.class); }
 
     @Override
-    public ICarsPhoto createEntity() {
-        final ICarsPhoto carsPhoto = new CarsPhoto();
-        carsPhoto.setVersion(ICarsPhoto.DEFAULT_VERSION);
+    public CarsPhoto createEntity() {
+        final CarsPhoto carsPhoto = new CarsPhoto();
+        carsPhoto.setVersion(CarsPhoto.DEFAULT_VERSION);
         return carsPhoto;
     }
 
     @Override
-    public ICarsPhoto selectFullInfo(final Integer id) {
+    public CarsPhoto selectFullInfo(final Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<ICarsPhoto> cq = cb.createQuery(ICarsPhoto.class);
+        final CriteriaQuery<CarsPhoto> cq = cb.createQuery(CarsPhoto.class);
         final Root<CarsPhoto> from = cq.from(CarsPhoto.class);
         cq.select(from);
 
         from.fetch(CarsPhoto_.car, JoinType.LEFT);
         cq.where(cb.equal(from.get(CarsPhoto_.id),id));
 
-        final List <ICarsPhoto> resultList = em.createQuery(cq).getResultList();
+        final List <CarsPhoto> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<ICarsPhoto> selectAllFullInfo() {
+    public List<CarsPhoto> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<ICarsPhoto> cq = cb.createQuery(ICarsPhoto.class);
+        final CriteriaQuery<CarsPhoto> cq = cb.createQuery(CarsPhoto.class);
         final Root<CarsPhoto> from = cq.from(CarsPhoto.class);
         cq.select(from);
 
         from.fetch(CarsPhoto_.car, JoinType.LEFT);
 
-        final TypedQuery<ICarsPhoto> q = em.createQuery(cq);
+        final TypedQuery<CarsPhoto> q = em.createQuery(cq);
         return q.getResultList();
     }
 
@@ -69,10 +68,10 @@ public class CarsPhotoDaoImpl extends AbstractDaoImpl<ICarsPhoto, Integer> imple
 //    }
 //
 //    @Override
-//    public List<ICarsPhoto> find(final CarsPhotoFilter filter) {
+//    public List<CarsPhoto> find(final CarsPhotoFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<ICarsPhoto> cq = cb.createQuery(ICarsPhoto.class);
+//        final CriteriaQuery<CarsPhoto> cq = cb.createQuery(CarsPhoto.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -82,7 +81,7 @@ public class CarsPhotoDaoImpl extends AbstractDaoImpl<ICarsPhoto, Integer> imple
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<ICarsPhoto> q = em.createQuery(cq);
+//        final TypedQuery<CarsPhoto> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

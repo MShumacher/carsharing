@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.ICalendar;
+import com.training.carsharing.model.impl.Calendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +23,9 @@ public class CalendarServiceTest extends AbstractTest {
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final ICalendar entity = saveNewCalendar();
+        final Calendar entity = saveNewCalendar();
 
-        final ICalendar entityFromDB = getCalendarService().selectFullInfo(entity.getId());
+        final Calendar entityFromDB = getCalendarService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB, "car", "renter");
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
@@ -37,14 +37,14 @@ public class CalendarServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final ICalendar entity = saveNewCalendar();
+        final Calendar entity = saveNewCalendar();
 
-        final ICalendar entityFromDB = getCalendarService().selectFullInfo(entity.getId());
+        final Calendar entityFromDB = getCalendarService().selectFullInfo(entity.getId());
         final Date newStart = getRandomDate();
         entityFromDB.setStart(newStart);
         getCalendarService().save(entityFromDB);
 
-        final ICalendar updatedEntityFromDB = getCalendarService().selectFullInfo(entityFromDB.getId());
+        final Calendar updatedEntityFromDB = getCalendarService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version","updated","start", "car", "renter");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
@@ -55,7 +55,7 @@ public class CalendarServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final ICalendar entity = saveNewCalendar();
+        final Calendar entity = saveNewCalendar();
         getCalendarService().delete(entity.getId());
         assertNull(getCalendarService().select(entity.getId()));
     }
@@ -76,9 +76,9 @@ public class CalendarServiceTest extends AbstractTest {
             saveNewCalendar();
         }
 
-        final List<ICalendar> allEntities = getCalendarService().selectAllFullInfo();
+        final List<Calendar> allEntities = getCalendarService().selectAllFullInfo();
 
-        for (final ICalendar entityFromDB : allEntities) {
+        for (final Calendar entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

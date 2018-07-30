@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.ICarParameterDao;
-import com.training.carsharing.model.ICarParameter;
 import com.training.carsharing.model.impl.CarParameter;
 import org.springframework.stereotype.Repository;
 
@@ -9,24 +8,24 @@ import java.util.List;
 
 
 @Repository
-public class CarParameterDaoImpl extends AbstractDaoImpl<ICarParameter, Integer> implements ICarParameterDao {
+public class CarParameterDaoImpl extends AbstractDaoImpl<CarParameter, Integer> implements ICarParameterDao {
 
     protected CarParameterDaoImpl() { super(CarParameter.class); }
 
     @Override
-    public ICarParameter createEntity() {
-        final ICarParameter parameter = new CarParameter();
-        parameter.setVersion(ICarParameter.DEFAULT_VERSION);
+    public CarParameter createEntity() {
+        final CarParameter parameter = new CarParameter();
+        parameter.setVersion(CarParameter.DEFAULT_VERSION);
         return parameter;
     }
 
     @Override
-    public ICarParameter selectFullInfo(Integer id) {
+    public CarParameter selectFullInfo(Integer id) {
         return select(id);
     }
 
     @Override
-    public List<ICarParameter> selectAllFullInfo() {
+    public List<CarParameter> selectAllFullInfo() {
         return selectAll();
     }
 
@@ -42,10 +41,10 @@ public class CarParameterDaoImpl extends AbstractDaoImpl<ICarParameter, Integer>
 //    }
 //
 //    @Override
-//    public List<ICarParameter> find(final ParameterFilter filter) {
+//    public List<CarParameter> find(final ParameterFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<ICarParameter> cq = cb.createQuery(ICarParameter.class);
+//        final CriteriaQuery<CarParameter> cq = cb.createQuery(CarParameter.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -55,7 +54,7 @@ public class CarParameterDaoImpl extends AbstractDaoImpl<ICarParameter, Integer>
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<ICarParameter> q = em.createQuery(cq);
+//        final TypedQuery<CarParameter> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

@@ -1,76 +1,64 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.IAd;
-import com.training.carsharing.model.IMessage;
-import com.training.carsharing.model.IUserAccount;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Message extends BaseEntity implements IMessage {
+public class Message extends BaseEntity {
 
     @Column
     private String message;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Ad.class)
-    private IAd ad;
+    private Ad ad;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserAccount.class)
-    private IUserAccount sender;
+    private UserAccount sender;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserAccount.class)
-    private IUserAccount recipient;
+    private UserAccount recipient;
 
     @Column
     private boolean viewed;
 
-    @Override
     public String getMessage() {
         return message;
     }
 
-    @Override
     public void setMessage(String message) {
         this.message = message;
     }
 
-    @Override
-    public IAd getAd() { return ad; }
+    public Ad getAd() {
+        return ad;
+    }
 
-    @Override
-    public void setAd(IAd ad) {
+    public void setAd(Ad ad) {
         this.ad = ad;
     }
 
-    @Override
-    public IUserAccount getSender() {
+    public UserAccount getSender() {
         return sender;
     }
 
-    @Override
-    public void setSender(IUserAccount sender) {
+    public void setSender(UserAccount sender) {
         this.sender = sender;
     }
 
-    @Override
-    public IUserAccount getRecipient() {
+    public UserAccount getRecipient() {
         return recipient;
     }
 
-    @Override
-    public void setRecipient(IUserAccount recipient) {
+    public void setRecipient(UserAccount recipient) {
         this.recipient = recipient;
     }
 
-    @Override
     public boolean isViewed() {
         return viewed;
     }
 
-    @Override
     public void setViewed(boolean viewed) {
         this.viewed = viewed;
     }

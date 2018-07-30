@@ -1,8 +1,8 @@
 package com.training.carsharing;
 
 import com.training.carsharing.dao.ICarDao;
-import com.training.carsharing.model.ICar;
+import com.training.carsharing.model.impl.Car;
 
-public interface ICarService extends IAbstractService<ICar, ICarDao, Integer> {
+public interface ICarService extends IAbstractService<Car, ICarDao, Integer> {
 
 }

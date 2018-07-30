@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.ICarParameter;
+import com.training.carsharing.model.impl.CarParameter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +20,9 @@ public class CarParameterServiceTest extends AbstractTest {
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final ICarParameter entity = saveNewCarParameter();
+        final CarParameter entity = saveNewCarParameter();
 
-        final ICarParameter entityFromDB = getCarParameterService().selectFullInfo(entity.getId());
+        final CarParameter entityFromDB = getCarParameterService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -32,14 +32,14 @@ public class CarParameterServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final ICarParameter entity = saveNewCarParameter();
+        final CarParameter entity = saveNewCarParameter();
 
-        final ICarParameter entityFromDB = getCarParameterService().selectFullInfo(entity.getId());
+        final CarParameter entityFromDB = getCarParameterService().selectFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getCarParameterService().save(entityFromDB);
 
-        final ICarParameter updatedEntityFromDB = getCarParameterService().selectFullInfo(entityFromDB.getId());
+        final CarParameter updatedEntityFromDB = getCarParameterService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version", "updated","name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -49,7 +49,7 @@ public class CarParameterServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final ICarParameter entity = saveNewCarParameter();
+        final CarParameter entity = saveNewCarParameter();
         getCarParameterService().delete(entity.getId());
         assertNull(getCarParameterService().select(entity.getId()));
     }
@@ -70,9 +70,9 @@ public class CarParameterServiceTest extends AbstractTest {
             saveNewCarParameter();
         }
 
-        final List<ICarParameter> allEntities = getCarParameterService().selectAllFullInfo();
+        final List<CarParameter> allEntities = getCarParameterService().selectAllFullInfo();
 
-        for (final ICarParameter entityFromDB : allEntities) {
+        for (final CarParameter entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

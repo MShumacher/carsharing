@@ -1,24 +1,18 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.IBrand;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-public class Brand extends BaseEntity implements IBrand {
+public class Brand extends BaseEntity {
 
     @Column
-
     private String name;
 
-
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }

@@ -1,7 +1,7 @@
 package com.training.carsharing.dao;
 
-import com.training.carsharing.model.IFuel;
+import com.training.carsharing.model.impl.Fuel;
 
-public interface IFuelDao extends IAbstractDao<IFuel, Integer> {
+public interface IFuelDao extends IAbstractDao<Fuel, Integer> {
 
 }

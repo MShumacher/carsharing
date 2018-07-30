@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IBodyTypeDao;
-import com.training.carsharing.model.IBodyType;
 import com.training.carsharing.model.impl.BodyType;
 import org.springframework.stereotype.Repository;
 
@@ -9,24 +8,26 @@ import java.util.List;
 
 
 @Repository
-public class BodyTypeImpl extends AbstractDaoImpl<IBodyType, Integer> implements IBodyTypeDao {
+public class BodyTypeImpl extends AbstractDaoImpl<BodyType, Integer> implements IBodyTypeDao {
 
-    protected BodyTypeImpl() { super(BodyType.class); }
+    protected BodyTypeImpl() {
+        super(BodyType.class);
+    }
 
     @Override
-    public IBodyType createEntity() {
-        final IBodyType parameter = new BodyType();
-        parameter.setVersion(IBodyType.DEFAULT_VERSION);
+    public BodyType createEntity() {
+        final BodyType parameter = new BodyType();
+        parameter.setVersion(BodyType.DEFAULT_VERSION);
         return parameter;
     }
 
     @Override
-    public IBodyType selectFullInfo(Integer id) {
+    public BodyType selectFullInfo(Integer id) {
         return select(id);
     }
 
     @Override
-    public List<IBodyType> selectAllFullInfo() {
+    public List<BodyType> selectAllFullInfo() {
         return selectAll();
     }
 
@@ -42,10 +43,10 @@ public class BodyTypeImpl extends AbstractDaoImpl<IBodyType, Integer> implements
 //    }
 //
 //    @Override
-//    public List<IBodyType> find(final ParameterFilter filter) {
+//    public List<BodyType> find(final ParameterFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IBodyType> cq = cb.createQuery(IBodyType.class);
+//        final CriteriaQuery<BodyType> cq = cb.createQuery(BodyType.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -55,7 +56,7 @@ public class BodyTypeImpl extends AbstractDaoImpl<IBodyType, Integer> implements
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IBodyType> q = em.createQuery(cq);
+//        final TypedQuery<BodyType> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

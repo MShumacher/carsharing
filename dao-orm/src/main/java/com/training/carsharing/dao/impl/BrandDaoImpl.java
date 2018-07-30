@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IBrandDao;
-import com.training.carsharing.model.IBrand;
 import com.training.carsharing.model.impl.Brand;
 import org.springframework.stereotype.Repository;
 
@@ -9,24 +8,26 @@ import java.util.List;
 
 
 @Repository
-public class BrandDaoImpl extends AbstractDaoImpl<IBrand, Integer> implements IBrandDao {
+public class BrandDaoImpl extends AbstractDaoImpl<Brand, Integer> implements IBrandDao {
 
-    protected BrandDaoImpl() { super(Brand.class); }
+    protected BrandDaoImpl() {
+        super(Brand.class);
+    }
 
     @Override
-    public IBrand createEntity() {
-        final IBrand parameter = new Brand();
-        parameter.setVersion(IBrand.DEFAULT_VERSION);
+    public Brand createEntity() {
+        final Brand parameter = new Brand();
+        parameter.setVersion(Brand.DEFAULT_VERSION);
         return parameter;
     }
 
     @Override
-    public IBrand selectFullInfo(Integer id) {
+    public Brand selectFullInfo(Integer id) {
         return select(id);
     }
 
     @Override
-    public List<IBrand> selectAllFullInfo() {
+    public List<Brand> selectAllFullInfo() {
         return selectAll();
     }
 
@@ -42,10 +43,10 @@ public class BrandDaoImpl extends AbstractDaoImpl<IBrand, Integer> implements IB
 //    }
 //
 //    @Override
-//    public List<IBrand> find(final ParameterFilter filter) {
+//    public List<Brand> find(final ParameterFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IBrand> cq = cb.createQuery(IBrand.class);
+//        final CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -55,7 +56,7 @@ public class BrandDaoImpl extends AbstractDaoImpl<IBrand, Integer> implements IB
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IBrand> q = em.createQuery(cq);
+//        final TypedQuery<Brand> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

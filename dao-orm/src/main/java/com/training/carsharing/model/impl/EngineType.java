@@ -1,39 +1,32 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.IFuel;
-import com.training.carsharing.model.IEngineType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class EngineType extends BaseEntity implements IEngineType {
+public class EngineType extends BaseEntity {
 
     @Column
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Fuel.class)
-    private IFuel fuel;
+    private Fuel fuel;
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
-    public IFuel getFuel() {
+    public Fuel getFuel() {
         return fuel;
     }
 
-    @Override
-    public void setFuel(IFuel fuel) {
+    public void setFuel(Fuel fuel) {
         this.fuel = fuel;
     }
 

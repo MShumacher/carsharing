@@ -1,16 +1,14 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.ICar;
-import com.training.carsharing.model.IPassport;
-import com.training.carsharing.model.IUserAccount;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-public class Passport implements IPassport {
+public class Passport {
+
+    public static int DEFAULT_VERSION = 1;
 
     @GenericGenerator(name = "generator", strategy = "foreign", parameters = @org.hibernate.annotations.Parameter(name = "property", value = "userAccount"))
     @Id
@@ -47,121 +45,99 @@ public class Passport implements IPassport {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false, targetEntity = UserAccount.class)
     @PrimaryKeyJoinColumn
-    private IUserAccount userAccount;
+    private UserAccount userAccount;
 
-    @Override
     public Integer getId() {
         return id;
     }
 
-    @Override
     public void setId(final Integer id) {
         this.id = id;
     }
 
-    @Override
     public String getFullName() {
         return fullName;
     }
 
-    @Override
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    @Override
     public String getNumber() {
         return number;
     }
 
-    @Override
     public void setNumber(String number) {
         this.number = number;
     }
 
-    @Override
     public String getIssuePlace() {
         return issuePlace;
     }
 
-    @Override
     public void setIssuePlace(String issuePlace) {
         this.issuePlace = issuePlace;
     }
 
-    @Override
     public Date getIssueDate() {
         return issueDate;
     }
 
-    @Override
     public void setIssueDate(Date issueDate) {
         this.issueDate = issueDate;
     }
 
-    @Override
     public String getBirthPlace() {
         return birthPlace;
     }
 
-    @Override
     public void setBirthPlace(String birthPlace) {
         this.birthPlace = birthPlace;
     }
 
-    @Override
     public Date getBirthday() {
         return birthday;
     }
 
-    @Override
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
-    @Override
-    public IUserAccount getUserAccount() {
+    public UserAccount getUserAccount() {
         return userAccount;
     }
 
-    @Override
-    public void setUserAccount(final IUserAccount userAccount) {
+    public void setUserAccount(final UserAccount userAccount) {
         this.userAccount = userAccount;
     }
 
-    @Override
     public Integer getVersion() {
         return version;
     }
 
-    @Override
     public void setVersion(final Integer version) {
         this.version = version;
     }
 
-    @Override
     public Date getCreated() {
         return new Date(created);
     }
 
-    @Override
     public void setCreated(final Date created) {
         this.created = created.getTime();
     }
 
-    @Override
     public Date getUpdated() {
         return new Date(updated);
     }
 
-    @Override
     public void setUpdated(final Date updated) {
         this.updated = updated.getTime();
     }
 
     @Override
     public String toString() {
-        return "Passport{id=" + id+
+        return "Passport{id=" + id +
                 ", fullName='" + fullName + '\'' +
                 ", number='" + number + '\'' +
                 ", issuePlace='" + issuePlace + '\'' +

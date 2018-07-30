@@ -1,6 +1,6 @@
 package com.training.carsharing.dao;
 
-import com.training.carsharing.model.IAd;
+import com.training.carsharing.model.impl.Ad;
 
-public interface IAdDao extends IAbstractDao<IAd, Integer> {
+public interface IAdDao extends IAbstractDao<Ad, Integer> {
 }

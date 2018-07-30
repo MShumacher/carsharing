@@ -1,12 +1,12 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.IBaseEntity;
-
 import javax.persistence.*;
 import java.util.Date;
 
 @MappedSuperclass
-public abstract class BaseEntity implements IBaseEntity {
+public abstract class BaseEntity {
+
+    public static int DEFAULT_VERSION = 1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,42 +22,34 @@ public abstract class BaseEntity implements IBaseEntity {
     @Column
     private Long updated;
 
-    @Override
     public Integer getId() {
         return id;
     }
 
-    @Override
     public void setId(final Integer id) {
         this.id = id;
     }
 
-    @Override
     public Integer getVersion() {
         return version;
     }
 
-    @Override
     public void setVersion(Integer version) {
         this.version = version;
     }
 
-    @Override
     public Date getCreated() {
         return new Date(created);
     }
 
-    @Override
     public void setCreated(final Date created) {
         this.created = created.getTime();
     }
 
-    @Override
     public Date getUpdated() {
         return new Date(updated);
     }
 
-    @Override
     public void setUpdated(final Date updated) {
         this.updated = updated.getTime();
     }

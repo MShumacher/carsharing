@@ -1,6 +1,6 @@
 package com.training.carsharing.dao;
 
-import com.training.carsharing.model.IMessage;
+import com.training.carsharing.model.impl.Message;
 
-public interface IMessageDao extends IAbstractDao<IMessage, Integer> {
+public interface IMessageDao extends IAbstractDao<Message, Integer> {
 }

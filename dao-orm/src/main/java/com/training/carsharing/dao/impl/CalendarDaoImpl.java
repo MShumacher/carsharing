@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.ICalendarDao;
-import com.training.carsharing.model.ICalendar;
 import com.training.carsharing.model.impl.Calendar;
 import com.training.carsharing.model.impl.Calendar_;
 import org.springframework.stereotype.Repository;
@@ -16,45 +15,47 @@ import java.util.List;
 
 
 @Repository
-public class CalendarDaoImpl extends AbstractDaoImpl<ICalendar, Integer> implements ICalendarDao {
+public class CalendarDaoImpl extends AbstractDaoImpl<Calendar, Integer> implements ICalendarDao {
 
- protected CalendarDaoImpl() { super(Calendar.class); }
+    protected CalendarDaoImpl() {
+        super(Calendar.class);
+    }
 
     @Override
-    public ICalendar createEntity() {
-        final ICalendar calendar = new Calendar();
-        calendar.setVersion(ICalendar.DEFAULT_VERSION);
+    public Calendar createEntity() {
+        final Calendar calendar = new Calendar();
+        calendar.setVersion(Calendar.DEFAULT_VERSION);
         return calendar;
     }
 
     @Override
-    public ICalendar selectFullInfo(final Integer id) {
+    public Calendar selectFullInfo(final Integer id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<ICalendar> cq = cb.createQuery(ICalendar.class);
+        final CriteriaQuery<Calendar> cq = cb.createQuery(Calendar.class);
         final Root<Calendar> from = cq.from(Calendar.class);
         cq.select(from);
 
         from.fetch(Calendar_.car, JoinType.LEFT);
         from.fetch(Calendar_.renter, JoinType.LEFT);
-        cq.where(cb.equal(from.get(Calendar_.id),id));
+        cq.where(cb.equal(from.get(Calendar_.id), id));
 
-        final List <ICalendar> resultList = em.createQuery(cq).getResultList();
+        final List<Calendar> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
-    public List<ICalendar> selectAllFullInfo() {
+    public List<Calendar> selectAllFullInfo() {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
-        final CriteriaQuery<ICalendar> cq = cb.createQuery(ICalendar.class);
+        final CriteriaQuery<Calendar> cq = cb.createQuery(Calendar.class);
         final Root<Calendar> from = cq.from(Calendar.class);
         cq.select(from);
 
         from.fetch(Calendar_.car, JoinType.LEFT);
         from.fetch(Calendar_.renter, JoinType.LEFT);
 
-        final TypedQuery<ICalendar> q = em.createQuery(cq);
+        final TypedQuery<Calendar> q = em.createQuery(cq);
         return q.getResultList();
     }
 
@@ -71,10 +72,10 @@ public class CalendarDaoImpl extends AbstractDaoImpl<ICalendar, Integer> impleme
 //    }
 //
 //    @Override
-//    public List<ICalendar> find(final CalendarFilter filter) {
+//    public List<Calendar> find(final CalendarFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<ICalendar> cq = cb.createQuery(ICalendar.class);
+//        final CriteriaQuery<Calendar> cq = cb.createQuery(Calendar.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -84,7 +85,7 @@ public class CalendarDaoImpl extends AbstractDaoImpl<ICalendar, Integer> impleme
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<ICalendar> q = em.createQuery(cq);
+//        final TypedQuery<Calendar> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

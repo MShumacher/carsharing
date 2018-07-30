@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IDrive;
+import com.training.carsharing.model.impl.Drive;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +20,9 @@ public class DriveServiceTest extends AbstractTest {
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IDrive entity = saveNewDrive();
+        final Drive entity = saveNewDrive();
 
-        final IDrive entityFromDB = getDriveService().selectFullInfo(entity.getId());
+        final Drive entityFromDB = getDriveService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -32,14 +32,14 @@ public class DriveServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IDrive entity = saveNewDrive();
+        final Drive entity = saveNewDrive();
 
-        final IDrive entityFromDB = getDriveService().selectFullInfo(entity.getId());
+        final Drive entityFromDB = getDriveService().selectFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getDriveService().save(entityFromDB);
 
-        final IDrive updatedEntityFromDB = getDriveService().selectFullInfo(entityFromDB.getId());
+        final Drive updatedEntityFromDB = getDriveService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -49,7 +49,7 @@ public class DriveServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IDrive entity = saveNewDrive();
+        final Drive entity = saveNewDrive();
         getDriveService().delete(entity.getId());
         assertNull(getDriveService().select(entity.getId()));
     }
@@ -70,9 +70,9 @@ public class DriveServiceTest extends AbstractTest {
             saveNewDrive();
         }
 
-        final List<IDrive> allEntities = getDriveService().selectAllFullInfo();
+        final List<Drive> allEntities = getDriveService().selectAllFullInfo();
 
-        for (final IDrive entityFromDB : allEntities) {
+        for (final Drive entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

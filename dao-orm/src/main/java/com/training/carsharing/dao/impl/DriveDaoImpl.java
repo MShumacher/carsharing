@@ -1,7 +1,6 @@
 package com.training.carsharing.dao.impl;
 
 import com.training.carsharing.dao.IDriveDao;
-import com.training.carsharing.model.IDrive;
 import com.training.carsharing.model.impl.Drive;
 import org.springframework.stereotype.Repository;
 
@@ -9,24 +8,26 @@ import java.util.List;
 
 
 @Repository
-public class DriveDaoImpl extends AbstractDaoImpl<IDrive, Integer> implements IDriveDao {
+public class DriveDaoImpl extends AbstractDaoImpl<Drive, Integer> implements IDriveDao {
 
-    protected DriveDaoImpl() { super(Drive.class); }
+    protected DriveDaoImpl() {
+        super(Drive.class);
+    }
 
     @Override
-    public IDrive createEntity() {
-        final IDrive parameter = new Drive();
-        parameter.setVersion(IDrive.DEFAULT_VERSION);
+    public Drive createEntity() {
+        final Drive parameter = new Drive();
+        parameter.setVersion(Drive.DEFAULT_VERSION);
         return parameter;
     }
 
     @Override
-    public IDrive selectFullInfo(Integer id) {
+    public Drive selectFullInfo(Integer id) {
         return select(id);
     }
 
     @Override
-    public List<IDrive> selectAllFullInfo() {
+    public List<Drive> selectAllFullInfo() {
         return selectAll();
     }
 
@@ -42,10 +43,10 @@ public class DriveDaoImpl extends AbstractDaoImpl<IDrive, Integer> implements ID
 //    }
 //
 //    @Override
-//    public List<IDrive> find(final ParameterFilter filter) {
+//    public List<Drive> find(final ParameterFilter filter) {
 //        final EntityManager em = getEntityManager();
 //        final CriteriaBuilder cb = em.getCriteriaBuilder();
-//        final CriteriaQuery<IDrive> cq = cb.createQuery(IDrive.class);
+//        final CriteriaQuery<Drive> cq = cb.createQuery(Drive.class);
 //        final Root<model> from = cq.from(model.class);
 //        cq.select(from);
 //
@@ -55,7 +56,7 @@ public class DriveDaoImpl extends AbstractDaoImpl<IDrive, Integer> implements ID
 //            cq.orderBy(new OrderImpl(expression, filter.getSortOrder()));
 //        }
 //
-//        final TypedQuery<IDrive> q = em.createQuery(cq);
+//        final TypedQuery<Drive> q = em.createQuery(cq);
 //        setPaging(filter, q);
 //        return q.getResultList();
 //    }

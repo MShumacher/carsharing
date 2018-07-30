@@ -1,6 +1,6 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.IFuel;
+import com.training.carsharing.model.impl.Fuel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +20,9 @@ public class FuelServiceTest extends AbstractTest {
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IFuel entity = saveNewFuel();
+        final Fuel entity = saveNewFuel();
 
-        final IFuel entityFromDB = getFuelService().selectFullInfo(entity.getId());
+        final Fuel entityFromDB = getFuelService().selectFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -32,14 +32,14 @@ public class FuelServiceTest extends AbstractTest {
 
     @Test
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final IFuel entity = saveNewFuel();
+        final Fuel entity = saveNewFuel();
 
-        final IFuel entityFromDB = getFuelService().selectFullInfo(entity.getId());
+        final Fuel entityFromDB = getFuelService().selectFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getFuelService().save(entityFromDB);
 
-        final IFuel updatedEntityFromDB = getFuelService().selectFullInfo(entityFromDB.getId());
+        final Fuel updatedEntityFromDB = getFuelService().selectFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -49,7 +49,7 @@ public class FuelServiceTest extends AbstractTest {
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        final IFuel entity = saveNewFuel();
+        final Fuel entity = saveNewFuel();
         getFuelService().delete(entity.getId());
         assertNull(getFuelService().select(entity.getId()));
     }
@@ -70,9 +70,9 @@ public class FuelServiceTest extends AbstractTest {
             saveNewFuel();
         }
 
-        final List<IFuel> allEntities = getFuelService().selectAllFullInfo();
+        final List<Fuel> allEntities = getFuelService().selectAllFullInfo();
 
-        for (final IFuel entityFromDB : allEntities) {
+        for (final Fuel entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());

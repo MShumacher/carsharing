@@ -1,35 +1,31 @@
 package com.training.carsharing.model.impl;
 
-import com.training.carsharing.model.ICar;
-import com.training.carsharing.model.ICarsPhoto;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class CarsPhoto extends BaseEntity implements ICarsPhoto {
+public class CarsPhoto extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Car.class)
-    private ICar car;
+    private Car car;
 
     @Column
     private String link;
 
-    @Override
-    public ICar getCar() {
+    public Car getCar() {
         return car;
     }
 
-    @Override
-    public void setCar(ICar car) {
+    public void setCar(Car car) {
         this.car = car;
     }
 
-    @Override
     public String getLink() {
         return link;
     }
 
-    @Override
     public void setLink(String link) {
         this.link = link;
     }

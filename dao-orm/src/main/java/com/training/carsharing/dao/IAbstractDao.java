@@ -2,7 +2,7 @@ package com.training.carsharing.dao;
 
 import java.util.List;
 
-public interface  IAbstractDao<ENTITY, ID> {
+public interface IAbstractDao<ENTITY, ID> {
 
     ENTITY createEntity();
 

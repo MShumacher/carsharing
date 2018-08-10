@@ -21,132 +21,150 @@ import static org.junit.Assert.*;
 public abstract class AbstractTest {
 
     @Autowired
-    private IModelService modelService;
+    private ModelService modelService;
     @Autowired
-    private IUserAccountService userAccountService;
+    private UserAccountService userAccountService;
     @Autowired
-    private ICarsPhotoService carsPhotoService;
+    private CarsPhotoService carsPhotoService;
     @Autowired
-    private ICarService carService;
+    private CarService carService;
     @Autowired
-    private ICarParameterService carParameterService;
+    private CarParameterService carParameterService;
     @Autowired
-    private ICalendarService calendarService;
+    private CalendarService calendarService;
     @Autowired
-    private IAdService adService;
+    private AdService adService;
     @Autowired
-    private IPassportService passportService;
+    private PassportService passportService;
     @Autowired
-    private IDrivingLicenseService drivingLicenseService;
+    private DrivingLicenseService drivingLicenseService;
     @Autowired
-    private IBrandService brandService;
+    private BrandService brandService;
     @Autowired
-    private IGearboxService gearboxService;
+    private GearboxService gearboxService;
     @Autowired
-    private IBodyTypeService bodyTypeService;
+    private BodyTypeService bodyTypeService;
     @Autowired
-    private IDriveService driveService;
+    private DriveService driveService;
     @Autowired
-    private IEngineTypeService engineTypeService;
+    private EngineTypeService engineTypeService;
     @Autowired
-    private IFuelService fuelService;
+    private FuelService fuelService;
     @Autowired
-    private IMessageService messageService;
+    private MessageService messageService;
 
     private static final Random RANDOM = new Random();
 
     private static SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
-    public IUserAccountService getUserAccountService() {
+    public UserAccountService getUserAccountService() {
         return userAccountService;
     }
-    public IModelService getModelService() {
+
+    public ModelService getModelService() {
         return modelService;
     }
-    public ICarsPhotoService getCarsPhotoService() {
+
+    public CarsPhotoService getCarsPhotoService() {
         return carsPhotoService;
     }
-    public ICarService getCarService() { return carService; }
-    public ICarParameterService getCarParameterService() { return carParameterService; }
-    public ICalendarService getCalendarService() { return calendarService; }
-    public IAdService getAdService() { return adService; }
-    public IPassportService getPassportService() { return passportService; }
-    public IDrivingLicenseService getDrivingLicenseService() { return drivingLicenseService; }
-    public IBrandService getBrandService() {
-        return brandService;
-    }
-    public IGearboxService getGearboxService() {
-        return gearboxService;
-    }
-    public IBodyTypeService getBodyTypeService() {
-        return bodyTypeService;
-    }
-    public IDriveService getDriveService() {
-        return driveService;
-    }
-    public IEngineTypeService getEngineTypeService() {
-        return engineTypeService;
-    }
-    public IFuelService getFuelService() {
-        return fuelService;
-    }
-    public IMessageService getMessageService() {
-        return messageService;
+
+    public CarService getCarService() {
+        return carService;
     }
 
+    public CarParameterService getCarParameterService() {
+        return carParameterService;
+    }
+
+    public CalendarService getCalendarService() {
+        return calendarService;
+    }
+
+    public AdService getAdService() {
+        return adService;
+    }
+
+    public PassportService getPassportService() {
+        return passportService;
+    }
+
+    public DrivingLicenseService getDrivingLicenseService() {
+        return drivingLicenseService;
+    }
+
+    public BrandService getBrandService() {
+        return brandService;
+    }
+
+    public GearboxService getGearboxService() {
+        return gearboxService;
+    }
+
+    public BodyTypeService getBodyTypeService() {
+        return bodyTypeService;
+    }
+
+    public DriveService getDriveService() {
+        return driveService;
+    }
+
+    public EngineTypeService getEngineTypeService() {
+        return engineTypeService;
+    }
+
+    public FuelService getFuelService() {
+        return fuelService;
+    }
+
+    public MessageService getMessageService() {
+        return messageService;
+    }
 
     protected Model saveNewModel() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Model entity = getModelService().createEntity();
         entity.setName("Name-" + getRandomPrefix());
         entity.setBrand(saveNewBrand());
-        getModelService().save(entity);
-        return entity;
+        return getModelService().save(entity);
     }
 
     protected Brand saveNewBrand() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Brand entity = getBrandService().createEntity();
         entity.setName("Name-" + getRandomPrefix());
-        getBrandService().save(entity);
-        return entity;
+        return getBrandService().save(entity);
     }
 
     protected Gearbox saveNewGearbox() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Gearbox entity = getGearboxService().createEntity();
         entity.setName("Name-" + getRandomPrefix());
-        getGearboxService().save(entity);
-        return entity;
+        return getGearboxService().save(entity);
     }
 
     protected BodyType saveNewBodyType() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final BodyType entity = getBodyTypeService().createEntity();
         entity.setName("Name-" + getRandomPrefix());
-        getBodyTypeService().save(entity);
-        return entity;
+        return getBodyTypeService().save(entity);
     }
 
     protected Drive saveNewDrive() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Drive entity = getDriveService().createEntity();
         entity.setName("Name-" + getRandomPrefix());
-        getDriveService().save(entity);
-        return entity;
+        return getDriveService().save(entity);
     }
 
     protected EngineType saveNewEngineType() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-       final EngineType entity = getEngineTypeService().createEntity();
-       entity.setName("Name-" + getRandomPrefix());
-       entity.setFuel(saveNewFuel());
-       getEngineTypeService().save(entity);
-       return entity;
+        final EngineType entity = getEngineTypeService().createEntity();
+        entity.setName("Name-" + getRandomPrefix());
+        entity.setFuel(saveNewFuel());
+        return getEngineTypeService().save(entity);
     }
 
     protected Fuel saveNewFuel() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Fuel entity = getFuelService().createEntity();
         entity.setName("Name-" + getRandomPrefix());
-        getFuelService().save(entity);
-        return entity;
+        return getFuelService().save(entity);
     }
-
-    protected UserAccount saveNewUserAccount() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    protected UserAccount getNewUserAccount() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final UserAccount entity = getUserAccountService().createEntity();
         entity.setEmail("Email-" + getRandomPrefix());
         entity.setPassword("Password-" + getRandomPrefix());
@@ -157,12 +175,14 @@ public abstract class AbstractTest {
         final Role[] roles = Role.values();
         int randomIndex = Math.max(0, RANDOM.nextInt(roles.length) - 1);
         entity.setRole(roles[randomIndex]);
-
-        getUserAccountService().save(entity);
         return entity;
     }
 
-    protected Passport saveNewPassport() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    protected UserAccount saveNewUserAccount() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        return getUserAccountService().save(getNewUserAccount());
+    }
+
+    protected Passport getNewPassport() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Passport entity = getPassportService().createEntity();
         entity.setUserAccount(saveNewUserAccount());
         entity.setFullName("FullName-" + getRandomPrefix());
@@ -171,29 +191,38 @@ public abstract class AbstractTest {
         entity.setIssueDate(getRandomDate());
         entity.setBirthPlace("BirthPlace-" + getRandomPrefix());
         entity.setBirthday(getRandomDate());
-        getPassportService().save(entity);
         return entity;
     }
 
-    protected DrivingLicense saveNewDrivingLicense() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    protected Passport saveNewPassport() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        return getPassportService().save(getNewPassport());
+    }
+
+    protected DrivingLicense getNewDrivingLicense() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final DrivingLicense entity = getDrivingLicenseService().createEntity();
         entity.setUserAccount(saveNewUserAccount());
         entity.setNumber("Number-" + getRandomPrefix());
         entity.setExpirationDate(getRandomDate());
         entity.setCategories("Categories-" + getRandomPrefix());
-        getDrivingLicenseService().save(entity);
         return entity;
     }
 
-        protected CarsPhoto saveNewCarsPhoto() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    protected DrivingLicense saveNewDrivingLicense() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        return getDrivingLicenseService().save(getNewDrivingLicense());
+    }
+
+    protected CarsPhoto saveNewCarsPhoto() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final CarsPhoto entity = getCarsPhotoService().createEntity();
         entity.setCar(saveNewCar());
         entity.setLink("Link-" + getRandomPrefix());
-        getCarsPhotoService().save(entity);
-        return entity;
+        return getCarsPhotoService().save(entity);
     }
 
     protected Car saveNewCar() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        return getCarService().save(getNewCar());
+    }
+
+    protected Car getNewCar() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Car entity = getCarService().createEntity();
 
         final int randomObjectsCount = getRandomObjectsCount();
@@ -203,7 +232,6 @@ public abstract class AbstractTest {
         }
         entity.getCarParameter().addAll(parameters);
 
-//        entity.setUserAccount(saveNewUserAccount());
         entity.setModel(saveNewModel());
         entity.setYear(getRandomPrefix());
         entity.setPlate("Plate-" + getRandomPrefix());
@@ -216,56 +244,51 @@ public abstract class AbstractTest {
         entity.setCharge(getRandomDouble());
         entity.setConditions("Conditions-" + getRandomPrefix());
         entity.setInsurance("Insurance-" + getRandomPrefix());
-        getCarService().save(entity);
         return entity;
     }
 
     protected Message saveNewMessage() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Message entity = getMessageService().createEntity();
-        entity.setMessage("Message"+getRandomPrefix());
+        entity.setMessage("Message" + getRandomPrefix());
         entity.setAd(saveNewAd());
         entity.setSender(saveNewUserAccount());
         entity.setRecipient(saveNewUserAccount());
         entity.setViewed(getRandomBoolean());
-        getMessageService().save(entity);
-        return entity;
+        return getMessageService().save(entity);
     }
 
     protected CarParameter saveNewCarParameter() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final CarParameter entity = getCarParameterService().createEntity();
         entity.setName("Name-" + getRandomPrefix());
-        getCarParameterService().save(entity);
-        return entity;
+        return getCarParameterService().save(entity);
     }
 
     protected Calendar saveNewCalendar() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Calendar entity = getCalendarService().createEntity();
         entity.setRenter(saveNewUserAccount());
-        Ad ad=saveNewAd();
+        Ad ad = saveNewAd();
         entity.setCar(ad.getCar());
         entity.setStart(getRandomDate());
         entity.setEnd(getRandomDate());
         entity.setTotalPrice(getRandomDouble());
-        getCalendarService().save(entity);
-        return entity;
+        return getCalendarService().save(entity);
     }
 
     protected Ad saveNewAd() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Ad entity = getAdService().createEntity();
-        entity.setUserAccount(saveNewUserAccount());
         entity.setCar(saveNewCar());
-        entity.setAddress("Address-"+getRandomPrefix());
+        entity.setUserAccount(saveNewUserAccount());
+        entity.setAddress("Address-" + getRandomPrefix());
         entity.setPrice(getRandomDouble());
-        entity.setBody("Body-"+getRandomPrefix());
+        entity.setBody("Body-" + getRandomPrefix());
         entity.setActive(getRandomBoolean());
-        getAdService().save(entity);
-        return entity;
+        return getAdService().save(entity);
     }
 
     protected static void assertEqualsDates(Date date1, Date date2) {
         String d1 = formatter.format(date1);
         String d2 = formatter.format(date2);
-        assertTrue( d1.equals(d2));
+        assertTrue(d1.equals(d2));
     }
 
     protected void assertNotNullFieldsExcept(Object entity, String... unverifiableFields) throws IllegalAccessException {
@@ -289,12 +312,12 @@ public abstract class AbstractTest {
             field.setAccessible(true);
             final String fieldName = field.getName();
             if (!unverifiableFieldsCollection.stream().anyMatch(fieldName::equalsIgnoreCase)) {
-                System.out.println("field: "+ fieldName + " " + field.get(entity)+"=="+field.get(entityFromDB));
+                System.out.println("field: " + fieldName + " " + field.get(entity) + "==" + field.get(entityFromDB));
 //                if ("Date".equalsIgnoreCase(field.getType().getSimpleName())) {
 //                    assertEquals((Date) field.get(entity), (Date) field.get(entityFromDB));
 //                } else {
-                    assertEquals(field.get(entity), field.get(entityFromDB));
-                }
+                assertEquals(field.get(entity), field.get(entityFromDB));
+            }
 //            }
         }
     }

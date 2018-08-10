@@ -15,7 +15,6 @@ public class CarServiceTest extends AbstractTest {
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getAdService().deleteAll();
         getCarService().deleteAll();
         getUserAccountService().deleteAll();
         getModelService().deleteAll();
@@ -26,7 +25,7 @@ public class CarServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Car entity = saveNewCar();
 
-        final Car entityFromDB = getCarService().selectFullInfo(entity.getId());
+        final Car entityFromDB = getCarService().findOneFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity, entityFromDB,"ad", "model", "carParameter", "gearbox", "bodyType", "drive", "engineType");
         assertEquals(entity.getModel().getId(), entityFromDB.getModel().getId());
@@ -43,12 +42,12 @@ public class CarServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Car entity = saveNewCar();
 
-        final Car entityFromDB = getCarService().selectFullInfo(entity.getId());
+        final Car entityFromDB = getCarService().findOneFullInfo(entity.getId());
         final String newInsurance = "new-insurance-" + getRandomPrefix();
         entityFromDB.setInsurance(newInsurance);
         getCarService().save(entityFromDB);
 
-        final Car updatedEntityFromDB = getCarService().selectFullInfo(entityFromDB.getId());
+        final Car updatedEntityFromDB = getCarService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version","updated","insurance", "ad", "model", "carParameter", "gearbox", "bodyType", "drive", "engineType");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getModel().getId(), entityFromDB.getModel().getId());
@@ -65,27 +64,27 @@ public class CarServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Car entity = saveNewCar();
-        getCarService().delete(entity.getId());
-        assertNull(getCarService().select(entity.getId()));
+        getCarService().delete(entity);
+        assertNull(getCarService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewCar();
         getCarService().deleteAll();
-        assertEquals(0, getCarService().selectAll().size());
+        assertEquals(0, getCarService().findAll().size());
     }
 
     @Test
     public void testSelectAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getCarService().selectAllFullInfo().size();
+        final int initialCount = getCarService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewCar();
         }
 
-        final List<Car> allEntities = getCarService().selectAllFullInfo();
+        final List<Car> allEntities = getCarService().findAllFullInfo();
 
         for (final Car entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB, "ad", "carParameter");

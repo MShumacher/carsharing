@@ -22,7 +22,7 @@ public class FuelServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Fuel entity = saveNewFuel();
 
-        final Fuel entityFromDB = getFuelService().selectFullInfo(entity.getId());
+        final Fuel entityFromDB = getFuelService().findOneFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -34,12 +34,12 @@ public class FuelServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Fuel entity = saveNewFuel();
 
-        final Fuel entityFromDB = getFuelService().selectFullInfo(entity.getId());
+        final Fuel entityFromDB = getFuelService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getFuelService().save(entityFromDB);
 
-        final Fuel updatedEntityFromDB = getFuelService().selectFullInfo(entityFromDB.getId());
+        final Fuel updatedEntityFromDB = getFuelService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -50,27 +50,27 @@ public class FuelServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Fuel entity = saveNewFuel();
-        getFuelService().delete(entity.getId());
-        assertNull(getFuelService().select(entity.getId()));
+        getFuelService().delete(entity);
+        assertNull(getFuelService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewFuel();
         getFuelService().deleteAll();
-        assertEquals(0, getFuelService().selectAll().size());
+        assertEquals(0, getFuelService().findAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getFuelService().selectAllFullInfo().size();
+        final int initialCount = getFuelService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewFuel();
         }
 
-        final List<Fuel> allEntities = getFuelService().selectAllFullInfo();
+        final List<Fuel> allEntities = getFuelService().findAllFullInfo();
 
         for (final Fuel entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);

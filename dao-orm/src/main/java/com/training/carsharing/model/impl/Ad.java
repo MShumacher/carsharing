@@ -7,17 +7,9 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Ad {
+public class Ad extends BaseEntity {
 
-    public static int DEFAULT_VERSION = 1;
-
-    @GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "car"))
-    @Id
-    @GeneratedValue(generator = "generator")
-    private Integer id;
-
-    @OneToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Car.class)
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Car.class)
     private Car car;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserAccount.class)
@@ -34,24 +26,6 @@ public class Ad {
 
     @Column
     private boolean active;
-
-    @Column
-    @Version
-    private Integer version;
-
-    @Column(updatable = false)
-    private Long created;
-
-    @Column
-    private Long updated;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
 
     public UserAccount getUserAccount() {
         return userAccount;
@@ -101,34 +75,9 @@ public class Ad {
         this.active = active;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(final Integer version) {
-        this.version = version;
-    }
-
-    public Date getCreated() {
-        return new Date(created);
-    }
-
-    public void setCreated(final Date created) {
-        this.created = created.getTime();
-    }
-
-    public Date getUpdated() {
-        return new Date(updated);
-    }
-
-    public void setUpdated(final Date updated) {
-        this.updated = updated.getTime();
-    }
-
     @Override
     public String toString() {
         return "Ad{" +
-                "id=" + id +
                 super.toString() +
                 ", carId=" + car.getId() +
                 ", userAccountId=" + userAccount.getId() +

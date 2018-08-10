@@ -22,7 +22,7 @@ public class CarParameterServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final CarParameter entity = saveNewCarParameter();
 
-        final CarParameter entityFromDB = getCarParameterService().selectFullInfo(entity.getId());
+        final CarParameter entityFromDB = getCarParameterService().findOneFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -34,12 +34,12 @@ public class CarParameterServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final CarParameter entity = saveNewCarParameter();
 
-        final CarParameter entityFromDB = getCarParameterService().selectFullInfo(entity.getId());
+        final CarParameter entityFromDB = getCarParameterService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getCarParameterService().save(entityFromDB);
 
-        final CarParameter updatedEntityFromDB = getCarParameterService().selectFullInfo(entityFromDB.getId());
+        final CarParameter updatedEntityFromDB = getCarParameterService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version", "updated","name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -50,27 +50,27 @@ public class CarParameterServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final CarParameter entity = saveNewCarParameter();
-        getCarParameterService().delete(entity.getId());
-        assertNull(getCarParameterService().select(entity.getId()));
+        getCarParameterService().delete(entity);
+        assertNull(getCarParameterService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewCarParameter();
         getCarParameterService().deleteAll();
-        assertEquals(0, getCarParameterService().selectAll().size());
+        assertEquals(0, getCarParameterService().findAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getCarParameterService().selectAllFullInfo().size();
+        final int initialCount = getCarParameterService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewCarParameter();
         }
 
-        final List<CarParameter> allEntities = getCarParameterService().selectAllFullInfo();
+        final List<CarParameter> allEntities = getCarParameterService().findAllFullInfo();
 
         for (final CarParameter entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);

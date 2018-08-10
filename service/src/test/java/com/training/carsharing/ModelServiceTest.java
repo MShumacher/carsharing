@@ -23,7 +23,7 @@ public class ModelServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Model entity = saveNewModel();
 
-        final Model entityFromDB = getModelService().selectFullInfo(entity.getId());
+        final Model entityFromDB = getModelService().findOneFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB, "brand");
         assertEquals(entity.getBrand().getId(),entityFromDB.getBrand().getId());
@@ -36,12 +36,12 @@ public class ModelServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Model entity = saveNewModel();
 
-        final Model entityFromDB = getModelService().selectFullInfo(entity.getId());
+        final Model entityFromDB = getModelService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getModelService().save(entityFromDB);
 
-        final Model updatedEntityFromDB = getModelService().selectFullInfo(entityFromDB.getId());
+        final Model updatedEntityFromDB = getModelService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "brand", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getBrand().getId(),updatedEntityFromDB.getBrand().getId());
@@ -53,27 +53,27 @@ public class ModelServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Model entity = saveNewModel();
-        getModelService().delete(entity.getId());
-        assertNull(getModelService().select(entity.getId()));
+        getModelService().delete(entity);
+        assertNull(getModelService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewModel();
         getModelService().deleteAll();
-        assertEquals(0, getModelService().selectAll().size());
+        assertEquals(0, getModelService().findAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getModelService().selectAllFullInfo().size();
+        final int initialCount = getModelService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewModel();
         }
 
-        final List<Model> allEntities = getModelService().selectAllFullInfo();
+        final List<Model> allEntities = getModelService().findAllFullInfo();
 
         for (final Model entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);

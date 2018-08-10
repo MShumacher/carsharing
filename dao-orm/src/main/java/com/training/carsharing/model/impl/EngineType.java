@@ -34,7 +34,7 @@ public class EngineType extends BaseEntity {
     public String toString() {
         return "engineType{" + super.toString() +
                 ", name='" + name + '\'' +
-                ", fuelId='" + fuel.getId() + '\'' +
+                ", fuelId=" + fuel.getId() +
                 "}";
     }
 }

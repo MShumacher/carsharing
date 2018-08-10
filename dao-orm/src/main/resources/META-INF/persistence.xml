@@ -5,18 +5,35 @@
              version="1.0">
 
     <persistence-unit name="my-unit">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <properties>
-            <property name="hibernate.dialect"
-                      value="org.hibernate.dialect.MySQLDialect" />
-            <property name="hibernate.physical_naming_strategy"
-                      value="com.training.carsharing.model.util.CustomPhysicalNamingStrategy" />
-            <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.format_sql" value="false" />
-            <!--<property name="hibernate.search.default.directory_provider"-->
-                      <!--value="filesystem" />-->
-            <!--<property name="hibernate.search.default.indexBase"-->
-                      <!--value="/src/main/resources/lucene/indexes" />-->
-        </properties>
+        <class>com.training.carsharing.model.impl.Ad</class>
+        <class>com.training.carsharing.model.impl.Model</class>
+        <class>com.training.carsharing.model.impl.UserAccount</class>
+        <class>com.training.carsharing.model.impl.Brand</class>
+        <class>com.training.carsharing.model.impl.Calendar</class>
+        <class>com.training.carsharing.model.impl.BodyType</class>
+        <class>com.training.carsharing.model.impl.Car</class>
+        <class>com.training.carsharing.model.impl.CarParameter</class>
+        <class>com.training.carsharing.model.impl.CarsPhoto</class>
+        <class>com.training.carsharing.model.impl.Drive</class>
+        <class>com.training.carsharing.model.impl.DrivingLicense</class>
+        <class>com.training.carsharing.model.impl.EngineType</class>
+        <class>com.training.carsharing.model.impl.Fuel</class>
+        <class>com.training.carsharing.model.impl.Gearbox</class>
+        <class>com.training.carsharing.model.impl.Message</class>
+        <class>com.training.carsharing.model.impl.Passport</class>
+        <!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
+        <!--<properties>-->
+            <!--<property name="hibernate.dialect"-->
+                      <!--value="org.hibernate.dialect.MySQLDialect" />-->
+            <!--<property name="hibernate.physical_naming_strategy"-->
+                      <!--value="com.training.carsharing.model.util.CustomPhysicalNamingStrategy" />-->
+            <!--<property name="hibernate.show_sql" value="true" />-->
+            <!--<property name="hibernate.format_sql" value="false" />-->
+            <!--&lt;!&ndash;<property name="hibernate.search.default.directory_provider"&ndash;&gt;-->
+                      <!--&lt;!&ndash;value="filesystem" />&ndash;&gt;-->
+            <!--&lt;!&ndash;<property name="hibernate.search.default.indexBase"&ndash;&gt;-->
+                      <!--&lt;!&ndash;value="/src/main/resources/lucene/indexes" />&ndash;&gt;-->
+        <!--</properties>-->
     </persistence-unit>
+
 </persistence>

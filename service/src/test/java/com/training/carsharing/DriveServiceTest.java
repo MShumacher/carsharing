@@ -22,7 +22,7 @@ public class DriveServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Drive entity = saveNewDrive();
 
-        final Drive entityFromDB = getDriveService().selectFullInfo(entity.getId());
+        final Drive entityFromDB = getDriveService().findOneFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -34,12 +34,12 @@ public class DriveServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Drive entity = saveNewDrive();
 
-        final Drive entityFromDB = getDriveService().selectFullInfo(entity.getId());
+        final Drive entityFromDB = getDriveService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getDriveService().save(entityFromDB);
 
-        final Drive updatedEntityFromDB = getDriveService().selectFullInfo(entityFromDB.getId());
+        final Drive updatedEntityFromDB = getDriveService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -50,27 +50,27 @@ public class DriveServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Drive entity = saveNewDrive();
-        getDriveService().delete(entity.getId());
-        assertNull(getDriveService().select(entity.getId()));
+        getDriveService().delete(entity);
+        assertNull(getDriveService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewDrive();
         getDriveService().deleteAll();
-        assertEquals(0, getDriveService().selectAll().size());
+        assertEquals(0, getDriveService().findAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getDriveService().selectAllFullInfo().size();
+        final int initialCount = getDriveService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewDrive();
         }
 
-        final List<Drive> allEntities = getDriveService().selectAllFullInfo();
+        final List<Drive> allEntities = getDriveService().findAllFullInfo();
 
         for (final Drive entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);

@@ -22,7 +22,7 @@ public class BrandServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Brand entity = saveNewBrand();
 
-        final Brand entityFromDB = getBrandService().select(entity.getId());
+        final Brand entityFromDB = getBrandService().findById(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -34,12 +34,12 @@ public class BrandServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Brand entity = saveNewBrand();
 
-        final Brand entityFromDB = getBrandService().select(entity.getId());
+        final Brand entityFromDB = getBrandService().findById(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getBrandService().save(entityFromDB);
 
-        final Brand updatedEntityFromDB = getBrandService().select(entityFromDB.getId());
+        final Brand updatedEntityFromDB = getBrandService().findById(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -50,27 +50,27 @@ public class BrandServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Brand entity = saveNewBrand();
-        getBrandService().delete(entity.getId());
-        assertNull(getBrandService().select(entity.getId()));
+        getBrandService().delete(entity);
+        assertNull(getBrandService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewBrand();
         getBrandService().deleteAll();
-        assertEquals(0, getBrandService().selectAll().size());
+        assertEquals(0, getBrandService().findAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getBrandService().selectAllFullInfo().size();
+        final int initialCount = getBrandService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewBrand();
         }
 
-        final List<Brand> allEntities = getBrandService().selectAllFullInfo();
+        final List<Brand> allEntities = getBrandService().findAllFullInfo();
 
         for (final Brand entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);

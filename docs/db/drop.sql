@@ -1,0 +1,35 @@
+
+
+DROP TABLE IF EXISTS model;
+
+DROP TABLE IF EXISTS cars_photo;
+
+DROP TABLE IF EXISTS car;
+
+DROP TABLE IF EXISTS message;
+
+DROP TABLE IF EXISTS user_account;
+
+DROP TABLE IF EXISTS car_parameter;
+
+DROP TABLE IF EXISTS car_2_car_parameter;
+
+DROP TABLE IF EXISTS calendar;
+
+DROP TABLE IF EXISTS ad;
+
+DROP TABLE IF EXISTS passport;
+
+DROP TABLE IF EXISTS driving_license;
+
+DROP TABLE IF EXISTS brand;
+
+DROP TABLE IF EXISTS gearbox;
+
+DROP TABLE IF EXISTS body_type;
+
+DROP TABLE IF EXISTS drive;
+
+DROP TABLE IF EXISTS engine_type;
+
+DROP TABLE IF EXISTS fuel;

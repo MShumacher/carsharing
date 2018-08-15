@@ -15,7 +15,7 @@ public class MessageServiceTest extends AbstractTest {
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getAdService().deleteAll();
+        getCarService().deleteAll();
         getUserAccountService().deleteAll();
         getMessageService().deleteAll();
     }
@@ -24,7 +24,7 @@ public class MessageServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Message entity = saveNewMessage();
 
-        final Message entityFromDB = getMessageService().selectFullInfo(entity.getId());
+        final Message entityFromDB = getMessageService().findOneFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity, entityFromDB,"ad", "sender", "recipient");
         assertEquals(entity.getAd().getId(), entityFromDB.getAd().getId());
@@ -39,12 +39,12 @@ public class MessageServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Message entity = saveNewMessage();
 
-        final Message entityFromDB = getMessageService().selectFullInfo(entity.getId());
+        final Message entityFromDB = getMessageService().findOneFullInfo(entity.getId());
         final String newMessage = "new-message-" + getRandomPrefix();
         entityFromDB.setMessage(newMessage);
         getMessageService().save(entityFromDB);
 
-        final Message updatedEntityFromDB = getMessageService().selectFullInfo(entityFromDB.getId());
+        final Message updatedEntityFromDB = getMessageService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version","updated","message", "ad", "sender","recipient");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getAd().getId(), entityFromDB.getAd().getId());
@@ -59,27 +59,27 @@ public class MessageServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Message entity = saveNewMessage();
-        getMessageService().delete(entity.getId());
-        assertNull(getMessageService().select(entity.getId()));
+        getMessageService().delete(entity);
+        assertNull(getMessageService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewMessage();
         getMessageService().deleteAll();
-        assertEquals(0, getMessageService().selectAll().size());
+        assertEquals(0, getMessageService().findAll().size());
     }
 
     @Test
     public void testSelectAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getMessageService().selectAllFullInfo().size();
+        final int initialCount = getMessageService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewMessage();
         }
 
-        final List<Message> allEntities = getMessageService().selectAllFullInfo();
+        final List<Message> allEntities = getMessageService().findAllFullInfo();
 
         for (final Message entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB, "ad", "parameters");

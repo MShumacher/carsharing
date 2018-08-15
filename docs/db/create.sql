@@ -11,7 +11,6 @@ CREATE TABLE model (
 );
 
 
-
 CREATE TABLE cars_photo (
 	id serial NOT NULL,
 	car_id integer NOT NULL,
@@ -21,7 +20,6 @@ CREATE TABLE cars_photo (
 	updated BIGINT NOT NULL,
 	CONSTRAINT cars_photo_pk PRIMARY KEY (id)
 );
-
 
 
 CREATE TABLE car (
@@ -45,7 +43,6 @@ CREATE TABLE car (
 );
 
 
-
 CREATE TABLE message (
 	id serial NOT NULL,
 	message character varying(500) NOT NULL,
@@ -58,7 +55,6 @@ CREATE TABLE message (
 	updated BIGINT NOT NULL,
 	CONSTRAINT message_pk PRIMARY KEY (id)
 );
-
 
 
 CREATE TABLE user_account (
@@ -76,7 +72,6 @@ CREATE TABLE user_account (
 );
 
 
-
 CREATE TABLE car_parameter (
 	id serial NOT NULL,
 	name character varying(300) NOT NULL UNIQUE,
@@ -87,12 +82,10 @@ CREATE TABLE car_parameter (
 );
 
 
-
 CREATE TABLE car_2_car_parameter (
 	car_parameter_id integer NOT NULL,
 	car_id integer NOT NULL
 );
-
 
 
 CREATE TABLE calendar (
@@ -109,9 +102,9 @@ CREATE TABLE calendar (
 );
 
 
-
 CREATE TABLE ad (
 	id serial NOT NULL,
+	car_id integer NOT NULL,
 	user_account_id integer NOT NULL,
 	address character varying(500) NOT NULL,
 	price numeric(12,2) NOT NULL,
@@ -124,9 +117,9 @@ CREATE TABLE ad (
 );
 
 
-
 CREATE TABLE passport (
 	id serial NOT NULL,
+	user_account_id integer NOT NULL,
 	full_name character varying(100) NOT NULL,
 	number character varying(50) NOT NULL UNIQUE,
 	issue_place character varying(100) NOT NULL,
@@ -140,9 +133,9 @@ CREATE TABLE passport (
 );
 
 
-
 CREATE TABLE driving_license (
 	id serial NOT NULL,
+	user_account_id integer NOT NULL,
 	number character varying(50) NOT NULL UNIQUE,
 	expiration_date DATETIME NOT NULL,
 	categories character varying(50) NOT NULL,
@@ -151,7 +144,6 @@ CREATE TABLE driving_license (
 	updated BIGINT NOT NULL,
 	CONSTRAINT driving_license_pk PRIMARY KEY (id)
 );
-
 
 
 CREATE TABLE brand (
@@ -164,7 +156,6 @@ CREATE TABLE brand (
 );
 
 
-
 CREATE TABLE gearbox (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
@@ -173,7 +164,6 @@ CREATE TABLE gearbox (
 	updated BIGINT NOT NULL,
 	CONSTRAINT gearbox_pk PRIMARY KEY (id)
 );
-
 
 
 CREATE TABLE body_type (
@@ -186,7 +176,6 @@ CREATE TABLE body_type (
 );
 
 
-
 CREATE TABLE drive (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
@@ -195,7 +184,6 @@ CREATE TABLE drive (
 	updated BIGINT NOT NULL,
 	CONSTRAINT drive_pk PRIMARY KEY (id)
 );
-
 
 
 CREATE TABLE engine_type (
@@ -207,7 +195,6 @@ CREATE TABLE engine_type (
 	updated BIGINT NOT NULL,
 	CONSTRAINT engine_type_pk PRIMARY KEY (id)
 );
-
 
 
 CREATE TABLE fuel (
@@ -235,24 +222,17 @@ ALTER TABLE message ADD CONSTRAINT message_fk0 FOREIGN KEY (ad_id) REFERENCES ad
 ALTER TABLE message ADD CONSTRAINT message_fk1 FOREIGN KEY (sender_id) REFERENCES user_account(id);
 ALTER TABLE message ADD CONSTRAINT message_fk2 FOREIGN KEY (recipient_id) REFERENCES user_account(id);
 
-
-
 ALTER TABLE car_2_car_parameter ADD CONSTRAINT car_2_car_parameter_fk0 FOREIGN KEY (car_parameter_id) REFERENCES car_parameter(id);
 ALTER TABLE car_2_car_parameter ADD CONSTRAINT car_2_car_parameter_fk1 FOREIGN KEY (car_id) REFERENCES car(id);
 
 ALTER TABLE calendar ADD CONSTRAINT calendar_fk0 FOREIGN KEY (renter_id) REFERENCES user_account(id);
 ALTER TABLE calendar ADD CONSTRAINT calendar_fk1 FOREIGN KEY (car_id) REFERENCES car(id);
 
-ALTER TABLE ad ADD CONSTRAINT ad_fk0 FOREIGN KEY (id) REFERENCES car(id);
+ALTER TABLE ad ADD CONSTRAINT ad_fk0 FOREIGN KEY (car_id) REFERENCES car(id);
 ALTER TABLE ad ADD CONSTRAINT ad_fk1 FOREIGN KEY (user_account_id) REFERENCES user_account(id);
 
-ALTER TABLE passport ADD CONSTRAINT passport_fk0 FOREIGN KEY (id) REFERENCES user_account(id);
+ALTER TABLE passport ADD CONSTRAINT passport_fk0 FOREIGN KEY (user_account_id) REFERENCES user_account(id);
 
-ALTER TABLE driving_license ADD CONSTRAINT driving_license_fk0 FOREIGN KEY (id) REFERENCES user_account(id);
-
-
-
-
+ALTER TABLE driving_license ADD CONSTRAINT driving_license_fk0 FOREIGN KEY (user_account_id) REFERENCES user_account(id);
 
 ALTER TABLE engine_type ADD CONSTRAINT engine_type_fk0 FOREIGN KEY (fuel_id) REFERENCES fuel(id);
-

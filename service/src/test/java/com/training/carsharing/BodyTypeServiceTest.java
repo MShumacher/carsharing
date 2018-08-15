@@ -22,7 +22,7 @@ public class BodyTypeServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final BodyType entity = saveNewBodyType();
 
-        final BodyType entityFromDB = getBodyTypeService().select(entity.getId());
+        final BodyType entityFromDB = getBodyTypeService().findById(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -34,12 +34,12 @@ public class BodyTypeServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final BodyType entity = saveNewBodyType();
 
-        final BodyType entityFromDB = getBodyTypeService().selectFullInfo(entity.getId());
+        final BodyType entityFromDB = getBodyTypeService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getBodyTypeService().save(entityFromDB);
 
-        final BodyType updatedEntityFromDB = getBodyTypeService().selectFullInfo(entityFromDB.getId());
+        final BodyType updatedEntityFromDB = getBodyTypeService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -50,27 +50,27 @@ public class BodyTypeServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final BodyType entity = saveNewBodyType();
-        getBodyTypeService().delete(entity.getId());
-        assertNull(getBodyTypeService().select(entity.getId()));
+        getBodyTypeService().delete(entity);
+        assertNull(getBodyTypeService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewBodyType();
         getBodyTypeService().deleteAll();
-        assertEquals(0, getBodyTypeService().selectAll().size());
+        assertEquals(0, getBodyTypeService().findAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getBodyTypeService().selectAllFullInfo().size();
+        final int initialCount = getBodyTypeService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewBodyType();
         }
 
-        final List<BodyType> allEntities = getBodyTypeService().selectAllFullInfo();
+        final List<BodyType> allEntities = getBodyTypeService().findAllFullInfo();
 
         for (final BodyType entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);

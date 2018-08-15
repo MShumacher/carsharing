@@ -22,7 +22,7 @@ public class UserAccountServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException  {
         final UserAccount entity = saveNewUserAccount();
 
-        final UserAccount entityFromDB = getUserAccountService().selectFullInfo(entity.getId());
+        final UserAccount entityFromDB = getUserAccountService().findOneFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB, "passport", "drivingLicense");
@@ -34,12 +34,12 @@ public class UserAccountServiceTest extends AbstractTest {
     public void testUpdate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InterruptedException {
         final UserAccount entity = saveNewUserAccount();
 
-        final UserAccount entityFromDB = getUserAccountService().selectFullInfo(entity.getId());
+        final UserAccount entityFromDB = getUserAccountService().findOneFullInfo(entity.getId());
         final String email = "new-email-" + getRandomPrefix();
         entityFromDB.setEmail(email);
         getUserAccountService().save(entityFromDB);
 
-        final UserAccount updatedEntityFromDB = getUserAccountService().selectFullInfo(entityFromDB.getId());
+        final UserAccount updatedEntityFromDB = getUserAccountService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version", "updated","email");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(email, updatedEntityFromDB.getEmail());
@@ -50,27 +50,27 @@ public class UserAccountServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final UserAccount entity = saveNewUserAccount();
-        getUserAccountService().delete(entity.getId());
-        assertNull(getUserAccountService().select(entity.getId()));
+        getUserAccountService().delete(entity);
+        assertNull(getUserAccountService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         saveNewUserAccount();
         getUserAccountService().deleteAll();
-        assertEquals(0, getUserAccountService().selectAllFullInfo().size());
+        assertEquals(0, getUserAccountService().findAllFullInfo().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getUserAccountService().selectAllFullInfo().size();
+        final int initialCount = getUserAccountService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewUserAccount();
         }
 
-        final List<UserAccount> allEntities = getUserAccountService().selectAllFullInfo();
+        final List<UserAccount> allEntities = getUserAccountService().findAllFullInfo();
 
         for (final UserAccount entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB, "passport", "drivingLicense");

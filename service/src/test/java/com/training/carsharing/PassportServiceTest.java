@@ -22,7 +22,7 @@ public class PassportServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Passport entity = saveNewPassport();
 
-        final Passport entityFromDB = getPassportService().selectFullInfo(entity.getId());
+        final Passport entityFromDB = getPassportService().findOneFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB,"userAccount");
         assertNotNullFieldsExcept(entityFromDB);
@@ -34,12 +34,12 @@ public class PassportServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Passport entity = saveNewPassport();
 
-        final Passport entityFromDB = getPassportService().selectFullInfo(entity.getId());
+        final Passport entityFromDB = getPassportService().findOneFullInfo(entity.getId());
         final String newFullName = "new-name-" + getRandomPrefix();
         entityFromDB.setFullName(newFullName);
         getPassportService().save(entityFromDB);
 
-        final Passport updatedEntityFromDB = getPassportService().selectFullInfo(entityFromDB.getId());
+        final Passport updatedEntityFromDB = getPassportService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "fullName", "userAccount");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
@@ -51,27 +51,27 @@ public class PassportServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Passport entity = saveNewPassport();
-        getPassportService().delete(entity.getId());
-        assertNull(getPassportService().select(entity.getId()));
+        getPassportService().delete(entity);
+        assertNull(getPassportService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewPassport();
         getPassportService().deleteAll();
-        assertEquals(0, getPassportService().selectAll().size());
+        assertEquals(0, getPassportService().findAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getPassportService().selectAllFullInfo().size();
+        final int initialCount = getPassportService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewPassport();
         }
 
-        final List<Passport> allEntities = getPassportService().selectAllFullInfo();
+        final List<Passport> allEntities = getPassportService().findAllFullInfo();
 
         for (final Passport entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB, "userAccount");

@@ -15,16 +15,15 @@ public class AdServiceTest extends AbstractTest {
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getCarService().deleteAll();
-        getUserAccountService().deleteAll();
         getAdService().deleteAll();
+        getCarService().deleteAll();
     }
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Ad entity = saveNewAd();
 
-        final Ad entityFromDB = getAdService().selectFullInfo(entity.getId());
+        final Ad entityFromDB = getAdService().findOneFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB, "car", "userAccount");
         assertNotNullFieldsExcept(entityFromDB);
@@ -38,12 +37,12 @@ public class AdServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Ad entity = saveNewAd();
 
-        final Ad entityFromDB = getAdService().selectFullInfo(entity.getId());
+        final Ad entityFromDB = getAdService().findOneFullInfo(entity.getId());
         final String newAddress = "new-address-"+getRandomPrefix();
         entityFromDB.setAddress(newAddress);
         getAdService().save(entityFromDB);
 
-        final Ad updatedEntityFromDB = getAdService().selectFullInfo(entityFromDB.getId());
+        final Ad updatedEntityFromDB = getAdService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version","updated","address", "car", "userAccount");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
@@ -55,27 +54,27 @@ public class AdServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Ad entity = saveNewAd();
-        getAdService().delete(entity.getId());
-        assertNull(getAdService().select(entity.getId()));
+        getAdService().delete(entity);
+        assertNull(getAdService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewAd();
         getAdService().deleteAll();
-        assertEquals(0, getAdService().selectAll().size());
+        assertEquals(0, getAdService().findAll().size());
     }
 
     @Test
     public void testSelectAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getAdService().selectAllFullInfo().size();
+        final int initialCount = getAdService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewAd();
         }
 
-        final List<Ad> allEntities = getAdService().selectAllFullInfo();
+        final List<Ad> allEntities = getAdService().findAllFullInfo();
 
         for (final Ad entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);

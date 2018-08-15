@@ -22,7 +22,7 @@ public class GearboxServiceTest extends AbstractTest {
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Gearbox entity = saveNewGearbox();
 
-        final Gearbox entityFromDB = getGearboxService().selectFullInfo(entity.getId());
+        final Gearbox entityFromDB = getGearboxService().findOneFullInfo(entity.getId());
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
@@ -34,12 +34,12 @@ public class GearboxServiceTest extends AbstractTest {
     public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Gearbox entity = saveNewGearbox();
 
-        final Gearbox entityFromDB = getGearboxService().selectFullInfo(entity.getId());
+        final Gearbox entityFromDB = getGearboxService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
         getGearboxService().save(entityFromDB);
 
-        final Gearbox updatedEntityFromDB = getGearboxService().selectFullInfo(entityFromDB.getId());
+        final Gearbox updatedEntityFromDB = getGearboxService().findOneFullInfo(entityFromDB.getId());
         assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
@@ -50,27 +50,27 @@ public class GearboxServiceTest extends AbstractTest {
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final Gearbox entity = saveNewGearbox();
-        getGearboxService().delete(entity.getId());
-        assertNull(getGearboxService().select(entity.getId()));
+        getGearboxService().delete(entity);
+        assertNull(getGearboxService().findById(entity.getId()));
     }
 
     @Test
     public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         saveNewGearbox();
         getGearboxService().deleteAll();
-        assertEquals(0, getGearboxService().selectAll().size());
+        assertEquals(0, getGearboxService().findAll().size());
     }
 
     @Test
     public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final int initialCount = getGearboxService().selectAllFullInfo().size();
+        final int initialCount = getGearboxService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();
         for (int i = 0; i < randomObjectsCount; i++) {
             saveNewGearbox();
         }
 
-        final List<Gearbox> allEntities = getGearboxService().selectAllFullInfo();
+        final List<Gearbox> allEntities = getGearboxService().findAllFullInfo();
 
         for (final Gearbox entityFromDB : allEntities) {
             assertNotNullFieldsExcept(entityFromDB);

@@ -186,10 +186,10 @@ public class Car extends BaseEntity {
                 ", plate='" + plate + '\'' +
                 ", mileage=" + mileage +
                 ", seats=" + seats +
-                ", gearboxId='" + gearbox.getId() + '\'' +
-                ", bodyTypeId='" + bodyType.getId() + '\'' +
-                ", driveId='" + drive.getId() + '\'' +
-                ", engineTypeId='" + engineType.getId() + '\'' +
+                ", gearboxId=" + gearbox.getId() +
+                ", bodyTypeId=" + bodyType.getId() +
+                ", driveId=" + drive.getId() +
+                ", engineTypeId=" + engineType.getId() +
                 ", charge=" + charge +
                 ", conditions='" + conditions + '\'' +
                 ", insurance='" + insurance + '\'' +

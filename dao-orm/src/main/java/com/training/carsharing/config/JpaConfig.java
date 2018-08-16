@@ -1,10 +1,15 @@
 package com.training.carsharing.config;
 
+import com.training.carsharing.model.impl.UserAccount;
+import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.hibernate.jpamodelgen.xml.jaxb.Persistence;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;

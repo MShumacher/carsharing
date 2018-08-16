@@ -1,6 +1,8 @@
 package com.training.carsharing.impl;
 
 import com.training.carsharing.AbstractService;
+import com.training.carsharing.model.impl.CarParameter;
+import com.training.carsharing.repository.CarParameterRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class CustomAbstractService<T, REPOSITORY, ID> implements AbstractService
 
     @Autowired
     private REPOSITORY repository;
+    @Autowired
+    private CarParameterRepository carParameterRepository;
 
     @Override
     public T createEntity() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
@@ -48,9 +52,10 @@ public class CustomAbstractService<T, REPOSITORY, ID> implements AbstractService
         } else {
             LOGGER.info("updated entity: {}", entity);
         }
+//        CarParameter carParameter = carParameterRepository.save((CarParameter) entity);
         Method method = repository.getClass().getMethod("save", Object.class);
-        entity = (T) method.invoke(repository, entity);
-        return entity;
+        T entity2 = (T) method.invoke(repository, entity);
+        return entity2;
     }
 
     @Override

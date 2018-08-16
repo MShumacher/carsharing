@@ -5,8 +5,6 @@ import com.training.carsharing.model.impl.Passport;
 import com.training.carsharing.model.impl.UserAccount;
 import com.training.carsharing.repository.PassportRepository;
 import com.training.carsharing.repository.UserAccountRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

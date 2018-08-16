@@ -1,10 +1,6 @@
 package com.training.carsharing.model.impl;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 public class Ad extends BaseEntity {

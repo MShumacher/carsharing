@@ -20,10 +20,9 @@
 
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-          <!--p:dataSource-ref="dataSource" -->
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
-        <property name="persistenceUnitName" value="my-unit"/>
+        <!--<property name="persistenceUnitName" value="my-unit"/>-->
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -31,17 +30,32 @@
                 <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <prop key="hibernate.physical_naming_strategy">
                     com.training.carsharing.model.util.CustomPhysicalNamingStrategy</prop>
+
+                <!-- Properties for Hibernate Envers -->
+                <prop key="org.hibernate.envers.audit_table_suffix">_H</prop>
+                <prop key="org.hibernate.envers.revision_field_name">AUDIT_REVISION</prop>
+                <prop key="org.hibernate.envers.revision_type_field_name">ACTION_TYPE</prop>
+                <prop key="org.hibernate.envers.audit_strategy">org.hibernate.envers.strategy.ValidityAuditStrategy</prop>
+                <prop key="org.hibernate.envers.audit_strategy_validity_end_rev_field_name">AUDIT_REVISION_END</prop>
+                <prop key="org.hibernate.envers.audit_strategy_validity_store_revend_timestamp">true</prop>
+                <prop key="org.hibernate.envers.audit_strategy_validity_revend_timestamp_field_name">AUDIT_REVISION_END_TS</prop>
             </props>
         </property>
         <property name="packagesToScan" value="com.training.carsharing.model.impl"/>
     </bean>
 
+    <!-- Enable auditing in Spring Data -->
+    <jpa:auditing auditor-aware-ref="auditorAwareBean"/>
+
+    <!-- return user information -->
+    <bean id="auditorAwareBean" class="ru.javastudy.auditor.AuditorAwareBean" />
+
     <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="com.mysql.cj.jdbc.Driver" p:url="${db.url}"
-          p:username="${db.user}" p:password="${db.password}" />
+          p:driverClassName="${db.driverClassName}" p:url="${db.url}"
+          p:username="${db.username}" p:password="${db.password}" />
 
     <tx:annotation-driven />
 

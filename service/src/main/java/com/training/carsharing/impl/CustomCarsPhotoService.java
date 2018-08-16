@@ -3,7 +3,6 @@ package com.training.carsharing.impl;
 import com.training.carsharing.CarsPhotoService;
 import com.training.carsharing.model.impl.CarsPhoto;
 import com.training.carsharing.repository.CarsPhotoRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,11 +1,13 @@
 package com.training.carsharing;
 
+import com.training.carsharing.config.ServiceTestConfig;
 import com.training.carsharing.model.enums.Role;
 import com.training.carsharing.model.impl.*;
 import com.training.carsharing.model.impl.Calendar;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.lang.reflect.Field;
@@ -17,6 +19,8 @@ import java.util.stream.Stream;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource(value = "classpath:jdbc-test.properties")
+//@ContextConfiguration(classes = {ServiceTestConfig.class})
 @ContextConfiguration(locations = "classpath:test-context.xml")
 public abstract class AbstractTest {
 
@@ -164,6 +168,7 @@ public abstract class AbstractTest {
         entity.setName("Name-" + getRandomPrefix());
         return getFuelService().save(entity);
     }
+
     protected UserAccount getNewUserAccount() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final UserAccount entity = getUserAccountService().createEntity();
         entity.setEmail("Email-" + getRandomPrefix());

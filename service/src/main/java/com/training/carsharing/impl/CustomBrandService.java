@@ -3,8 +3,6 @@ package com.training.carsharing.impl;
 import com.training.carsharing.BrandService;
 import com.training.carsharing.model.impl.Brand;
 import com.training.carsharing.repository.BrandRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 @Service

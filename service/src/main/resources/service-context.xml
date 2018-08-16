@@ -11,22 +11,8 @@
       http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-    <context:property-placeholder
-            ignore-unresolvable="false" location="classpath:jdbc.properties" />
-
-
-    <bean id="entityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-          p:dataSource-ref="dataSource" />
-
     <!--<bean name="bcryptEncoder"-->
           <!--class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />-->
-
-
-    <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="com.mysql.cj.jdbc.Driver" p:url="${db.url}"
-          p:username="${db.user}" p:password="${db.password}" />
 
     <context:annotation-config />
 

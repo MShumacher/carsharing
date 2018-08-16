@@ -3,7 +3,6 @@ package com.training.carsharing.model.impl;
 import com.training.carsharing.model.enums.Role;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 public class UserAccount extends BaseEntity {

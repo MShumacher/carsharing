@@ -32,6 +32,6 @@ public class Model extends BaseEntity {
 
     @Override
     public String toString() {
-        return "model{" + super.toString() + ", name='" + name + '\'' + ", brandId='" + brand.getId() + '\'' + "}";
+        return "model{" + super.toString() + ", name='" + name + '\'' + ", brandId=" + brand.getId() + "}";
     }
 }

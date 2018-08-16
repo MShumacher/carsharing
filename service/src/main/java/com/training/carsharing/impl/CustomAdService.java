@@ -2,9 +2,7 @@ package com.training.carsharing.impl;
 
 import com.training.carsharing.AdService;
 import com.training.carsharing.model.impl.Ad;
-import com.training.carsharing.model.impl.Ad;
 import com.training.carsharing.model.impl.Car;
-import com.training.carsharing.repository.AdRepository;
 import com.training.carsharing.repository.AdRepository;
 import com.training.carsharing.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;

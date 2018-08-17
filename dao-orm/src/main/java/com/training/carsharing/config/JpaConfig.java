@@ -26,8 +26,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource(value = "classpath:jdbc.properties")
 @EnableJpaRepositories(basePackages = "com.training.carsharing.repository")
-//@EnableScheduling //task:annotation-driven
-//@ImportResource("classpath:dao-orm-context.xml")
+@EnableScheduling //task:annotation-driven
+@ImportResource("classpath:dao-orm-context.xml")
 public class JpaConfig {
     /**
      * @PropertySource annotation does not automatically

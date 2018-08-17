@@ -6,7 +6,7 @@ import com.training.carsharing.repository.BodyTypeRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomBodyTypeService extends CustomAbstractService<BodyType, BodyTypeRepository, Integer> implements BodyTypeService {
+public class CustomBodyTypeService extends CustomAbstractService<BodyType, Integer> implements BodyTypeService {
 
     public CustomBodyTypeService() { super(BodyType.class); }
 

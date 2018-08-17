@@ -6,7 +6,7 @@ import com.training.carsharing.repository.UserAccountRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomUserAccountService extends CustomAbstractService<UserAccount, UserAccountRepository, Integer> implements UserAccountService {
+public class CustomUserAccountService extends CustomAbstractService<UserAccount, Integer> implements UserAccountService {
 
     public CustomUserAccountService() {
         super(UserAccount.class);

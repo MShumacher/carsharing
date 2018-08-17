@@ -317,7 +317,7 @@ public abstract class AbstractTest {
             field.setAccessible(true);
             final String fieldName = field.getName();
             if (!unverifiableFieldsCollection.stream().anyMatch(fieldName::equalsIgnoreCase)) {
-                System.out.println("field: " + fieldName + " " + field.get(entity) + "==" + field.get(entityFromDB));
+//                System.out.println("field: " + fieldName + " " + field.get(entity) + "==" + field.get(entityFromDB));
 //                if ("Date".equalsIgnoreCase(field.getType().getSimpleName())) {
 //                    assertEquals((Date) field.get(entity), (Date) field.get(entityFromDB));
 //                } else {

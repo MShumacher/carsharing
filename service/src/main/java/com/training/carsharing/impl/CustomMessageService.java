@@ -6,7 +6,7 @@ import com.training.carsharing.repository.MessageRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomMessageService extends CustomAbstractService<Message, MessageRepository, Integer> implements MessageService {
+public class CustomMessageService extends CustomAbstractService<Message, Integer> implements MessageService {
 
     public CustomMessageService() { super(Message.class); }
 

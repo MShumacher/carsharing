@@ -6,7 +6,7 @@ import com.training.carsharing.repository.ModelRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomModelService extends CustomAbstractService<Model, ModelRepository, Integer> implements ModelService {
+public class CustomModelService extends CustomAbstractService<Model, Integer> implements ModelService {
 
     public CustomModelService() { super(Model.class); }
 

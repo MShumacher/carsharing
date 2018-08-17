@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class CustomPassportService extends CustomAbstractService<Passport, PassportRepository, Integer> implements PassportService {
+public class CustomPassportService extends CustomAbstractService<Passport, Integer> implements PassportService {
 
     @Autowired
     private PassportRepository passportRepository;

@@ -1,5 +1,7 @@
 package com.training.carsharing;
 
+import com.training.carsharing.model.impl.BaseEntity;
+
 import javax.transaction.Transactional;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;

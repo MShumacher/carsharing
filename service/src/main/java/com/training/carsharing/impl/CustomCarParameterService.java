@@ -6,7 +6,7 @@ import com.training.carsharing.repository.CarParameterRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomCarParameterService extends CustomAbstractService<CarParameter, CarParameterRepository, Integer> implements CarParameterService {
+public class CustomCarParameterService extends CustomAbstractService<CarParameter, Integer> implements CarParameterService {
 
     public CustomCarParameterService() { super(CarParameter.class); }
 

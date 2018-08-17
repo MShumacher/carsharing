@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomAbstractService<T, REPOSITORY, ID> implements AbstractService<T, REPOSITORY, ID> {
+public class CustomAbstractService<T, REPOSITORY, ID> implements AbstractService<T, ID> {
 
     public CustomAbstractService(Class<? extends T> entityClass) {
         this.entityClass = entityClass;

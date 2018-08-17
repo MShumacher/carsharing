@@ -4,7 +4,7 @@ import javax.transaction.Transactional;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public interface AbstractService<T, REPOSITORY, ID> {
+public interface AbstractService<T, ID> {
 
     T createEntity() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 

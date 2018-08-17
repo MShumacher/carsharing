@@ -6,6 +6,7 @@ import org.hibernate.jpamodelgen.xml.jaxb.Persistence;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.domain.AuditorAware;
@@ -25,7 +26,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource(value = "classpath:jdbc.properties")
 @EnableJpaRepositories(basePackages = "com.training.carsharing.repository")
-@EnableScheduling //task:annotation-driven
+//@EnableScheduling //task:annotation-driven
+//@ImportResource("classpath:dao-orm-context.xml")
 public class JpaConfig {
     /**
      * @PropertySource annotation does not automatically

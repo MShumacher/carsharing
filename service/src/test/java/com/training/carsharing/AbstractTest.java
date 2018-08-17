@@ -20,8 +20,8 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(value = "classpath:jdbc-test.properties")
-//@ContextConfiguration(classes = {ServiceTestConfig.class})
-@ContextConfiguration(locations = "classpath:test-context.xml")
+@ContextConfiguration(classes = {ServiceTestConfig.class})
+//@ContextConfiguration(locations = "classpath:test-context.xml")
 public abstract class AbstractTest {
 
     @Autowired

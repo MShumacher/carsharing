@@ -75,6 +75,7 @@ public class JpaConfig {
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         jpaProperties.put("hibernate.show_sql", true);
+        jpaProperties.put("hibernate.id.new_generator_mappings","false");
 //        jpaProperties.put("hibernate.format_sql","false");
 //        jpaProperties.put("hibernate.search.default.directory_provider", "filesystem");
 //        jpaProperties.put("hibernate.search.default.indexBase", "/src/main/resources/lucene/indexes");

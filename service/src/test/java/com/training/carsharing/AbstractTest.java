@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -59,7 +60,7 @@ public abstract class AbstractTest {
 
     private static final Random RANDOM = new Random();
 
-    private static SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+    private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     public UserAccountService getUserAccountService() {
         return userAccountService;

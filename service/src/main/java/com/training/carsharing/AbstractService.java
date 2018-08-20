@@ -1,29 +1,26 @@
 package com.training.carsharing;
 
-import com.training.carsharing.model.impl.BaseEntity;
-
 import javax.transaction.Transactional;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface AbstractService<T, ID> {
 
-    T createEntity() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+    T createEntity();
 
-    T findById(ID id) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+    T findById(ID id);
 
-    T findOneFullInfo(ID id) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+    T findOneFullInfo(ID id);
 
-    List<T> findAll() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+    List<T> findAll();
 
-    List<T> findAllFullInfo() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
-
-    @Transactional
-    T save(T entity) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+    List<T> findAllFullInfo();
 
     @Transactional
-    void deleteAll() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+    T save(T entity);
 
     @Transactional
-    void delete(T entity) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+    void deleteAll();
+
+    @Transactional
+    void delete(T entity);
 }

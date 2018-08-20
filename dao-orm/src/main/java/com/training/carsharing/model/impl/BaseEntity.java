@@ -1,34 +1,22 @@
 package com.training.carsharing.model.impl;
 
-import javax.persistence.*;
-import java.util.Date;
+import org.springframework.data.jpa.domain.AbstractAuditable;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
 @MappedSuperclass
-public abstract class BaseEntity {
+@EntityListeners({AuditingEntityListener.class})
+public abstract class BaseEntity extends AbstractAuditable<UserAccount, Long> {
 
     public static int DEFAULT_VERSION = 1;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column
     @Version
     private Integer version;
-
-    @Column(updatable = false)
-    private Long created;
-
-    @Column
-    private Long updated;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(final Long id) {
-        this.id = id;
-    }
 
     public Integer getVersion() {
         return version;
@@ -38,24 +26,8 @@ public abstract class BaseEntity {
         this.version = version;
     }
 
-    public Date getCreated() {
-        return new Date(created);
-    }
-
-    public void setCreated(final Date created) {
-        this.created = created.getTime();
-    }
-
-    public Date getUpdated() {
-        return new Date(updated);
-    }
-
-    public void setUpdated(final Date updated) {
-        this.updated = updated.getTime();
-    }
-
     @Override
     public String toString() {
-        return " id=" + id;
+        return " id=" + getId();
     }
 }

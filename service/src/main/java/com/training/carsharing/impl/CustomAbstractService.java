@@ -6,9 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,18 +29,8 @@ public abstract class CustomAbstractService<ENTITY, ID> implements AbstractServi
     }
 
     @Override
-    public ENTITY save(ENTITY entity) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        final Date modifiedOn = new Date();
-        Method methodSetUpdated = entityClass.getMethod("setUpdated", Date.class);
-        methodSetUpdated.invoke(entity, modifiedOn);
-        Method methodGetId = entityClass.getMethod("getId");
-        if (methodGetId.invoke(entity) == null) {
-            Method methodSetCreated = entityClass.getMethod("setCreated", Date.class);
-            methodSetCreated.invoke(entity, modifiedOn);
-            LOGGER.info("new saved entity: {}", entity);
-        } else {
-            LOGGER.info("updated entity: {}", entity);
-        }
+    public ENTITY save(ENTITY entity) {
+        LOGGER.info("saved entity: {}", entity);
         ENTITY entity2 = repository.save(entity);
         return entity2;
     }

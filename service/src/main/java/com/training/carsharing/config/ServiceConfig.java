@@ -1,13 +1,24 @@
 package com.training.carsharing.config;
 
+import com.training.carsharing.impl.AuditorAwareImpl;
+import com.training.carsharing.model.impl.UserAccount;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Configuration
 @ComponentScan(basePackages = "com.training.carsharing.impl")
 @Import({JpaConfig.class})
+@EnableJpaAuditing
 public class ServiceConfig {
+
+    @Bean
+    public AuditorAware<UserAccount> auditorProvider() {
+        return new AuditorAwareImpl();
+    }
 //    @Value("${java.mail.username}") String mailUsername;
 //    @Value("${java.mail.password}") String mailPassword;
 //    @Value("${java.mail.host}") String mailHost;

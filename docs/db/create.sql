@@ -1,26 +1,50 @@
 
+CREATE TABLE user1 (
+	id serial NOT NULL,
+	name character varying(50) NOT NULL UNIQUE,
+	version BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
+	CONSTRAINT user_pk PRIMARY KEY (id)
+
+);
+
+ALTER TABLE user1 CONSTRAINT user_created_by_user foreign key (created_by_id) references user1(id),
+ALTER TABLE user1 CONSTRAINT user_last_modified_by_user foreign key (last_modified_by_id) references user1(id)
+
+insert into user1 (name, version) values ('John', 1);
 
 CREATE TABLE model (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	brand_id integer NOT NULL,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT model_pk PRIMARY KEY (id)
 );
 
+ALTER TABLE model CONSTRAINT model_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE model CONSTRAINT model_last_modified_by_user foreign key (last_modified_by_id) references user_account(id)
 
 CREATE TABLE cars_photo (
 	id serial NOT NULL,
 	car_id integer NOT NULL,
 	link character varying(300) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT cars_photo_pk PRIMARY KEY (id)
 );
 
+ALTER TABLE cars_photo CONSTRAINT cars_photo_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE cars_photo CONSTRAINT cars_photo_last_modified_by_user foreign key (last_modified_by_id) references user_account(id)
 
 CREATE TABLE car (
 	id serial NOT NULL,
@@ -37,10 +61,15 @@ CREATE TABLE car (
 	conditions character varying(1000) NOT NULL,
 	insurance character varying(500),
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT car_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE car CONSTRAINT car_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE car CONSTRAINT car_last_modified_by_user foreign key (last_modified_by_id) references user_account(id)
 
 
 CREATE TABLE message (
@@ -51,10 +80,15 @@ CREATE TABLE message (
 	recipient_id integer NOT NULL,
 	viewed BOOLEAN NOT NULL,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT message_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE message CONSTRAINT message_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE message CONSTRAINT message_last_modified_by_user foreign key (last_modified_by_id) references user_account(id)
 
 
 CREATE TABLE user_account (
@@ -66,20 +100,30 @@ CREATE TABLE user_account (
 	phone character varying(50) NOT NULL UNIQUE,
 	role character varying(50) NOT NULL,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT user_account_pk PRIMARY KEY (id)
 );
 
+ALTER TABLE user_account CONSTRAINT user_account_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE user_account CONSTRAINT user_account_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
+insert into user_account (email, password, name, phone, role, version, created_date) values ('1@1.1', '1', '1', '1', 'ROLE_ADMIN', 1, now());
 
 CREATE TABLE car_parameter (
 	id serial NOT NULL,
 	name character varying(300) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT parameter_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE car_parameter CONSTRAINT car_parameter_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE car_parameter CONSTRAINT car_parameter_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
 
 
 CREATE TABLE car_2_car_parameter (
@@ -96,10 +140,15 @@ CREATE TABLE calendar (
 	end DATETIME NOT NULL,
 	total_price numeric(12,2) NOT NULL,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT calendar_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE calendar CONSTRAINT calendar_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE calendar CONSTRAINT calendar_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
 
 
 CREATE TABLE ad (
@@ -111,10 +160,15 @@ CREATE TABLE ad (
 	body character varying(1000) NOT NULL,
 	active BOOLEAN NOT NULL,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT ad_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE ad CONSTRAINT ad_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE ad CONSTRAINT ad_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
 
 
 CREATE TABLE passport (
@@ -127,10 +181,15 @@ CREATE TABLE passport (
 	birth_place character varying(500) NOT NULL,
 	birthday DATETIME NOT NULL,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT passport_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE passport CONSTRAINT passport_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE passport CONSTRAINT passport_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
 
 
 CREATE TABLE driving_license (
@@ -140,50 +199,75 @@ CREATE TABLE driving_license (
 	expiration_date DATETIME NOT NULL,
 	categories character varying(50) NOT NULL,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT driving_license_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE driving_license CONSTRAINT driving_license_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE driving_license CONSTRAINT driving_license_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
 
 
 CREATE TABLE brand (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT brand_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE brand CONSTRAINT brand_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE brand CONSTRAINT brand_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
 
 
 CREATE TABLE gearbox (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT gearbox_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE gearbox CONSTRAINT gearbox_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE gearbox CONSTRAINT gearbox_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
 
 
 CREATE TABLE body_type (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT body_type_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE body_type CONSTRAINT body_type_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE body_type CONSTRAINT body_type_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
 
 
 CREATE TABLE drive (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT drive_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE drive CONSTRAINT drive_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE drive CONSTRAINT drive_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
 
 
 CREATE TABLE engine_type (
@@ -191,21 +275,30 @@ CREATE TABLE engine_type (
 	name character varying(50) NOT NULL UNIQUE,
 	fuel_id integer NOT NULL,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT engine_type_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE engine_type CONSTRAINT engine_type_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE engine_type CONSTRAINT engine_type_last_modified_by_user foreign key (last_modified_by_id) references user_account
 
 
 CREATE TABLE fuel (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created BIGINT NOT NULL,
-	updated BIGINT NOT NULL,
+	created_date TIMESTAMP NOT NULL,
+	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_by_id BIGINT,
+	last_modified_by_id BIGINT,
 	CONSTRAINT fuel_pk PRIMARY KEY (id)
 );
 
+ALTER TABLE fuel CONSTRAINT fuel_created_by_user foreign key (created_by_id) references user_account(id),
+ALTER TABLE fuel CONSTRAINT fuel_last_modified_by_user foreign key (last_modified_by_id) references user_account
 
 
 ALTER TABLE model ADD CONSTRAINT model_fk0 FOREIGN KEY (brand_id) REFERENCES brand(id);

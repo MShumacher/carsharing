@@ -1,14 +1,12 @@
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.0.9.RELEASE'
-//    // https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api
-//    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.2.Final'
-    // https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen
+    // https://mvnrepository.com/artifact/org.springframework/spring-aspects
+    compile group: 'org.springframework', name: 'spring-aspects', version: '5.0.8.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-test
     testCompile group: 'org.springframework.boot', name: 'spring-boot-test', version: '2.0.4.RELEASE'
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen
     compile group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.3.2.Final'
-    // https://mvnrepository.com/artifact/org.springframework/spring-context
-    compile group: 'org.springframework', name: 'spring-context', version: '5.0.7.RELEASE'
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
     // https://mvnrepository.com/artifact/org.springframework/spring-tx

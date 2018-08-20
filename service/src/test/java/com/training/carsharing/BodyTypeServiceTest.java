@@ -37,6 +37,7 @@ public class BodyTypeServiceTest extends AbstractTest {
         final BodyType entityFromDB = getBodyTypeService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
+        Thread.currentThread().sleep(2000);
         getBodyTypeService().save(entityFromDB);
 
         final BodyType updatedEntityFromDB = getBodyTypeService().findOneFullInfo(entityFromDB.getId());

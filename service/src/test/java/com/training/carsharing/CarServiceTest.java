@@ -46,6 +46,7 @@ public class CarServiceTest extends AbstractTest {
         final Car entityFromDB = getCarService().findOneFullInfo(entity.getId());
         final String newInsurance = "new-insurance-" + getRandomPrefix();
         entityFromDB.setInsurance(newInsurance);
+        Thread.currentThread().sleep(2000);
         getCarService().save(entityFromDB);
 
         final Car updatedEntityFromDB = getCarService().findOneFullInfo(entityFromDB.getId());

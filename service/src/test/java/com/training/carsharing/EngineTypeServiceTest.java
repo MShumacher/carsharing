@@ -40,6 +40,7 @@ public class EngineTypeServiceTest extends AbstractTest {
         final EngineType entityFromDB = getEngineTypeService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
+        Thread.currentThread().sleep(2000);
         getEngineTypeService().save(entityFromDB);
 
         final EngineType updatedEntityFromDB = getEngineTypeService().findOneFullInfo(entityFromDB.getId());

@@ -38,6 +38,7 @@ public class FuelServiceTest extends AbstractTest {
         final Fuel entityFromDB = getFuelService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
+        Thread.currentThread().sleep(2000);
         getFuelService().save(entityFromDB);
 
         final Fuel updatedEntityFromDB = getFuelService().findOneFullInfo(entityFromDB.getId());

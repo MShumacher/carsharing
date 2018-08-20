@@ -38,6 +38,7 @@ public class UserAccountServiceTest extends AbstractTest {
         final UserAccount entityFromDB = getUserAccountService().findOneFullInfo(entity.getId());
         final String email = "new-email-" + getRandomPrefix();
         entityFromDB.setEmail(email);
+        Thread.currentThread().sleep(2000);
         getUserAccountService().save(entityFromDB);
 
         final UserAccount updatedEntityFromDB = getUserAccountService().findOneFullInfo(entityFromDB.getId());

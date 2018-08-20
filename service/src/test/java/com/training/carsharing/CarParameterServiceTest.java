@@ -37,6 +37,7 @@ public class CarParameterServiceTest extends AbstractTest {
         final CarParameter entityFromDB = getCarParameterService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
+        Thread.currentThread().sleep(2000);
         getCarParameterService().save(entityFromDB);
 
         final CarParameter updatedEntityFromDB = getCarParameterService().findOneFullInfo(entityFromDB.getId());

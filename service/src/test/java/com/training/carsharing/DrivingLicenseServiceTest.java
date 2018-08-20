@@ -38,6 +38,7 @@ public class DrivingLicenseServiceTest extends AbstractTest {
         final DrivingLicense entityFromDB = getDrivingLicenseService().findOneFullInfo(entity.getId());
         final String newNumber = "new-number-" + getRandomPrefix();
         entityFromDB.setNumber(newNumber);
+        Thread.currentThread().sleep(2000);
         getDrivingLicenseService().save(entityFromDB);
 
         final DrivingLicense updatedEntityFromDB = getDrivingLicenseService().findOneFullInfo(entityFromDB.getId());

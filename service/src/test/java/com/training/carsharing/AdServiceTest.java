@@ -41,6 +41,7 @@ public class AdServiceTest extends AbstractTest {
         final Ad entityFromDB = getAdService().findOneFullInfo(entity.getId());
         final String newAddress = "new-address-"+getRandomPrefix();
         entityFromDB.setAddress(newAddress);
+        Thread.currentThread().sleep(2000);
         getAdService().save(entityFromDB);
 
         final Ad updatedEntityFromDB = getAdService().findOneFullInfo(entityFromDB.getId());

@@ -40,6 +40,7 @@ public class ModelServiceTest extends AbstractTest {
         final Model entityFromDB = getModelService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
+        Thread.currentThread().sleep(2000);
         getModelService().save(entityFromDB);
 
         final Model updatedEntityFromDB = getModelService().findOneFullInfo(entityFromDB.getId());

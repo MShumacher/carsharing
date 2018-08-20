@@ -12,11 +12,11 @@ import static org.junit.Assert.*;
 
 public class BrandServiceTest extends AbstractTest {
 
-    @Before
-    @After
-    public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getBrandService().deleteAll();
-    }
+//    @Before
+//    @After
+//    public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+//        getBrandService().deleteAll();
+//    }
 
     @Test
     public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
@@ -37,10 +37,11 @@ public class BrandServiceTest extends AbstractTest {
         final Brand entityFromDB = getBrandService().findById(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
+        Thread.currentThread().sleep(2000);
         getBrandService().save(entityFromDB);
 
         final Brand updatedEntityFromDB = getBrandService().findById(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
+        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "lastModifiedDate", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
 

@@ -38,6 +38,7 @@ public class PassportServiceTest extends AbstractTest {
         final Passport entityFromDB = getPassportService().findOneFullInfo(entity.getId());
         final String newFullName = "new-name-" + getRandomPrefix();
         entityFromDB.setFullName(newFullName);
+        Thread.currentThread().sleep(2000);
         getPassportService().save(entityFromDB);
 
         final Passport updatedEntityFromDB = getPassportService().findOneFullInfo(entityFromDB.getId());

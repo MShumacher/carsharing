@@ -40,6 +40,7 @@ public class CarsPhotoServiceTest extends AbstractTest {
         final CarsPhoto entityFromDB = getCarsPhotoService().findOneFullInfo(entity.getId());
         final String newLink = "new-link-" + getRandomPrefix();
         entityFromDB.setLink(newLink);
+        Thread.currentThread().sleep(2000);
         getCarsPhotoService().save(entityFromDB);
 
         final CarsPhoto updatedEntityFromDB = getCarsPhotoService().findOneFullInfo(entityFromDB.getId());

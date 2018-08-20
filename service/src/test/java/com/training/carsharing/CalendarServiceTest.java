@@ -42,6 +42,7 @@ public class CalendarServiceTest extends AbstractTest {
         final Calendar entityFromDB = getCalendarService().findOneFullInfo(entity.getId());
         final Date newStart = getRandomDate();
         entityFromDB.setStart(newStart);
+        Thread.currentThread().sleep(2000);
         getCalendarService().save(entityFromDB);
 
         final Calendar updatedEntityFromDB = getCalendarService().findOneFullInfo(entityFromDB.getId());

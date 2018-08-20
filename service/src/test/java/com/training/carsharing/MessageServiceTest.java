@@ -43,6 +43,7 @@ public class MessageServiceTest extends AbstractTest {
         final Message entityFromDB = getMessageService().findOneFullInfo(entity.getId());
         final String newMessage = "new-message-" + getRandomPrefix();
         entityFromDB.setMessage(newMessage);
+        Thread.currentThread().sleep(2000);
         getMessageService().save(entityFromDB);
 
         final Message updatedEntityFromDB = getMessageService().findOneFullInfo(entityFromDB.getId());

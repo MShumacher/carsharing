@@ -38,6 +38,7 @@ public class DriveServiceTest extends AbstractTest {
         final Drive entityFromDB = getDriveService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
+        Thread.currentThread().sleep(2000);
         getDriveService().save(entityFromDB);
 
         final Drive updatedEntityFromDB = getDriveService().findOneFullInfo(entityFromDB.getId());

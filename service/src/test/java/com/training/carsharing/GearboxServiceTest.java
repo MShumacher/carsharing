@@ -38,6 +38,7 @@ public class GearboxServiceTest extends AbstractTest {
         final Gearbox entityFromDB = getGearboxService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
+        Thread.currentThread().sleep(2000);
         getGearboxService().save(entityFromDB);
 
         final Gearbox updatedEntityFromDB = getGearboxService().findOneFullInfo(entityFromDB.getId());

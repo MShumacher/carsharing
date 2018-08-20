@@ -25,12 +25,12 @@ public class AdServiceTest extends AbstractTest {
 
         final Ad entityFromDB = getAdService().findOneFullInfo(entity.getId());
 
-        assertEqualsFieldsExcept(entity,entityFromDB, "car", "userAccount");
+        assertEqualsFieldsExcept(entity, entityFromDB, "car", "userAccount");
         assertNotNullFieldsExcept(entityFromDB);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
 
-      //  assertTrue(entityFromDB.getCreated().isEqual(entityFromDB.getUpdated()));
+        //  assertTrue(entityFromDB.getCreated().isEqual(entityFromDB.getUpdated()));
 //        assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
 
@@ -39,21 +39,21 @@ public class AdServiceTest extends AbstractTest {
         final Ad entity = saveNewAd();
 
         final Ad entityFromDB = getAdService().findOneFullInfo(entity.getId());
-        final String newAddress = "new-address-"+getRandomPrefix();
+        final String newAddress = "new-address-" + getRandomPrefix();
         entityFromDB.setAddress(newAddress);
         Thread.currentThread().sleep(2000);
         getAdService().save(entityFromDB);
 
         final Ad updatedEntityFromDB = getAdService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version","updated","address", "car", "userAccount");
-        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB, "version", "updated", "address", "car", "userAccount");
+        assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
         assertEquals(newAddress, updatedEntityFromDB.getAddress());
 
-     //   assertTrue(updatedEntityFromDB.getUpdated().isAfter(entity.getUpdated()));
+        //   assertTrue(updatedEntityFromDB.getUpdated().isAfter(entity.getUpdated()));
 //        assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
-     }
+    }
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {

@@ -1,21 +1,4 @@
 
-CREATE TABLE user1 (
-	id serial NOT NULL,
-	name character varying(50) NOT NULL UNIQUE,
-	version BIGINT NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
-	created_by_id BIGINT,
-	last_modified_by_id BIGINT,
-	CONSTRAINT user_pk PRIMARY KEY (id)
-
-);
-
-ALTER TABLE user1 CONSTRAINT user_created_by_user foreign key (created_by_id) references user1(id),
-ALTER TABLE user1 CONSTRAINT user_last_modified_by_user foreign key (last_modified_by_id) references user1(id)
-
-insert into user1 (name, version) values ('John', 1);
-
 CREATE TABLE model (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
@@ -109,7 +92,7 @@ CREATE TABLE user_account (
 
 ALTER TABLE user_account CONSTRAINT user_account_created_by_user foreign key (created_by_id) references user_account(id),
 ALTER TABLE user_account CONSTRAINT user_account_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
-insert into user_account (email, password, name, phone, role, version, created_date) values ('1@1.1', '1', '1', '1', 'ROLE_ADMIN', 1, now());
+insert into user_account (email, password, name, phone, role, version, created_date) values ('admin@itools.ru', 'admin', 'admin', '911', 'ROLE_ADMIN', 1, now());
 
 CREATE TABLE car_parameter (
 	id serial NOT NULL,

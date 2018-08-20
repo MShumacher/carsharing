@@ -1,16 +1,11 @@
 package com.training.carsharing.config;
 
-import com.training.carsharing.model.impl.UserAccount;
-import org.hibernate.jpa.HibernatePersistenceProvider;
-import org.hibernate.jpamodelgen.xml.jaxb.Persistence;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.data.domain.AuditorAware;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -75,7 +70,7 @@ public class JpaConfig {
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         jpaProperties.put("hibernate.show_sql", true);
-        jpaProperties.put("hibernate.id.new_generator_mappings","false");
+        jpaProperties.put("hibernate.id.new_generator_mappings", "false");
 //        jpaProperties.put("hibernate.format_sql","false");
 //        jpaProperties.put("hibernate.search.default.directory_provider", "filesystem");
 //        jpaProperties.put("hibernate.search.default.indexBase", "/src/main/resources/lucene/indexes");

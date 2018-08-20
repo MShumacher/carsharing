@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Repository
-public class CarsPhotoRepositoryImpl extends AbstractRepositoryImpl<CarsPhoto, Integer> implements CarsPhotoRepositoryCustom {
+public class CarsPhotoRepositoryImpl extends AbstractRepositoryImpl<CarsPhoto, Long> implements CarsPhotoRepositoryCustom {
 
  protected CarsPhotoRepositoryImpl() { super(CarsPhoto.class); }
 
@@ -27,7 +27,7 @@ public class CarsPhotoRepositoryImpl extends AbstractRepositoryImpl<CarsPhoto, I
     }
 
     @Override
-    public CarsPhoto findOneFullInfo(final Integer id) {
+    public CarsPhoto findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<CarsPhoto> cq = cb.createQuery(CarsPhoto.class);

@@ -6,7 +6,7 @@ import com.training.carsharing.repository.CarsPhotoRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomCarsPhotoService extends CustomAbstractService<CarsPhoto, Integer> implements CarsPhotoService {
+public class CustomCarsPhotoService extends CustomAbstractService<CarsPhoto, Long> implements CarsPhotoService {
 
     public CustomCarsPhotoService() {
         super(CarsPhoto.class);

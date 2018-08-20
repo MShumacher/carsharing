@@ -6,7 +6,7 @@ import com.training.carsharing.repository.FuelRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomFuelService extends CustomAbstractService<Fuel, Integer> implements FuelService {
+public class CustomFuelService extends CustomAbstractService<Fuel, Long> implements FuelService {
 
     public CustomFuelService() { super(Fuel.class); }
 

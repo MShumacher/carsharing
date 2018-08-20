@@ -6,7 +6,7 @@ import com.training.carsharing.repository.EngineTypeRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomEngineTypeService extends CustomAbstractService<EngineType, Integer> implements EngineTypeService {
+public class CustomEngineTypeService extends CustomAbstractService<EngineType, Long> implements EngineTypeService {
 
     public CustomEngineTypeService() { super(EngineType.class); }
 

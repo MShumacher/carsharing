@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Repository
-public class DrivingLicenseRepositoryImpl extends AbstractRepositoryImpl<DrivingLicense, Integer> implements DrivingLicenseRepositoryCustom {
+public class DrivingLicenseRepositoryImpl extends AbstractRepositoryImpl<DrivingLicense, Long> implements DrivingLicenseRepositoryCustom {
 
     protected DrivingLicenseRepositoryImpl() {
         super(DrivingLicense.class);
@@ -29,7 +29,7 @@ public class DrivingLicenseRepositoryImpl extends AbstractRepositoryImpl<Driving
     }
 
     @Override
-    public DrivingLicense findOneFullInfo(final Integer id) {
+    public DrivingLicense findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<DrivingLicense> cq = cb.createQuery(DrivingLicense.class);

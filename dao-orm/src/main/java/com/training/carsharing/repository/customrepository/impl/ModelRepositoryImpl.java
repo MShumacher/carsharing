@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Repository
-public class ModelRepositoryImpl extends AbstractRepositoryImpl<Model, Integer> implements ModelRepositoryCustom {
+public class ModelRepositoryImpl extends AbstractRepositoryImpl<Model, Long> implements ModelRepositoryCustom {
 
     protected ModelRepositoryImpl() {
         super(Model.class);
@@ -29,7 +29,7 @@ public class ModelRepositoryImpl extends AbstractRepositoryImpl<Model, Integer> 
     }
 
     @Override
-    public Model findOneFullInfo(Integer id) {
+    public Model findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Model> cq = cb.createQuery(Model.class);

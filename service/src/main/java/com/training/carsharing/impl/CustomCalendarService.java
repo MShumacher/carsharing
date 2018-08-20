@@ -6,7 +6,7 @@ import com.training.carsharing.repository.CalendarRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomCalendarService extends CustomAbstractService<Calendar, Integer> implements CalendarService {
+public class CustomCalendarService extends CustomAbstractService<Calendar, Long> implements CalendarService {
 
     public CustomCalendarService() {
         super(Calendar.class);

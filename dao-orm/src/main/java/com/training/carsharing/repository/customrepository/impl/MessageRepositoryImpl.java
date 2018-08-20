@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Repository
-public class MessageRepositoryImpl extends AbstractRepositoryImpl<Message, Integer> implements MessageRepositoryCustom {
+public class MessageRepositoryImpl extends AbstractRepositoryImpl<Message, Long> implements MessageRepositoryCustom {
 
     protected MessageRepositoryImpl() {
         super(Message.class);
@@ -29,7 +29,7 @@ public class MessageRepositoryImpl extends AbstractRepositoryImpl<Message, Integ
     }
 
     @Override
-    public Message findOneFullInfo(final Integer id) {
+    public Message findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Message> cq = cb.createQuery(Message.class);

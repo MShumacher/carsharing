@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class CustomAdService extends CustomAbstractService<Ad, Integer> implements AdService {
+public class CustomAdService extends CustomAbstractService<Ad, Long> implements AdService {
 
     @Autowired
     private AdRepository adRepository;

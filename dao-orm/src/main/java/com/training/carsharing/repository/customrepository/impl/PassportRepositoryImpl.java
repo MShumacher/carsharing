@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Repository
-public class PassportRepositoryImpl extends AbstractRepositoryImpl<Passport, Integer> implements PassportRepositoryCustom {
+public class PassportRepositoryImpl extends AbstractRepositoryImpl<Passport, Long> implements PassportRepositoryCustom {
 
     protected PassportRepositoryImpl() {
         super(Passport.class);
@@ -29,7 +29,7 @@ public class PassportRepositoryImpl extends AbstractRepositoryImpl<Passport, Int
     }
 
     @Override
-    public Passport findOneFullInfo(final Integer id) {
+    public Passport findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Passport> cq = cb.createQuery(Passport.class);

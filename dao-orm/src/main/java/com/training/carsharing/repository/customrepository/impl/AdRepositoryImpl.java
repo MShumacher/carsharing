@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Repository
-public class AdRepositoryImpl extends AbstractRepositoryImpl<Ad, Integer> implements AdRepositoryCustom {
+public class AdRepositoryImpl extends AbstractRepositoryImpl<Ad, Long> implements AdRepositoryCustom {
 
     protected AdRepositoryImpl() {
         super(Ad.class);
@@ -29,7 +29,7 @@ public class AdRepositoryImpl extends AbstractRepositoryImpl<Ad, Integer> implem
     }
 
     @Override
-    public Ad findOneFullInfo(final Integer id) {
+    public Ad findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Ad> cq = cb.createQuery(Ad.class);

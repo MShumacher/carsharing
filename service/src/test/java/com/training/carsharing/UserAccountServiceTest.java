@@ -72,7 +72,7 @@ public class UserAccountServiceTest extends AbstractTest {
         final List<UserAccount> allEntities = getUserAccountService().findAllFullInfo();
 
         for (final UserAccount entityFromDB : allEntities) {
-            assertNotNullFieldsExcept(entityFromDB, "passport", "drivingLicense", "photoLink");
+            assertNotNullFieldsExcept(entityFromDB, "passport", "drivingLicense", "photoLink", "createdBy", "lastModifiedBy");
         }
         assertEquals(randomObjectsCount + initialCount, allEntities.size());
     }

@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaAuditing
 @Import({ ServiceConfig.class})
 //@PropertySource(value = "classpath:jdbc.properties")
 public class WebConfig {

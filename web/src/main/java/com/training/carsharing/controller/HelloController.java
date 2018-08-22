@@ -15,8 +15,7 @@ public class HelloController {
     @RequestMapping("/")
     public Brand index() {
         Brand brand = brandService.createEntity();
-        brand.setName("Audi");
-//        return brand;
+        brand.setName("Mercedes");
         return brandService.save(brand);
 //        return brandService.findOneFullInfo(583L);
 //        return brandService.findById(583L);

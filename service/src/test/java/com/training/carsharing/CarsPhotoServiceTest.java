@@ -45,7 +45,7 @@ public class CarsPhotoServiceTest extends AbstractTest {
         assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(newLink, updatedEntityFromDB.getLink());
-        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().get().isAfter(entity.getLastModifiedDate().get()));
     }
 
     @Test

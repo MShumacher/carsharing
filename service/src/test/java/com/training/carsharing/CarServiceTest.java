@@ -55,7 +55,7 @@ public class CarServiceTest extends AbstractTest {
         assertEquals(entity.getDrive().getId(), entityFromDB.getDrive().getId());
         assertEquals(entity.getEngineType().getId(), entityFromDB.getEngineType().getId());
         assertEquals(newInsurance, updatedEntityFromDB.getInsurance());
-        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().get().isAfter(entity.getLastModifiedDate().get()));
     }
 
     @Test

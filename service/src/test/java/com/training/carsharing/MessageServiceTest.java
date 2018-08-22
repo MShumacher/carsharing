@@ -50,7 +50,7 @@ public class MessageServiceTest extends AbstractTest {
         assertEquals(entity.getSender().getId(), entityFromDB.getSender().getId());
         assertEquals(entity.getRecipient().getId(), entityFromDB.getRecipient().getId());
         assertEquals(newMessage, updatedEntityFromDB.getMessage());
-        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().get().isAfter(entity.getLastModifiedDate().get()));
     }
 
     @Test

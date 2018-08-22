@@ -45,7 +45,7 @@ public class ModelServiceTest extends AbstractTest {
         assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
         assertEquals(entity.getBrand().getId(), updatedEntityFromDB.getBrand().getId());
         assertEquals(newName, updatedEntityFromDB.getName());
-        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().get().isAfter(entity.getLastModifiedDate().get()));
     }
 
 

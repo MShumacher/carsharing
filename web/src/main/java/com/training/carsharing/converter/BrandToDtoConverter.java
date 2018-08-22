@@ -14,9 +14,9 @@ public class BrandToDtoConverter implements Function<Brand, BrandDto> {
             final BrandDto brandDto = new BrandDto();
             brandDto.setId(entity.getId());
             brandDto.setName(entity.getName());
-            brandDto.setCreatedDate(entity.getCreatedDate());
+            brandDto.setCreatedDate(entity.getCreatedDate().get());
             //brandDto.setCreatedBy(entity.getCreatedBy());
-            brandDto.setLastModifiedDate(entity.getLastModifiedDate());
+            brandDto.setLastModifiedDate(entity.getLastModifiedDate().get());
             //brandDto.setLastModifiedBy(entity.getLastModifiedBy());
             return brandDto;
         }

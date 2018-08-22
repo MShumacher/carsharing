@@ -42,7 +42,7 @@ public class UserAccountServiceTest extends AbstractTest {
         assertEqualsFieldsExcept(entity, updatedEntityFromDB, "version", "lastModifiedDate", "email");
         assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
         assertEquals(email, updatedEntityFromDB.getEmail());
-        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().get().isAfter(entity.getLastModifiedDate().get()));
     }
 
 

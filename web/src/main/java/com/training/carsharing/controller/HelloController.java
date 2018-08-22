@@ -14,11 +14,11 @@ public class HelloController {
 
     @RequestMapping("/")
     public Brand index() {
-        Brand brand = brandService.createEntity();
-        brand.setName("Audi");
+//        Brand brand = brandService.createEntity();
+ //       brand.setName("Audi");
 // return       brandService.save(brand);
-        return brandService.findOneFullInfo(442L);
- //       return brandService.findById(259L);
+//        return brandService.findOneFullInfo(583L);
+        return brandService.findById(583L);
     }
 
 }

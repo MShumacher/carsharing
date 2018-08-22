@@ -2,14 +2,16 @@ package com.training.carsharing.model.impl;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.AbstractAuditable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
-public abstract class BaseEntity{
+public abstract class BaseEntity { //extends AbstractAuditable<UserAccount, Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,16 +60,16 @@ public abstract class BaseEntity{
         this.id = id;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    public Optional<LocalDateTime> getCreatedDate() {
+        return Optional.ofNullable(createdDate);
     }
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
+    public Optional<LocalDateTime> getLastModifiedDate() {
+        return Optional.ofNullable(lastModifiedDate);
     }
 
     public void setLastModifiedDate(LocalDateTime lastModifiedDate) {

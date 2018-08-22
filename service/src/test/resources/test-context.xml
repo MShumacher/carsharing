@@ -17,8 +17,8 @@
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource" destroy-method="close"
-          p:driverClassName="com.mysql.jdbc.Driver" p:url="${db.url}"
-          p:username="${db.user}" p:password="${db.password}" />
+          p:driverClassName="${db.driverClassName}" p:url="${db.url}"
+          p:username="${db.username}" p:password="${db.password}" />
 
     <import resource="service-context.xml" />
 

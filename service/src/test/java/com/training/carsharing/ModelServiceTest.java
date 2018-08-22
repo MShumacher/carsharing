@@ -25,11 +25,9 @@ public class ModelServiceTest extends AbstractTest {
 
         final Model entityFromDB = getModelService().findOneFullInfo(entity.getId());
 
-        assertEqualsFieldsExcept(entity,entityFromDB, "brand");
-        assertEquals(entity.getBrand().getId(),entityFromDB.getBrand().getId());
+        assertEqualsFieldsExcept(entity, entityFromDB, "brand");
+        assertEquals(entity.getBrand().getId(), entityFromDB.getBrand().getId());
         assertNotNullFieldsExcept(entityFromDB);
-
-        assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
 
     @Test
@@ -39,15 +37,16 @@ public class ModelServiceTest extends AbstractTest {
         final Model entityFromDB = getModelService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
+        Thread.currentThread().sleep(500);
         getModelService().save(entityFromDB);
 
         final Model updatedEntityFromDB = getModelService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "brand", "name");
-        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
-        assertEquals(entity.getBrand().getId(),updatedEntityFromDB.getBrand().getId());
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB, "version", "lastModifiedDate", "brand", "name");
+        assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
+        assertEquals(entity.getBrand().getId(), updatedEntityFromDB.getBrand().getId());
         assertEquals(newName, updatedEntityFromDB.getName());
-        assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
-     }
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
+    }
 
 
     @Test

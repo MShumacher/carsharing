@@ -13,23 +13,15 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-
 @Repository
-public class UserAccountRepositoryImpl extends AbstractRepositoryImpl<UserAccount, Integer> implements UserAccountRepositoryCustom {
+public class UserAccountRepositoryImpl extends AbstractRepositoryImpl<UserAccount, Long> implements UserAccountRepositoryCustom {
 
     protected UserAccountRepositoryImpl() {
         super(UserAccount.class);
     }
 
     @Override
-    public UserAccount createEntity() {
-        final UserAccount userAccount = new UserAccount();
-        userAccount.setVersion(userAccount.DEFAULT_VERSION);
-        return userAccount;
-    }
-
-    @Override
-    public UserAccount findOneFullInfo(final Integer id) {
+    public UserAccount findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<UserAccount> cq = cb.createQuery(UserAccount.class);

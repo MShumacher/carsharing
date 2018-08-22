@@ -15,21 +15,15 @@ import java.util.List;
 
 
 @Repository
-public class MessageRepositoryImpl extends AbstractRepositoryImpl<Message, Integer> implements MessageRepositoryCustom {
+public class MessageRepositoryImpl extends AbstractRepositoryImpl<Message, Long> implements MessageRepositoryCustom {
 
     protected MessageRepositoryImpl() {
         super(Message.class);
     }
 
-    @Override
-    public Message createEntity() {
-        final Message car = new Message();
-        car.setVersion(Message.DEFAULT_VERSION);
-        return car;
-    }
 
     @Override
-    public Message findOneFullInfo(final Integer id) {
+    public Message findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Message> cq = cb.createQuery(Message.class);

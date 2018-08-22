@@ -14,22 +14,15 @@ import java.util.List;
 
 
 @Repository
-public class BodyTypeRepositoryImpl extends AbstractRepositoryImpl<BodyType, Integer> implements BodyTypeRepositoryCustom {
+public class BodyTypeRepositoryImpl extends AbstractRepositoryImpl<BodyType, Long> implements BodyTypeRepositoryCustom {
 
     protected BodyTypeRepositoryImpl() {
         super(BodyType.class);
     }
 
-    @Override
-    public BodyType createEntity() {
-        final BodyType parameter = new BodyType();
-        parameter.setVersion(BodyType.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
-    public BodyType findOneFullInfo(final Integer id) {
+    public BodyType findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<BodyType> cq = cb.createQuery(BodyType.class);

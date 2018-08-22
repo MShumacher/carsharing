@@ -26,8 +26,6 @@ public class BodyTypeServiceTest extends AbstractTest {
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
-
-        assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
 
     @Test
@@ -37,13 +35,14 @@ public class BodyTypeServiceTest extends AbstractTest {
         final BodyType entityFromDB = getBodyTypeService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
+        Thread.currentThread().sleep(500);
         getBodyTypeService().save(entityFromDB);
 
         final BodyType updatedEntityFromDB = getBodyTypeService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
+        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "lastModifiedDate", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
-        assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
      }
 
 

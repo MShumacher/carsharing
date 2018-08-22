@@ -1,106 +1,76 @@
 package com.training.carsharing.impl;
 
 import com.training.carsharing.AbstractService;
+import com.training.carsharing.repository.AbstractRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomAbstractService<T, REPOSITORY, ID> implements AbstractService<T, REPOSITORY, ID> {
+public abstract class CustomAbstractService<ENTITY, ID> implements AbstractService<ENTITY, ID> {
 
-    public CustomAbstractService(Class<? extends T> entityClass) {
+    public CustomAbstractService(Class<? extends ENTITY> entityClass) {
         this.entityClass = entityClass;
     }
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(CustomAbstractService.class);
 
-    private Class<? extends T> entityClass;
+    private Class<? extends ENTITY> entityClass;
 
     @Autowired
-    private REPOSITORY repository;
+    private AbstractRepository<ENTITY, ID> repository;
 
     @Override
-    public T createEntity() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Method method = repository.getClass().getMethod("createEntity");
-        T entity = (T) method.invoke(repository);
+    public ENTITY createEntity() {
+        ENTITY entity = repository.createEntity();
         return entity;
     }
 
     @Override
-    public T save(T entity) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-//        Method[] methods = repository.getClass().getMethods();
-//        for (Method method : methods) {
-//            System.out.println(method.getName());
-//        }
-        Method methodSetUpdated = entityClass.getMethod("setUpdated", Date.class);
-        final Date modifiedOn = new Date();
-        methodSetUpdated.invoke(entity, modifiedOn);
-        Method methodGetId = entityClass.getMethod("getId");
-        if (methodGetId.invoke(entity) == null) {
-            Method methodSetCreated = entityClass.getMethod("setCreated", Date.class);
-            methodSetCreated.invoke(entity, modifiedOn);
-            LOGGER.info("new saved entity: {}", entity);
-        } else {
-            LOGGER.info("updated entity: {}", entity);
-        }
-        Method method = repository.getClass().getMethod("save", Object.class);
-        entity = (T) method.invoke(repository, entity);
-        return entity;
+    public ENTITY save(ENTITY entity) {
+        LOGGER.info("saved entity: {}", entity);
+        return repository.save(entity);
     }
 
     @Override
-    public T findById(final ID id) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Method method = repository.getClass().getMethod("findById", Object.class/*id.getClass()*/);
-        //findById(ID id) возвращает тип Optional<T>. чтобы получить entity, нужно сделать get
-        final Optional entityOptional = (Optional) method.invoke(repository, id);
-        T entity = null;
-        if (entityOptional.isPresent()) {
-            entity = (T) entityOptional.get();
-        }
+    public ENTITY findById(final ID id) {
+        final Optional<ENTITY> entityById = repository.findById(id);
+        LOGGER.info("entityById[{}]: {}", id, entityById);
+        return entityById.isPresent() ? entityById.get() : null;
+    }
+
+    @Override
+    public ENTITY findOneFullInfo(final ID id) {
+        final ENTITY entity = repository.findOneFullInfo(id);
         LOGGER.debug("entityById[{}]: {}", id, entity);
         return entity;
     }
 
     @Override
-    public T findOneFullInfo(final ID id) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Method method = repository.getClass().getMethod("findOneFullInfo", Object.class);
-        final T entity = (T) method.invoke(repository, id);
-        LOGGER.debug("entityById[{}]: {}", id, entity);
-        return entity;
-    }
-
-    @Override
-    public List<T> findAll() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method method = repository.getClass().getMethod("findAll");
-        List<T> all = (List<T>) method.invoke(repository);
+    public List<ENTITY> findAll() {
+        List<ENTITY> all = (List<ENTITY>) repository.findAll();
         LOGGER.debug("total count {} entities in DB: {}", repository.getClass().getSimpleName(), all.size());
         return all;
     }
 
     @Override
-    public List<T> findAllFullInfo() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method method = repository.getClass().getMethod("findAllFullInfo");
-        List<T> all = (List<T>) method.invoke(repository);
+    public List<ENTITY> findAllFullInfo() {
+        List<ENTITY> all = repository.findAllFullInfo();
         LOGGER.debug("total count {} entities in DB: {}", repository.getClass().getSimpleName(), all.size());
         return all;
     }
 
     @Override
-    public void delete(final T entity) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public void delete(final ENTITY entity) {
         LOGGER.info("delete {} entity: {}", repository.getClass().getSimpleName(), entity);
-        Method method = repository.getClass().getMethod("delete", Object.class);
-        method.invoke(repository, entity);
+        repository.delete(entity);
     }
 
     @Override
-    public void deleteAll() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public void deleteAll() {
         LOGGER.info("delete all {} entities", repository.getClass().getSimpleName());
-        Method method = repository.getClass().getMethod("deleteAll");
-        method.invoke(repository);
+        repository.deleteAll();
     }
 }

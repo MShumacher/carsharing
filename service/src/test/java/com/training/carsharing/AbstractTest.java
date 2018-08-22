@@ -1,23 +1,28 @@
 package com.training.carsharing;
 
+import com.training.carsharing.config.ServiceTestConfig;
 import com.training.carsharing.model.enums.Role;
 import com.training.carsharing.model.impl.*;
 import com.training.carsharing.model.impl.Calendar;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:test-context.xml")
+@TestPropertySource(value = "classpath:jdbc-test.properties")
+@ContextConfiguration(classes = {ServiceTestConfig.class})
+//@ContextConfiguration(locations = "classpath:test-context.xml")
 public abstract class AbstractTest {
 
     @Autowired
@@ -54,8 +59,6 @@ public abstract class AbstractTest {
     private MessageService messageService;
 
     private static final Random RANDOM = new Random();
-
-    private static SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
     public UserAccountService getUserAccountService() {
         return userAccountService;
@@ -164,6 +167,7 @@ public abstract class AbstractTest {
         entity.setName("Name-" + getRandomPrefix());
         return getFuelService().save(entity);
     }
+
     protected UserAccount getNewUserAccount() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         final UserAccount entity = getUserAccountService().createEntity();
         entity.setEmail("Email-" + getRandomPrefix());
@@ -285,12 +289,6 @@ public abstract class AbstractTest {
         return getAdService().save(entity);
     }
 
-    protected static void assertEqualsDates(Date date1, Date date2) {
-        String d1 = formatter.format(date1);
-        String d2 = formatter.format(date2);
-        assertTrue(d1.equals(d2));
-    }
-
     protected void assertNotNullFieldsExcept(Object entity, String... unverifiableFields) throws IllegalAccessException {
         Collection<String> unverifiableFieldsCollection = Arrays.asList(unverifiableFields);
         Field[] fields = getAllFields(entity);
@@ -298,7 +296,7 @@ public abstract class AbstractTest {
             field.setAccessible(true);
             final String fieldName = field.getName();
             if (!unverifiableFieldsCollection.stream().anyMatch(fieldName::equalsIgnoreCase)) {
-                System.out.println("Имя: " + field.getName() + " Тип: " + field.getType().getSimpleName() + " Значение: " + field.get(entity));
+//                System.out.println("Имя: " + field.getName() + " Тип: " + field.getType().getSimpleName() + " Значение: " + field.get(entity));
                 assertNotNull(field.get(entity));
             }
         }
@@ -312,10 +310,7 @@ public abstract class AbstractTest {
             field.setAccessible(true);
             final String fieldName = field.getName();
             if (!unverifiableFieldsCollection.stream().anyMatch(fieldName::equalsIgnoreCase)) {
-                System.out.println("field: " + fieldName + " " + field.get(entity) + "==" + field.get(entityFromDB));
-//                if ("Date".equalsIgnoreCase(field.getType().getSimpleName())) {
-//                    assertEquals((Date) field.get(entity), (Date) field.get(entityFromDB));
-//                } else {
+//                System.out.println("field: " + fieldName + " " + field.get(entity) + "==" + field.get(entityFromDB));
                 assertEquals(field.get(entity), field.get(entityFromDB));
             }
 //            }

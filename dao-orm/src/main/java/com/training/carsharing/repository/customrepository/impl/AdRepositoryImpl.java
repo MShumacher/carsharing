@@ -15,21 +15,14 @@ import java.util.List;
 
 
 @Repository
-public class AdRepositoryImpl extends AbstractRepositoryImpl<Ad, Integer> implements AdRepositoryCustom {
+public class AdRepositoryImpl extends AbstractRepositoryImpl<Ad, Long> implements AdRepositoryCustom {
 
     protected AdRepositoryImpl() {
         super(Ad.class);
     }
 
     @Override
-    public Ad createEntity() {
-        final Ad ad = new Ad();
-        ad.setVersion(Ad.DEFAULT_VERSION);
-        return ad;
-    }
-
-    @Override
-    public Ad findOneFullInfo(final Integer id) {
+    public Ad findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Ad> cq = cb.createQuery(Ad.class);

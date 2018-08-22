@@ -14,22 +14,15 @@ import java.util.List;
 
 
 @Repository
-public class DriveRepositoryImpl extends AbstractRepositoryImpl<Drive, Integer> implements DriveRepositoryCustom {
+public class DriveRepositoryImpl extends AbstractRepositoryImpl<Drive, Long> implements DriveRepositoryCustom {
 
     protected DriveRepositoryImpl() {
         super(Drive.class);
     }
 
-    @Override
-    public Drive createEntity() {
-        final Drive parameter = new Drive();
-        parameter.setVersion(Drive.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
-    public Drive findOneFullInfo(final Integer id) {
+    public Drive findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Drive> cq = cb.createQuery(Drive.class);

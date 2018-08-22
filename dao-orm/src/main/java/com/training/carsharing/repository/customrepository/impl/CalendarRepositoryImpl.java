@@ -15,21 +15,14 @@ import java.util.List;
 
 
 @Repository
-public class CalendarRepositoryImpl extends AbstractRepositoryImpl<Calendar, Integer> implements CalendarRepositoryCustom {
+public class CalendarRepositoryImpl extends AbstractRepositoryImpl<Calendar, Long> implements CalendarRepositoryCustom {
 
     protected CalendarRepositoryImpl() {
         super(Calendar.class);
     }
 
     @Override
-    public Calendar createEntity() {
-        final Calendar calendar = new Calendar();
-        calendar.setVersion(Calendar.DEFAULT_VERSION);
-        return calendar;
-    }
-
-    @Override
-    public Calendar findOneFullInfo(final Integer id) {
+    public Calendar findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Calendar> cq = cb.createQuery(Calendar.class);

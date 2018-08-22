@@ -15,21 +15,14 @@ import java.util.List;
 
 
 @Repository
-public class DrivingLicenseRepositoryImpl extends AbstractRepositoryImpl<DrivingLicense, Integer> implements DrivingLicenseRepositoryCustom {
+public class DrivingLicenseRepositoryImpl extends AbstractRepositoryImpl<DrivingLicense, Long> implements DrivingLicenseRepositoryCustom {
 
     protected DrivingLicenseRepositoryImpl() {
         super(DrivingLicense.class);
     }
 
     @Override
-    public DrivingLicense createEntity() {
-        final DrivingLicense drivingLicense = new DrivingLicense();
-        drivingLicense.setVersion(DrivingLicense.DEFAULT_VERSION);
-        return drivingLicense;
-    }
-
-    @Override
-    public DrivingLicense findOneFullInfo(final Integer id) {
+    public DrivingLicense findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<DrivingLicense> cq = cb.createQuery(DrivingLicense.class);

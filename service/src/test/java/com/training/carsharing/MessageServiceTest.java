@@ -16,7 +16,7 @@ public class MessageServiceTest extends AbstractTest {
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         getCarService().deleteAll();
-        getUserAccountService().deleteAll();
+//        getUserAccountService().deleteAll();
         getMessageService().deleteAll();
     }
 
@@ -26,13 +26,11 @@ public class MessageServiceTest extends AbstractTest {
 
         final Message entityFromDB = getMessageService().findOneFullInfo(entity.getId());
 
-        assertEqualsFieldsExcept(entity, entityFromDB,"ad", "sender", "recipient");
+        assertEqualsFieldsExcept(entity, entityFromDB, "ad", "sender", "recipient");
         assertEquals(entity.getAd().getId(), entityFromDB.getAd().getId());
         assertEquals(entity.getSender().getId(), entityFromDB.getSender().getId());
         assertEquals(entity.getRecipient().getId(), entityFromDB.getRecipient().getId());
         assertNotNullFieldsExcept(entityFromDB);
-
-        assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
 
     @Test
@@ -42,19 +40,18 @@ public class MessageServiceTest extends AbstractTest {
         final Message entityFromDB = getMessageService().findOneFullInfo(entity.getId());
         final String newMessage = "new-message-" + getRandomPrefix();
         entityFromDB.setMessage(newMessage);
+        Thread.currentThread().sleep(500);
         getMessageService().save(entityFromDB);
 
         final Message updatedEntityFromDB = getMessageService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity, updatedEntityFromDB,"version","updated","message", "ad", "sender","recipient");
-        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB, "version", "lastModifiedDate", "message", "ad", "sender", "recipient");
+        assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
         assertEquals(entity.getAd().getId(), entityFromDB.getAd().getId());
         assertEquals(entity.getSender().getId(), entityFromDB.getSender().getId());
         assertEquals(entity.getRecipient().getId(), entityFromDB.getRecipient().getId());
         assertEquals(newMessage, updatedEntityFromDB.getMessage());
-        long time = updatedEntityFromDB.getUpdated().getTime();
-        final long time1 = entity.getUpdated().getTime();
-        assertTrue(time > time1);
-     }
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
+    }
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {

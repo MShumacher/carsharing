@@ -15,21 +15,14 @@ import java.util.List;
 
 
 @Repository
-public class PassportRepositoryImpl extends AbstractRepositoryImpl<Passport, Integer> implements PassportRepositoryCustom {
+public class PassportRepositoryImpl extends AbstractRepositoryImpl<Passport, Long> implements PassportRepositoryCustom {
 
     protected PassportRepositoryImpl() {
         super(Passport.class);
     }
 
     @Override
-    public Passport createEntity() {
-        final Passport passport = new Passport();
-        passport.setVersion(Passport.DEFAULT_VERSION);
-        return passport;
-    }
-
-    @Override
-    public Passport findOneFullInfo(final Integer id) {
+    public Passport findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Passport> cq = cb.createQuery(Passport.class);

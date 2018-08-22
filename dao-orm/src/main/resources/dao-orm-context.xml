@@ -20,15 +20,15 @@
 
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-          <!--p:dataSource-ref="dataSource" -->
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
-        <property name="persistenceUnitName" value="my-unit"/>
+        <!--<property name="persistenceUnitName" value="my-unit"/>-->
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <prop key="hibernate.id.new_generator_mappings">false</prop>
                 <prop key="hibernate.physical_naming_strategy">
                     com.training.carsharing.model.util.CustomPhysicalNamingStrategy</prop>
             </props>
@@ -40,8 +40,8 @@
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="com.mysql.cj.jdbc.Driver" p:url="${db.url}"
-          p:username="${db.user}" p:password="${db.password}" />
+          p:driverClassName="${db.driverClassName}" p:url="${db.url}"
+          p:username="${db.username}" p:password="${db.password}" />
 
     <tx:annotation-driven />
 

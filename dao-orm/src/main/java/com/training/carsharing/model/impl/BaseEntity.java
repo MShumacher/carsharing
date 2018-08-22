@@ -1,34 +1,44 @@
 package com.training.carsharing.model.impl;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
-public abstract class BaseEntity {
-
-    public static int DEFAULT_VERSION = 1;
+@EntityListeners({AuditingEntityListener.class})
+public abstract class BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+
+    public static int DEFAULT_VERSION = 1;
+
+    @CreatedDate
+    @Column
+    private LocalDateTime createdDate;
+
+//    @CreatedBy
+//    @ManyToOne
+//    private UserAccount createdBy;
+
+    @LastModifiedDate
+    @Column
+    private LocalDateTime lastModifiedDate;
+
+//    @LastModifiedBy
+//    @ManyToOne
+//    private UserAccount lastModifiedBy;
 
     @Column
     @Version
     private Integer version;
-
-    @Column(updatable = false)
-    private Long created;
-
-    @Column
-    private Long updated;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
 
     public Integer getVersion() {
         return version;
@@ -38,24 +48,48 @@ public abstract class BaseEntity {
         this.version = version;
     }
 
-    public Date getCreated() {
-        return new Date(created);
-    }
-
-    public void setCreated(final Date created) {
-        this.created = created.getTime();
-    }
-
-    public Date getUpdated() {
-        return new Date(updated);
-    }
-
-    public void setUpdated(final Date updated) {
-        this.updated = updated.getTime();
-    }
-
     @Override
     public String toString() {
-        return " id=" + id;
+        return " id=" + getId();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+//    public UserAccount getCreatedBy() {
+//        return createdBy;
+//    }
+//
+//    public void setCreatedBy(UserAccount createdBy) {
+//        this.createdBy = createdBy;
+//    }
+//
+//    public UserAccount getLastModifiedBy() {
+//        return lastModifiedBy;
+//    }
+//
+//    public void setLastModifiedBy(UserAccount lastModifiedBy) {
+//        this.lastModifiedBy = lastModifiedBy;
+//    }
 }

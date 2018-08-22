@@ -18,7 +18,7 @@ public class CalendarServiceTest extends AbstractTest {
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         getCalendarService().deleteAll();
         getCarService().deleteAll();
-        getUserAccountService().deleteAll();
+//        getUserAccountService().deleteAll();
     }
 
     @Test
@@ -27,12 +27,10 @@ public class CalendarServiceTest extends AbstractTest {
 
         final Calendar entityFromDB = getCalendarService().findOneFullInfo(entity.getId());
 
-        assertEqualsFieldsExcept(entity,entityFromDB, "car", "renter");
+        assertEqualsFieldsExcept(entity, entityFromDB, "car", "renter");
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(entity.getRenter().getId(), entityFromDB.getRenter().getId());
         assertNotNullFieldsExcept(entityFromDB);
-
-        assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
 
     @Test
@@ -40,18 +38,19 @@ public class CalendarServiceTest extends AbstractTest {
         final Calendar entity = saveNewCalendar();
 
         final Calendar entityFromDB = getCalendarService().findOneFullInfo(entity.getId());
-        final Date newStart = getRandomDate();
-        entityFromDB.setStart(newStart);
+        final Double newTotalPrice = getRandomDouble();
+        entityFromDB.setTotalPrice(newTotalPrice);
+        Thread.currentThread().sleep(500);
         getCalendarService().save(entityFromDB);
 
         final Calendar updatedEntityFromDB = getCalendarService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version","updated","start", "car", "renter");
-        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB, "version", "lastModifiedDate", "totalPrice", "car", "renter");
+        assertEquals(newTotalPrice, updatedEntityFromDB.getTotalPrice());
+        assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(entity.getRenter().getId(), entityFromDB.getRenter().getId());
-        assertEqualsDates(newStart, updatedEntityFromDB.getStart());
-        assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
-     }
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
+    }
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {

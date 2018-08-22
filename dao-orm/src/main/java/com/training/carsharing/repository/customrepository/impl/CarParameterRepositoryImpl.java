@@ -14,20 +14,13 @@ import java.util.List;
 
 
 @Repository
-public class CarParameterRepositoryImpl extends AbstractRepositoryImpl<CarParameter, Integer> implements CarParameterRepositoryCustom {
+public class CarParameterRepositoryImpl extends AbstractRepositoryImpl<CarParameter, Long> implements CarParameterRepositoryCustom {
 
     protected CarParameterRepositoryImpl() { super(CarParameter.class); }
 
-    @Override
-    public CarParameter createEntity() {
-        final CarParameter parameter = new CarParameter();
-        parameter.setVersion(CarParameter.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
-    public CarParameter findOneFullInfo(final Integer id) {
+    public CarParameter findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<CarParameter> cq = cb.createQuery(CarParameter.class);

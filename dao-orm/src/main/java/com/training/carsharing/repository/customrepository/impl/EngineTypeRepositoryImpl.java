@@ -15,21 +15,14 @@ import java.util.List;
 
 
 @Repository
-public class EngineTypeRepositoryImpl extends AbstractRepositoryImpl<EngineType, Integer> implements EngineTypeRepositoryCustom {
+public class EngineTypeRepositoryImpl extends AbstractRepositoryImpl<EngineType, Long> implements EngineTypeRepositoryCustom {
 
     protected EngineTypeRepositoryImpl() {
         super(EngineType.class);
     }
 
     @Override
-    public EngineType createEntity() {
-        final EngineType model = new EngineType();
-        model.setVersion(EngineType.DEFAULT_VERSION);
-        return model;
-    }
-
-    @Override
-    public EngineType findOneFullInfo(Integer id) {
+    public EngineType findOneFullInfo(Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<EngineType> cq = cb.createQuery(EngineType.class);

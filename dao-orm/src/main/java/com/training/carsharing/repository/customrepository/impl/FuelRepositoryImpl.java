@@ -14,22 +14,15 @@ import java.util.List;
 
 
 @Repository
-public class FuelRepositoryImpl extends AbstractRepositoryImpl<Fuel, Integer> implements FuelRepositoryCustom {
+public class FuelRepositoryImpl extends AbstractRepositoryImpl<Fuel, Long> implements FuelRepositoryCustom {
 
     protected FuelRepositoryImpl() {
         super(Fuel.class);
     }
 
-    @Override
-    public Fuel createEntity() {
-        final Fuel parameter = new Fuel();
-        parameter.setVersion(Fuel.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
-    public Fuel findOneFullInfo(final Integer id) {
+    public Fuel findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Fuel> cq = cb.createQuery(Fuel.class);

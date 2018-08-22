@@ -14,22 +14,15 @@ import java.util.List;
 
 
 @Repository
-public class BrandRepositoryImpl extends AbstractRepositoryImpl<Brand, Integer> implements BrandRepositoryCustom {
+public class BrandRepositoryImpl extends AbstractRepositoryImpl<Brand, Long> implements BrandRepositoryCustom {
 
     protected BrandRepositoryImpl() {
         super(Brand.class);
     }
 
-    @Override
-    public Brand createEntity() {
-        final Brand parameter = new Brand();
-        parameter.setVersion(Brand.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
-    public Brand findOneFullInfo(final Integer id) {
+    public Brand findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);

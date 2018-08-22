@@ -15,21 +15,14 @@ import java.util.List;
 
 
 @Repository
-public class CarRepositoryImpl extends AbstractRepositoryImpl<Car, Integer> implements CarRepositoryCustom {
+public class CarRepositoryImpl extends AbstractRepositoryImpl<Car, Long> implements CarRepositoryCustom {
 
     protected CarRepositoryImpl() {
         super(Car.class);
     }
 
     @Override
-    public Car createEntity() {
-        final Car car = new Car();
-        car.setVersion(Car.DEFAULT_VERSION);
-        return car;
-    }
-
-    @Override
-    public Car findOneFullInfo(final Integer id) {
+    public Car findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Car> cq = cb.createQuery(Car.class);

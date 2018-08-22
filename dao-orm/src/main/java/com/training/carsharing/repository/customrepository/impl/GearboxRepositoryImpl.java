@@ -14,22 +14,15 @@ import java.util.List;
 
 
 @Repository
-public class GearboxRepositoryImpl extends AbstractRepositoryImpl<Gearbox, Integer> implements GearboxRepositoryCustom {
+public class GearboxRepositoryImpl extends AbstractRepositoryImpl<Gearbox, Long> implements GearboxRepositoryCustom {
 
     protected GearboxRepositoryImpl() {
         super(Gearbox.class);
     }
 
-    @Override
-    public Gearbox createEntity() {
-        final Gearbox parameter = new Gearbox();
-        parameter.setVersion(Gearbox.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
-    public Gearbox findOneFullInfo(final Integer id) {
+    public Gearbox findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();
         final CriteriaQuery<Gearbox> cq = cb.createQuery(Gearbox.class);

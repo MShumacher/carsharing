@@ -22,13 +22,6 @@ public class AdRepositoryImpl extends AbstractRepositoryImpl<Ad, Long> implement
     }
 
     @Override
-    public Ad createEntity() {
-        final Ad ad = new Ad();
-        ad.setVersion(Ad.DEFAULT_VERSION);
-        return ad;
-    }
-
-    @Override
     public Ad findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();

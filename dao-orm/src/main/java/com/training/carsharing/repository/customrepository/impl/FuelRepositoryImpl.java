@@ -20,13 +20,6 @@ public class FuelRepositoryImpl extends AbstractRepositoryImpl<Fuel, Long> imple
         super(Fuel.class);
     }
 
-    @Override
-    public Fuel createEntity() {
-        final Fuel parameter = new Fuel();
-        parameter.setVersion(Fuel.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
     public Fuel findOneFullInfo(final Long id) {

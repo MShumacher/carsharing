@@ -20,13 +20,6 @@ public class DriveRepositoryImpl extends AbstractRepositoryImpl<Drive, Long> imp
         super(Drive.class);
     }
 
-    @Override
-    public Drive createEntity() {
-        final Drive parameter = new Drive();
-        parameter.setVersion(Drive.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
     public Drive findOneFullInfo(final Long id) {

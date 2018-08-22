@@ -20,13 +20,6 @@ public class BodyTypeRepositoryImpl extends AbstractRepositoryImpl<BodyType, Lon
         super(BodyType.class);
     }
 
-    @Override
-    public BodyType createEntity() {
-        final BodyType parameter = new BodyType();
-        parameter.setVersion(BodyType.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
     public BodyType findOneFullInfo(final Long id) {

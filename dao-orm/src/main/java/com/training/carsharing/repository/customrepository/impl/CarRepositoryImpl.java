@@ -22,13 +22,6 @@ public class CarRepositoryImpl extends AbstractRepositoryImpl<Car, Long> impleme
     }
 
     @Override
-    public Car createEntity() {
-        final Car car = new Car();
-        car.setVersion(Car.DEFAULT_VERSION);
-        return car;
-    }
-
-    @Override
     public Car findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();

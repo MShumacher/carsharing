@@ -20,13 +20,6 @@ public class GearboxRepositoryImpl extends AbstractRepositoryImpl<Gearbox, Long>
         super(Gearbox.class);
     }
 
-    @Override
-    public Gearbox createEntity() {
-        final Gearbox parameter = new Gearbox();
-        parameter.setVersion(Gearbox.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
     public Gearbox findOneFullInfo(final Long id) {

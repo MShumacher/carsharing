@@ -18,13 +18,6 @@ public class CarParameterRepositoryImpl extends AbstractRepositoryImpl<CarParame
 
     protected CarParameterRepositoryImpl() { super(CarParameter.class); }
 
-    @Override
-    public CarParameter createEntity() {
-        final CarParameter parameter = new CarParameter();
-        parameter.setVersion(CarParameter.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
     public CarParameter findOneFullInfo(final Long id) {

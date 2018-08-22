@@ -22,13 +22,6 @@ public class ModelRepositoryImpl extends AbstractRepositoryImpl<Model, Long> imp
     }
 
     @Override
-    public Model createEntity() {
-        final Model model = new Model();
-        model.setVersion(Model.DEFAULT_VERSION);
-        return model;
-    }
-
-    @Override
     public Model findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();

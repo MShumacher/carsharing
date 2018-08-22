@@ -22,13 +22,6 @@ public class EngineTypeRepositoryImpl extends AbstractRepositoryImpl<EngineType,
     }
 
     @Override
-    public EngineType createEntity() {
-        final EngineType model = new EngineType();
-        model.setVersion(EngineType.DEFAULT_VERSION);
-        return model;
-    }
-
-    @Override
     public EngineType findOneFullInfo(Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();

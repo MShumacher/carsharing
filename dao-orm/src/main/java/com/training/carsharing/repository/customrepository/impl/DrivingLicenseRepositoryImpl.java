@@ -22,13 +22,6 @@ public class DrivingLicenseRepositoryImpl extends AbstractRepositoryImpl<Driving
     }
 
     @Override
-    public DrivingLicense createEntity() {
-        final DrivingLicense drivingLicense = new DrivingLicense();
-        drivingLicense.setVersion(DrivingLicense.DEFAULT_VERSION);
-        return drivingLicense;
-    }
-
-    @Override
     public DrivingLicense findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();

@@ -21,12 +21,6 @@ public class MessageRepositoryImpl extends AbstractRepositoryImpl<Message, Long>
         super(Message.class);
     }
 
-    @Override
-    public Message createEntity() {
-        final Message car = new Message();
-        car.setVersion(Message.DEFAULT_VERSION);
-        return car;
-    }
 
     @Override
     public Message findOneFullInfo(final Long id) {

@@ -22,13 +22,6 @@ public class CalendarRepositoryImpl extends AbstractRepositoryImpl<Calendar, Lon
     }
 
     @Override
-    public Calendar createEntity() {
-        final Calendar calendar = new Calendar();
-        calendar.setVersion(Calendar.DEFAULT_VERSION);
-        return calendar;
-    }
-
-    @Override
     public Calendar findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();

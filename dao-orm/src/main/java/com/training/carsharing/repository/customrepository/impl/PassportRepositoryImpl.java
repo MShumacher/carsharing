@@ -22,13 +22,6 @@ public class PassportRepositoryImpl extends AbstractRepositoryImpl<Passport, Lon
     }
 
     @Override
-    public Passport createEntity() {
-        final Passport passport = new Passport();
-        passport.setVersion(Passport.DEFAULT_VERSION);
-        return passport;
-    }
-
-    @Override
     public Passport findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();

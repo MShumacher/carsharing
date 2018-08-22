@@ -21,13 +21,6 @@ public class UserAccountRepositoryImpl extends AbstractRepositoryImpl<UserAccoun
     }
 
     @Override
-    public UserAccount createEntity() {
-        final UserAccount user = new UserAccount();
-        user.setVersion(user.DEFAULT_VERSION);
-        return user;
-    }
-
-    @Override
     public UserAccount findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();

@@ -20,13 +20,6 @@ public class CarsPhotoRepositoryImpl extends AbstractRepositoryImpl<CarsPhoto, L
  protected CarsPhotoRepositoryImpl() { super(CarsPhoto.class); }
 
     @Override
-    public CarsPhoto createEntity() {
-        final CarsPhoto carsPhoto = new CarsPhoto();
-        carsPhoto.setVersion(CarsPhoto.DEFAULT_VERSION);
-        return carsPhoto;
-    }
-
-    @Override
     public CarsPhoto findOneFullInfo(final Long id) {
         final EntityManager em = getEntityManager();
         final CriteriaBuilder cb = em.getCriteriaBuilder();

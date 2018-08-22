@@ -20,13 +20,6 @@ public class BrandRepositoryImpl extends AbstractRepositoryImpl<Brand, Long> imp
         super(Brand.class);
     }
 
-    @Override
-    public Brand createEntity() {
-        final Brand parameter = new Brand();
-        parameter.setVersion(Brand.DEFAULT_VERSION);
-        return parameter;
-    }
-
     //TODO delete methods
     @Override
     public Brand findOneFullInfo(final Long id) {

@@ -26,9 +26,6 @@ public class PassportServiceTest extends AbstractTest {
 
         assertEqualsFieldsExcept(entity,entityFromDB,"userAccount");
         assertNotNullFieldsExcept(entityFromDB);
-
-    //    assertTrue(entityFromDB.getCreated().isEqual(entityFromDB.getUpdated()));
-//        assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
 
     @Test
@@ -38,17 +35,15 @@ public class PassportServiceTest extends AbstractTest {
         final Passport entityFromDB = getPassportService().findOneFullInfo(entity.getId());
         final String newFullName = "new-name-" + getRandomPrefix();
         entityFromDB.setFullName(newFullName);
-        Thread.currentThread().sleep(2000);
+        Thread.currentThread().sleep(500);
         getPassportService().save(entityFromDB);
 
         final Passport updatedEntityFromDB = getPassportService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "fullName", "userAccount");
+        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "lastModifiedDate", "fullName", "userAccount");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
         assertEquals(newFullName, updatedEntityFromDB.getFullName());
-
-     //   assertTrue(updatedEntityFromDB.getUpdated().isAfter(entity.getUpdated()));
-//        assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
      }
 
 

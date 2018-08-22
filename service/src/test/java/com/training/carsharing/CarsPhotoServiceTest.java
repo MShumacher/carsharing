@@ -25,12 +25,9 @@ public class CarsPhotoServiceTest extends AbstractTest {
 
         final CarsPhoto entityFromDB = getCarsPhotoService().findOneFullInfo(entity.getId());
 
-        assertEqualsFieldsExcept(entity,entityFromDB, "car");
+        assertEqualsFieldsExcept(entity, entityFromDB, "car");
         assertNotNullFieldsExcept(entityFromDB);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
-
-    //    assertTrue(entityFromDB.getCreated().isEqual(entityFromDB.getUpdated()));
-//        assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
 
     @Test
@@ -40,18 +37,16 @@ public class CarsPhotoServiceTest extends AbstractTest {
         final CarsPhoto entityFromDB = getCarsPhotoService().findOneFullInfo(entity.getId());
         final String newLink = "new-link-" + getRandomPrefix();
         entityFromDB.setLink(newLink);
-        Thread.currentThread().sleep(2000);
+        Thread.currentThread().sleep(500);
         getCarsPhotoService().save(entityFromDB);
 
         final CarsPhoto updatedEntityFromDB = getCarsPhotoService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version","updated","link", "car");
-        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB, "version", "lastModifiedDate", "link", "car");
+        assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(newLink, updatedEntityFromDB.getLink());
-
-   //     assertTrue(updatedEntityFromDB.getUpdated().isAfter(entity.getUpdated()));
-//        assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
-     }
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
+    }
 
     @Test
     public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {

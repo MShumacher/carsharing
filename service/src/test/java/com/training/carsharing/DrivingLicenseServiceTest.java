@@ -24,11 +24,8 @@ public class DrivingLicenseServiceTest extends AbstractTest {
 
         final DrivingLicense entityFromDB = getDrivingLicenseService().findOneFullInfo(entity.getId());
 
-        assertEqualsFieldsExcept(entity,entityFromDB, "userAccount");
+        assertEqualsFieldsExcept(entity, entityFromDB, "userAccount");
         assertNotNullFieldsExcept(entityFromDB);
-
-        //assertTrue(entityFromDB.getCreated().isEqual(entityFromDB.getUpdated()));
-//         assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
 
     @Test
@@ -38,18 +35,16 @@ public class DrivingLicenseServiceTest extends AbstractTest {
         final DrivingLicense entityFromDB = getDrivingLicenseService().findOneFullInfo(entity.getId());
         final String newNumber = "new-number-" + getRandomPrefix();
         entityFromDB.setNumber(newNumber);
-        Thread.currentThread().sleep(2000);
+        Thread.currentThread().sleep(500);
         getDrivingLicenseService().save(entityFromDB);
 
         final DrivingLicense updatedEntityFromDB = getDrivingLicenseService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "number", "userAccount");
-        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB, "version", "lastModifiedDate", "number", "userAccount");
+        assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
         assertEquals(newNumber, updatedEntityFromDB.getNumber());
-
-       // assertTrue(updatedEntityFromDB.getUpdated().isAfter(entity.getUpdated()));
-//        assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
-     }
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
+    }
 
 
     @Test

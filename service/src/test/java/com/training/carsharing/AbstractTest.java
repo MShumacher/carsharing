@@ -60,8 +60,6 @@ public abstract class AbstractTest {
 
     private static final Random RANDOM = new Random();
 
-    private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
     public UserAccountService getUserAccountService() {
         return userAccountService;
     }
@@ -291,12 +289,6 @@ public abstract class AbstractTest {
         return getAdService().save(entity);
     }
 
-    protected static void assertEqualsDates(Date date1, Date date2) {
-        String d1 = formatter.format(date1);
-        String d2 = formatter.format(date2);
-        assertTrue(d1.equals(d2));
-    }
-
     protected void assertNotNullFieldsExcept(Object entity, String... unverifiableFields) throws IllegalAccessException {
         Collection<String> unverifiableFieldsCollection = Arrays.asList(unverifiableFields);
         Field[] fields = getAllFields(entity);
@@ -304,7 +296,7 @@ public abstract class AbstractTest {
             field.setAccessible(true);
             final String fieldName = field.getName();
             if (!unverifiableFieldsCollection.stream().anyMatch(fieldName::equalsIgnoreCase)) {
-                System.out.println("Имя: " + field.getName() + " Тип: " + field.getType().getSimpleName() + " Значение: " + field.get(entity));
+//                System.out.println("Имя: " + field.getName() + " Тип: " + field.getType().getSimpleName() + " Значение: " + field.get(entity));
                 assertNotNull(field.get(entity));
             }
         }
@@ -319,9 +311,6 @@ public abstract class AbstractTest {
             final String fieldName = field.getName();
             if (!unverifiableFieldsCollection.stream().anyMatch(fieldName::equalsIgnoreCase)) {
 //                System.out.println("field: " + fieldName + " " + field.get(entity) + "==" + field.get(entityFromDB));
-//                if ("Date".equalsIgnoreCase(field.getType().getSimpleName())) {
-//                    assertEquals((Date) field.get(entity), (Date) field.get(entityFromDB));
-//                } else {
                 assertEquals(field.get(entity), field.get(entityFromDB));
             }
 //            }

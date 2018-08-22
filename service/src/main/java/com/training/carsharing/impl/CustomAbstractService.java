@@ -31,8 +31,7 @@ public abstract class CustomAbstractService<ENTITY, ID> implements AbstractServi
     @Override
     public ENTITY save(ENTITY entity) {
         LOGGER.info("saved entity: {}", entity);
-        ENTITY entity2 = repository.save(entity);
-        return entity2;
+        return repository.save(entity);
     }
 
     @Override

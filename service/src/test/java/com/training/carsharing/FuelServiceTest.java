@@ -26,9 +26,6 @@ public class FuelServiceTest extends AbstractTest {
 
         assertEqualsFieldsExcept(entity,entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
-
-     //   assertTrue(entityFromDB.getCreated().isEqual(entityFromDB.getUpdated()));
-//        assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
 
     @Test
@@ -38,16 +35,14 @@ public class FuelServiceTest extends AbstractTest {
         final Fuel entityFromDB = getFuelService().findOneFullInfo(entity.getId());
         final String newName = "new-name-" + getRandomPrefix();
         entityFromDB.setName(newName);
-        Thread.currentThread().sleep(2000);
+        Thread.currentThread().sleep(500);
         getFuelService().save(entityFromDB);
 
         final Fuel updatedEntityFromDB = getFuelService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "updated", "name");
+        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "lastModifiedDate", "name");
         assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
         assertEquals(newName, updatedEntityFromDB.getName());
-
-    //    assertTrue(updatedEntityFromDB.getUpdated().isAfter(entity.getUpdated()));
-//        assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
      }
 
 

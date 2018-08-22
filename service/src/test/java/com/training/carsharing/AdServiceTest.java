@@ -29,9 +29,6 @@ public class AdServiceTest extends AbstractTest {
         assertNotNullFieldsExcept(entityFromDB);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
-
-        //  assertTrue(entityFromDB.getCreated().isEqual(entityFromDB.getUpdated()));
-//        assertEquals(entityFromDB.getCreated().getTime(),entityFromDB.getUpdated().getTime());
     }
 
     @Test
@@ -41,18 +38,16 @@ public class AdServiceTest extends AbstractTest {
         final Ad entityFromDB = getAdService().findOneFullInfo(entity.getId());
         final String newAddress = "new-address-" + getRandomPrefix();
         entityFromDB.setAddress(newAddress);
-        Thread.currentThread().sleep(2000);
+        Thread.currentThread().sleep(500);
         getAdService().save(entityFromDB);
 
         final Ad updatedEntityFromDB = getAdService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity, updatedEntityFromDB, "version", "updated", "address", "car", "userAccount");
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB, "version", "lastModifiedDate", "address", "car", "userAccount");
         assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
         assertEquals(entity.getCar().getId(), entityFromDB.getCar().getId());
         assertEquals(entity.getUserAccount().getId(), entityFromDB.getUserAccount().getId());
         assertEquals(newAddress, updatedEntityFromDB.getAddress());
-
-        //   assertTrue(updatedEntityFromDB.getUpdated().isAfter(entity.getUpdated()));
-//        assertTrue(updatedEntityFromDB.getUpdated().getTime() >= entity.getUpdated().getTime());
+        assertTrue(updatedEntityFromDB.getLastModifiedDate().isAfter(entity.getLastModifiedDate()));
     }
 
     @Test

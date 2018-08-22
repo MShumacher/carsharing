@@ -4,8 +4,8 @@ CREATE TABLE model (
 	name character varying(50) NOT NULL UNIQUE,
 	brand_id integer NOT NULL,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT model_pk PRIMARY KEY (id)
@@ -19,8 +19,8 @@ CREATE TABLE cars_photo (
 	car_id integer NOT NULL,
 	link character varying(300) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT cars_photo_pk PRIMARY KEY (id)
@@ -44,8 +44,8 @@ CREATE TABLE car (
 	conditions character varying(1000) NOT NULL,
 	insurance character varying(500),
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT car_pk PRIMARY KEY (id)
@@ -63,8 +63,8 @@ CREATE TABLE message (
 	recipient_id integer NOT NULL,
 	viewed BOOLEAN NOT NULL,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT message_pk PRIMARY KEY (id)
@@ -83,8 +83,8 @@ CREATE TABLE user_account (
 	phone character varying(50) NOT NULL UNIQUE,
 	role character varying(50) NOT NULL,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT user_account_pk PRIMARY KEY (id)
@@ -92,14 +92,14 @@ CREATE TABLE user_account (
 
 ALTER TABLE user_account CONSTRAINT user_account_created_by_user foreign key (created_by_id) references user_account(id),
 ALTER TABLE user_account CONSTRAINT user_account_last_modified_by_user foreign key (last_modified_by_id) references user_account(id),
-insert into user_account (email, password, name, phone, role, version, created_date) values ('admin@itools.ru', 'admin', 'admin', '911', 'ROLE_ADMIN', 1, now());
+insert into user_account (email, password, name, phone, role, version, created_date) values ('admin@itools.ru', 'admin', 'admin', '911', 'ROLE_ADMIN', 1, now(3));
 
 CREATE TABLE car_parameter (
 	id serial NOT NULL,
 	name character varying(300) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT parameter_pk PRIMARY KEY (id)
@@ -123,8 +123,8 @@ CREATE TABLE calendar (
 	end DATETIME NOT NULL,
 	total_price numeric(12,2) NOT NULL,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT calendar_pk PRIMARY KEY (id)
@@ -143,8 +143,8 @@ CREATE TABLE ad (
 	body character varying(1000) NOT NULL,
 	active BOOLEAN NOT NULL,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT ad_pk PRIMARY KEY (id)
@@ -164,8 +164,8 @@ CREATE TABLE passport (
 	birth_place character varying(500) NOT NULL,
 	birthday DATETIME NOT NULL,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT passport_pk PRIMARY KEY (id)
@@ -182,8 +182,8 @@ CREATE TABLE driving_license (
 	expiration_date DATETIME NOT NULL,
 	categories character varying(50) NOT NULL,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT driving_license_pk PRIMARY KEY (id)
@@ -197,8 +197,8 @@ CREATE TABLE brand (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT brand_pk PRIMARY KEY (id)
@@ -212,8 +212,8 @@ CREATE TABLE gearbox (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT gearbox_pk PRIMARY KEY (id)
@@ -227,8 +227,8 @@ CREATE TABLE body_type (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT body_type_pk PRIMARY KEY (id)
@@ -242,8 +242,8 @@ CREATE TABLE drive (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT drive_pk PRIMARY KEY (id)
@@ -258,8 +258,8 @@ CREATE TABLE engine_type (
 	name character varying(50) NOT NULL UNIQUE,
 	fuel_id integer NOT NULL,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT engine_type_pk PRIMARY KEY (id)
@@ -273,8 +273,8 @@ CREATE TABLE fuel (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	version integer NOT NULL,
-	created_date TIMESTAMP NOT NULL,
-	last_modified_date TIMESTAMP NOT NULL default now(),
+	created_date TIMESTAMP(3) NOT NULL,
+	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
 	CONSTRAINT fuel_pk PRIMARY KEY (id)

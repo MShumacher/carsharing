@@ -7,8 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-//@SpringBootApplication//(scanBasePackages = {"com.training.carsharing.dto", "com.training.carsharing.controller",  "com.training.carsharing.converter"})
-//@EnableConfigurationProperties(WebConfig.class)
+//@SpringBootApplication
 @EnableJpaAuditing
 public class Application {
 

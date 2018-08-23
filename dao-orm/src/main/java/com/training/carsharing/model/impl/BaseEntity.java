@@ -10,6 +10,7 @@ import javax.persistence.Version;
 
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
+//@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public abstract class BaseEntity extends AbstractAuditable<UserAccount, Long> {
 
     public static int DEFAULT_VERSION = 1;

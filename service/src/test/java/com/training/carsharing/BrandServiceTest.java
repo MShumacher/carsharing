@@ -15,7 +15,7 @@ public class BrandServiceTest extends AbstractTest {
     @Before
     @After
     public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
- //       getBrandService().deleteAll();
+        getBrandService().deleteAll();
     }
 
     @Test

@@ -1,9 +1,11 @@
 package com.training.carsharing;
 
 import com.training.carsharing.model.impl.Brand;
-import com.training.carsharing.repository.BrandRepository;
+
+import java.util.List;
 
 public interface BrandService extends AbstractService<Brand, Long> {
 
+    List<Brand> findByName(String name);
 }
 

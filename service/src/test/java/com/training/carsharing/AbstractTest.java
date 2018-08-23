@@ -1,28 +1,24 @@
 package com.training.carsharing;
 
-import com.training.carsharing.config.ServiceTestConfig;
 import com.training.carsharing.model.enums.Role;
 import com.training.carsharing.model.impl.*;
 import com.training.carsharing.model.impl.Calendar;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(value = "classpath:jdbc-test.properties")
-@ContextConfiguration(classes = {ServiceTestConfig.class})
-//@ContextConfiguration(locations = "classpath:test-context.xml")
+@SpringBootTest
+@RunWith(SpringRunner.class)
+@TestPropertySource("/application-test.properties")
 public abstract class AbstractTest {
 
     @Autowired

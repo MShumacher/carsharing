@@ -1,15 +1,14 @@
 package com.training.carsharing.model.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.jpa.domain.AbstractAuditable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "createdDate", "lastModifiedDate", "createdBy", "lastModifiedBy", "new", "version"})
 //@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public abstract class BaseEntity extends AbstractAuditable<UserAccount, Long> {
 
@@ -18,6 +17,15 @@ public abstract class BaseEntity extends AbstractAuditable<UserAccount, Long> {
     @Column
     @Version
     private Integer version;
+
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+
+    @Override
+    public void setId(Long id) {
+        super.setId(id);
+    }
 
     public Integer getVersion() {
         return version;
@@ -29,6 +37,6 @@ public abstract class BaseEntity extends AbstractAuditable<UserAccount, Long> {
 
     @Override
     public String toString() {
-        return " id=" + getId();
+        return "id=" + getId() + ", version=" + getVersion();
     }
 }

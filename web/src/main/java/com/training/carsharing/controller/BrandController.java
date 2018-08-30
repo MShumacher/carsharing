@@ -1,10 +1,13 @@
 package com.training.carsharing.controller;
 
 import com.training.carsharing.BrandService;
+import com.training.carsharing.converter.BrandFromDtoConverter;
 import com.training.carsharing.converter.BrandToDtoConverter;
 import com.training.carsharing.dto.BrandDto;
+import com.training.carsharing.dto.ListDto;
 import com.training.carsharing.model.impl.Brand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -24,23 +30,34 @@ public class BrandController {
     private BrandService brandService;
     @Autowired
     private BrandToDtoConverter toDtoConverter;
+    @Autowired
+    private BrandFromDtoConverter fromDtoConverter;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView index(final HttpServletRequest req,
+    @GetMapping()
+    public ModelAndView brand(final HttpServletRequest req,
                               @RequestParam(name = "page", required = false) final Integer pageNumber,
                               @RequestParam(name = "sort", required = false) final String sortColumn) {
 
-        final List<BrandDto> listDto = getListDto(req);
-
-        final List<Brand> entities = brandService.findAllFullInfo();
-        listDto.addAll(entities.stream().map(toDtoConverter).collect(Collectors.toList()));
+        final ListDto<BrandDto> listDto = getListDto(req);
+        listDto.setPage(pageNumber);
+        listDto.setSort(sortColumn);
+        List<Brand> entities = null;
+        if (listDto.getSort() == null) {
+            entities = brandService.findAll(listDto.getPage(), listDto.getItemsPerPage());
+        } else {
+            entities = brandService.findAll(listDto.getPage(), listDto.getItemsPerPage(), listDto.getSort().getColumn(), listDto.getSort().isAscending());
+        }
+        listDto.setList(entities.stream().map(toDtoConverter).collect(Collectors.toList()));
+        listDto.setTotalCount(brandService.count());
 
         final HashMap<String, Object> models = new HashMap<>();
-        models.put("listDto", listDto);
+        models.put(ListDto.SESSION_ATTR_NAME, listDto);
+//        req.setAttribute(ListDto.SESSION_ATTR_NAME, listDto);
+//        return "brand";
         return new ModelAndView("brand.list", models);
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @GetMapping("/add")
     public ModelAndView showForm() {
         final Map<String, Object> hashMap = new HashMap<>();
         final BrandDto dto = new BrandDto();
@@ -58,12 +75,12 @@ public class BrandController {
             loadCommonFormBrands(hashMap);
             return new ModelAndView("brand.edit", hashMap);
         } else {
-            final Brand entity = new Brand();//fromDtoConverter.apply(formModel);
             try {
+                final Brand entity = fromDtoConverter.apply(formModel);
                 brandService.save(entity);
-            } catch (PersistenceException e) {
+            } catch (ObjectOptimisticLockingFailureException | PersistenceException e) {
                 loadCommonFormBrands(hashMap);
-                hashMap.put("error", "PersistenceException");
+                hashMap.put("error", e.getClass().getSimpleName());
                 return new ModelAndView("brand.edit", hashMap);
             }
             return "redirect:/brand";
@@ -72,7 +89,7 @@ public class BrandController {
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public String delete(@PathVariable(name = "id", required = true) final Long id) {
- //       brandService.delete(id);
+        brandService.delete(brandService.findById(id));
         return "redirect:/brand";
     }
 
@@ -97,12 +114,12 @@ public class BrandController {
         return new ModelAndView("brand.edit", hashMap);
     }
 
-    private List<BrandDto> getListDto(final HttpServletRequest req) {
+    private ListDto<BrandDto> getListDto(final HttpServletRequest req) {
         final String sessionModelName = getClass().getSimpleName() + "_LIST_MODEL";
 
-        List<BrandDto> listDto = (List<BrandDto>) req.getSession().getAttribute(sessionModelName);
+        ListDto<BrandDto> listDto = (ListDto<BrandDto>) req.getSession().getAttribute(sessionModelName);
         if (listDto == null) {
-            listDto = new ArrayList<BrandDto>();
+            listDto = new ListDto<BrandDto>();
 
             req.getSession().setAttribute(sessionModelName, listDto);
         }

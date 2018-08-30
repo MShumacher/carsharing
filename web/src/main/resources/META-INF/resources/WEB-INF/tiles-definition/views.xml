@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="index" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/index.jsp" />
+	</definition>
+	
+	<definition name="brand.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/brand/list.jsp" />
+	</definition>
+    <definition name="brand.edit" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/view/brand/form.jsp" />
+    </definition>
+
+	<definition name="login" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/login.jsp" />
+	</definition>
+</tiles-definitions>

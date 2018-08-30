@@ -26,14 +26,14 @@ public abstract class AbstractRepositoryImpl<T, ID> implements AbstractRepositor
 
     @Override
     public T createEntity() {
-        BaseEntity entity=null;
+        BaseEntity entity = null;
         try {
             entity = (BaseEntity) entityClass.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             //TODO something with this
             e.printStackTrace();
         }
-        entity.setVersion(Ad.DEFAULT_VERSION);
+//        entity.setVersion(BaseEntity.DEFAULT_VERSION);
         return (T) entity;
     }
 }

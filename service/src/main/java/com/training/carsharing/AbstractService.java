@@ -3,24 +3,30 @@ package com.training.carsharing;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface AbstractService<T, ID> {
+public interface AbstractService<ENTITY, ID> {
 
-    T createEntity();
+    ENTITY createEntity();
 
-    T findById(ID id);
+    ENTITY findById(ID id);
 
-    T findOneFullInfo(ID id);
+    ENTITY findOneFullInfo(ID id);
 
-    List<T> findAll();
+    List<ENTITY> findAll();
 
-    List<T> findAllFullInfo();
+    List<ENTITY> findAllFullInfo();
 
     @Transactional
-    T save(T entity);
+    ENTITY save(ENTITY entity);
 
     @Transactional
     void deleteAll();
 
     @Transactional
-    void delete(T entity);
+    void delete(ENTITY entity);
+
+    long count();
+
+    List<ENTITY> findAll(int page, int size, String sortBy, boolean isAscending);
+
+    List<ENTITY> findAll(int page, int size);
 }

@@ -8,9 +8,9 @@ import java.util.List;
 
 
 @Repository
-public class BodyTypeImpl extends AbstractDaoImpl<BodyType, Integer> implements IBodyTypeDao {
+public class BodyTypeDaoImpl extends AbstractDaoImpl<BodyType, Integer> implements IBodyTypeDao {
 
-    protected BodyTypeImpl() {
+    protected BodyTypeDaoImpl() {
         super(BodyType.class);
     }
 

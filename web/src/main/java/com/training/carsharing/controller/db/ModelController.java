@@ -1,4 +1,4 @@
-package com.training.carsharing.controller;
+package com.training.carsharing.controller.db;
 
 import com.training.carsharing.dto.ModelDto;
 import com.training.carsharing.model.impl.Model;
@@ -17,7 +17,7 @@ public class ModelController extends AbstractController<Model, ModelDto, Long> {
     }
 
     @Override
-    public Map<String, Object> getHashMapWithAllCommonForms() {
+    public Map<String, Object> getHashMapWithAllCommonForms(Long id) {
         final Map<String, Object> hashMap = new HashMap<>();
         loadCommonFormBrands(hashMap);
         return hashMap;

@@ -21,10 +21,7 @@ public class ModelFromDtoConverter extends AbstractFromDtoConverter<ModelDto, Mo
     public Model apply(final ModelDto dto) throws PersistenceException {
         Model entity = applyBaseEntity(dto.getId());
         entity.setName(dto.getName());
-
-        Brand brand = brandService.findById(dto.getBrandId());
-        entity.setBrand(brand);
-
+        entity.setBrand(brandService.findById(dto.getBrandId()));
         entity.setVersion(dto.getVersion());
         return entity;
     }

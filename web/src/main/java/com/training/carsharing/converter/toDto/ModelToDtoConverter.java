@@ -19,15 +19,15 @@ public class ModelToDtoConverter extends AbstractToDtoConverter<Model, ModelDto>
 
     @Override
     public ModelDto apply(final Model entity) {
-        final ModelDto modelDto = applyBaseDto(entity);
-        modelDto.setName(entity.getName());
+        final ModelDto dto = applyBaseDto(entity);
+        dto.setName(entity.getName());
 
         final Brand brand = entity.getBrand();
         if (brand != null) {
-            modelDto.setBrandId(brand.getId());
-            modelDto.setBrandName(brand.getName());
+            dto.setBrandId(brand.getId());
+            dto.setBrandName(brand.getName());
         }
-        return modelDto;
+        return dto;
     }
 
 }

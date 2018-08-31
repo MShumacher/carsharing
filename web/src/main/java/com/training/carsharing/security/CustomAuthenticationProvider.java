@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -31,7 +30,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         final String email = authentication.getPrincipal().toString();
         final String password = authentication.getCredentials().toString();
         LOGGER.info("user {} try to log in.", email);
-        UserAccount user = userAccountService.getByEmail(email);
+        UserAccount user = userAccountService.findByEmail(email);
         if (user == null) {
             LOGGER.info("user {} doesn't exist.");
             throw new BadCredentialsException("1000");

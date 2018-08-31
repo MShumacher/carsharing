@@ -1,14 +1,10 @@
-package com.training.carsharing.controller;
+package com.training.carsharing.controller.db;
 
 import com.training.carsharing.dto.GearboxDto;
 import com.training.carsharing.model.impl.Gearbox;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +54,7 @@ public class GearboxController extends AbstractController<Gearbox, GearboxDto, L
 //    }
 
     @Override
-    public Map<String, Object> getHashMapWithAllCommonForms() {
+    public Map<String, Object> getHashMapWithAllCommonForms(Long id) {
         final Map<String, Object> hashMap = new HashMap<>();
         return hashMap;
     }

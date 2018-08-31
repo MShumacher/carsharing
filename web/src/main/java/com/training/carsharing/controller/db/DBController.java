@@ -1,4 +1,4 @@
-package com.training.carsharing.controller;
+package com.training.carsharing.controller.db;
 
 import com.training.carsharing.dto.ListDto;
 import org.springframework.validation.BindingResult;
@@ -21,5 +21,5 @@ public interface DBController<ENTITY, DTO, ID> {
 
     ModelAndView getEditModelAndView(ID id);
 
-    Map<String, Object> getHashMapWithAllCommonForms();
+    Map<String, Object> getHashMapWithAllCommonForms(ID id);
 }

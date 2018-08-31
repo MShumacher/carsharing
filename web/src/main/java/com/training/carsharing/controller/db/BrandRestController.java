@@ -1,4 +1,4 @@
-package com.training.carsharing.controller;
+package com.training.carsharing.controller.db;
 
 import com.training.carsharing.BrandService;
 import com.training.carsharing.exception.ResourceNotFoundException;

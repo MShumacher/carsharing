@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="mytaglib" uri="my-custom-tags-uri"%>
 
 <div class="row">
@@ -14,8 +14,7 @@
         <form name='loginForm' action="<c:url value='login' />" method='POST'>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <input type='text' name='email' value=''> <label
-                        for="email">email:</label>
+                    <input type='text' name='email' value=''><label for="email">email:</label>
                 </div>
             </div>
             <div class="row">

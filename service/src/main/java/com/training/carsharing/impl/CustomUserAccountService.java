@@ -1,16 +1,13 @@
 package com.training.carsharing.impl;
 
 import com.training.carsharing.UserAccountService;
-import com.training.carsharing.model.enums.Role;
 import com.training.carsharing.model.impl.UserAccount;
 import com.training.carsharing.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @Service
@@ -42,12 +39,11 @@ public class CustomUserAccountService extends CustomAbstractService<UserAccount,
     public UserAccount getCurrentUserAccount() {
         //TODO get current user
         UserAccount userAccount = userAccountRepository.findByEmail("admin@itools.ru").get(0);
-        //       final UserAccount userAccount = userAccountRepository.findById(23L).get();
         return userAccount;
     }
 
     @Override
-    public UserAccount getByEmail(String email){
+    public UserAccount findByEmail(String email) {
         List<UserAccount> byEmail = userAccountRepository.findByEmail(email);
         UserAccount userAccount = byEmail.get(0);
         return userAccount;
@@ -57,5 +53,25 @@ public class CustomUserAccountService extends CustomAbstractService<UserAccount,
     public boolean isPasswordCorrect(final UserAccount userAccount, final String password) {
 //        return (passwordEncoder.matches(password, userAccount.getPassword()));
         return true;
+    }
+
+    @Override
+    public List<UserAccount> findWithoutPassport() {
+        return userAccountRepository.findWithoutPassport();
+    }
+
+    @Override
+    public List<UserAccount> findWithoutDrivingLicense() {
+        return userAccountRepository.findWithoutDrivingLicense();
+    }
+
+    @Override
+    public UserAccount findByDrivingLicense(Long id) {
+        return userAccountRepository.findByDrivingLicenseId(id);
+    }
+
+    @Override
+    public UserAccount findByPassport(Long id) {
+        return userAccountRepository.findByPassportId(id);
     }
 }

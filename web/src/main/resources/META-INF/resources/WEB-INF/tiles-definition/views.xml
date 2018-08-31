@@ -35,6 +35,55 @@
 		<put-attribute name="body" value="/WEB-INF/view/bodytype/form.jsp" />
 	</definition>
 
+	<definition name="drive.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/drive/list.jsp" />
+	</definition>
+	<definition name="drive.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/drive/form.jsp" />
+	</definition>
+
+	<definition name="fuel.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/fuel/list.jsp" />
+	</definition>
+	<definition name="fuel.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/fuel/form.jsp" />
+	</definition>
+
+	<definition name="enginetype.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/enginetype/list.jsp" />
+	</definition>
+	<definition name="enginetype.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/enginetype/form.jsp" />
+	</definition>
+
+	<definition name="carparameter.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/carparameter/list.jsp" />
+	</definition>
+	<definition name="carparameter.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/carparameter/form.jsp" />
+	</definition>
+
+    <definition name="useraccount.list" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/view/useraccount/list.jsp" />
+    </definition>
+    <definition name="useraccount.edit" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/view/useraccount/form.jsp" />
+    </definition>
+
+    <definition name="passport.list" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/view/passport/list.jsp" />
+    </definition>
+    <definition name="passport.edit" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/view/passport/form.jsp" />
+    </definition>
+
+    <definition name="drivinglicense.list" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/view/drivinglicense/list.jsp" />
+    </definition>
+    <definition name="drivinglicense.edit" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/view/drivinglicense/form.jsp" />
+    </definition>
+
 	<definition name="login" extends="DefaultTemplate">
 		<put-attribute name="body" value="/WEB-INF/view/login.jsp" />
 	</definition>

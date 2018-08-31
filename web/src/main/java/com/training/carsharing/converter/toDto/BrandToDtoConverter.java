@@ -17,9 +17,9 @@ public class BrandToDtoConverter extends AbstractToDtoConverter<Brand, BrandDto>
 
     @Override
     public BrandDto apply(final Brand entity) {
-        final BrandDto brandDto = applyBaseDto(entity);
-        brandDto.setName(entity.getName());
-        return brandDto;
+        final BrandDto dto = applyBaseDto(entity);
+        dto.setName(entity.getName());
+        return dto;
     }
 }
 

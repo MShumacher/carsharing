@@ -1,38 +1,48 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="mytaglib" uri="my-custom-tags-uri"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
 <c:set var="baseUrl" value="${pageContext.request.contextPath}" />
 
 <header>
     <nav>
         <div class="nav-wrapper container">
-            <ul id="dropdown1" class="dropdown-content">
-                <li><a href="#!">one</a></li>
-                <li><a href="#!">two</a></li>
-                <li class="divider"></li>
-                <li><a href="#!">three</a></li>
-            </ul>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <ul id="dropdown1" class="dropdown-content">
+                    <li><a href="${baseUrl}/brand">Brands</a></li>
+                    <li><a href="${baseUrl}/model">Models</a></li>
+                    <li><a href="${baseUrl}/gearbox">Gearboxes</a></li>
+                    <li><a href="${baseUrl}/bodytype">Body types</a></li>
+                    <li><a href="${baseUrl}/drive">Drives</a></li>
+                    <li><a href="${baseUrl}/fuel">Fuels</a></li>
+                    <li><a href="${baseUrl}/enginetype">Engine types</a></li>
+                    <li><a href="${baseUrl}/carparameter">Car parameters</a></li>
+                    <li><a href="${baseUrl}/useraccount">User accounts</a></li>
+                    <li><a href="${baseUrl}/passport">Passports</a></li>
+                    <li><a href="${baseUrl}/drivinglicense">Driving licenses</a></li>
+                    <li class="divider"></li>
+                </ul>
+                <ul class="left">
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">dbMenu<i
+                            class="material-icons right">arrow_drop_down</i></a></li>
+                </ul>
                 <li><a href="${baseUrl}/">Home</a></li>
-                <li><a href="${baseUrl}/brand">Brands</a></li>
-                <li><a href="${baseUrl}/model">Models</a></li>
-                <li><a href="${baseUrl}/gearbox">Gearboxes</a></li>
-                <li><a href="${baseUrl}/bodytype">Body type</a></li>
-                <li><a href="${baseUrl}/engine">Engines</a></li>
-                <li><a href="${baseUrl}/car">Cars</a></li>
-                <li><a href="${baseUrl}/ajax-samples">AJAX</a></li>
-                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i
-                        class="material-icons right">arrow_drop_down</i></a></li>
+
                 <li><a href="${baseUrl}?language=ru">RU</a></li>
                 <li><a href="${baseUrl}?language=en">EN</a></li>
                 <sec:authorize access="!isAnonymous()">
                     <a class="right" href="${baseUrl}/execute_logout" title="logout"><i
                             class="material-icons">arrow_forward</i></a>
                 </sec:authorize>
+
             </ul>
+            <div class="col s3">
+                <div class="right">
+                    <span id="clock"></span>
+                </div>
+            </div>
         </div>
     </nav>
 

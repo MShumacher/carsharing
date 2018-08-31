@@ -16,9 +16,9 @@ public class GearboxToDtoConverter extends AbstractToDtoConverter<Gearbox, Gearb
 
     @Override
     public GearboxDto apply(final Gearbox entity) {
-        final GearboxDto brandDto = applyBaseDto(entity);
-        brandDto.setName(entity.getName());
-        return brandDto;
+        final GearboxDto dto = applyBaseDto(entity);
+        dto.setName(entity.getName());
+        return dto;
     }
 }
 

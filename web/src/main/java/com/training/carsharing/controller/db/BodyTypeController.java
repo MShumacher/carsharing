@@ -1,4 +1,4 @@
-package com.training.carsharing.controller;
+package com.training.carsharing.controller.db;
 
 import com.training.carsharing.dto.BodyTypeDto;
 import com.training.carsharing.model.impl.BodyType;
@@ -17,7 +17,7 @@ public class BodyTypeController extends AbstractController<BodyType, BodyTypeDto
     }
 
     @Override
-    public Map<String, Object> getHashMapWithAllCommonForms() {
+    public Map<String, Object> getHashMapWithAllCommonForms(Long id) {
         final Map<String, Object> hashMap = new HashMap<>();
         return hashMap;
     }

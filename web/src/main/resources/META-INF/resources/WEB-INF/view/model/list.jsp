@@ -1,13 +1,11 @@
-<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="mytaglib" uri="my-custom-tags-uri"%>
 
 <c:set var="baseUrl" value="${pageContext.request.contextPath}/model" />
 
-<h4 class="header">Models</h4>
+<h4 class="header">models</h4>
 
 <table class="bordered highlight">
     <tbody>

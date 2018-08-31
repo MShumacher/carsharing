@@ -19,6 +19,8 @@
                 <li><a href="${baseUrl}/">Home</a></li>
                 <li><a href="${baseUrl}/brand">Brands</a></li>
                 <li><a href="${baseUrl}/model">Models</a></li>
+                <li><a href="${baseUrl}/gearbox">Gearboxes</a></li>
+                <li><a href="${baseUrl}/bodytype">Body type</a></li>
                 <li><a href="${baseUrl}/engine">Engines</a></li>
                 <li><a href="${baseUrl}/car">Cars</a></li>
                 <li><a href="${baseUrl}/ajax-samples">AJAX</a></li>

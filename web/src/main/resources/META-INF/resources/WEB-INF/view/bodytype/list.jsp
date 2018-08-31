@@ -5,9 +5,9 @@
 <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="mytaglib" uri="my-custom-tags-uri"%>
 
-<c:set var="baseUrl" value="${pageContext.request.contextPath}/brand" />
+<c:set var="baseUrl" value="${pageContext.request.contextPath}/bodytype" />
 
-<h4 class="header">Brands</h4>
+<h4 class="header">Body Types</h4>
 
 <table class="bordered highlight">
     <tbody>
@@ -19,21 +19,21 @@
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="lastModifiedDate">lastModifiedDate</mytaglib:sort-link></th>
         <th></th>
     </tr>
-    <c:forEach var="brand" items="${listDto.list}" varStatus="loopCounter">
+    <c:forEach var="bodyType" items="${listDto.list}" varStatus="loopCounter">
         <tr>
-            <td><c:out value="${brand.id}" /></td>
-            <td><c:out value="${brand.name}" /></td>
-            <td><c:out value="${brand.version}" /></td>
-            <td><javatime:format value="${brand.createdDate}" pattern="dd.MM.yyyy / HH:mm:ss" /></td>
-            <td><javatime:format value="${brand.lastModifiedDate}" pattern="dd.MM.yyyy / HH:mm:ss" /></td>
+            <td><c:out value="${bodyType.id}" /></td>
+            <td><c:out value="${bodyType.name}" /></td>
+            <td><c:out value="${bodyType.version}" /></td>
+            <td><javatime:format value="${bodyType.createdDate}" pattern="dd.MM.yyyy / HH:mm:ss" /></td>
+            <td><javatime:format value="${bodyType.lastModifiedDate}" pattern="dd.MM.yyyy / HH:mm:ss" /></td>
             <td class="right">
-                <a class="btn-floating"	href="${baseUrl}/${brand.id}">
+                <a class="btn-floating"	href="${baseUrl}/${bodyType.id}">
                     <i class="material-icons">info</i>
                 </a>
-                <a class="btn-floating"	href="${baseUrl}/${brand.id}/edit">
+                <a class="btn-floating"	href="${baseUrl}/${bodyType.id}/edit">
                     <i class="material-icons">edit</i>
                 </a>
-                <a class="btn-floating red" href="${baseUrl}/${brand.id}/delete">
+                <a class="btn-floating red" href="${baseUrl}/${bodyType.id}/delete">
                     <i class="material-icons">delete</i>
                 </a>
             </td>

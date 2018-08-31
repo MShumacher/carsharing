@@ -20,7 +20,7 @@
     <h5 class="header red-text">ObjectOptimisticLockingFailureException</h5>
 </c:if>
 
-<c:set var="baseUrl" value="${pageContext.request.contextPath}/brand" />
+<c:set var="baseUrl" value="${pageContext.request.contextPath}/model" />
 <div class="row">
     <form:form class="col s12" method="POST" action="${baseUrl}" modelAttribute="formModel">
         <form:input path="id" type="hidden" />
@@ -30,6 +30,15 @@
                 <form:input path="name" type="text" disabled="${readonly}" />
                 <form:errors path="name" cssClass="red-text" />
                 <label for="name">name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <form:select path="brandId" disabled="${readonly}">
+                    <form:options items="${brandChoices}" />
+                </form:select>
+                <form:errors path="brandId" cssClass="red-text" />
+                <label for="brandId">brandName</label>
             </div>
         </div>
         <div class="row">

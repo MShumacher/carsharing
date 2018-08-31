@@ -6,16 +6,9 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-     -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/custom.css">
-    <script src="${pageContext.request.contextPath}/resources/js/init-materialize-forms.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/init-menu.js"></script>
-
-
-
+    <link rel="stylesheet" href="/css/custom.css">
+    <script src="/js/init-materialize-forms.js"></script>
+    <script src="/js/init-menu.js"></script>
 </head>
 
 <body>

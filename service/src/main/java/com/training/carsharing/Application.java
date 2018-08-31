@@ -24,13 +24,13 @@ public class Application implements CommandLineRunner {
 //        return new AuditorAwareImpl();
 //    }
 
-//    private static final Logger LOGGER = LoggerFactory.getLogger("Application");
-//    private static final Random RANDOM = new Random();
+//    private resources final Logger LOGGER = LoggerFactory.getLogger("Application");
+//    private resources final Random RANDOM = new Random();
 //
 //    @Autowired
 //    BrandService brandService;
 //
-//    public static void main(String[] args) {
+//    public resources void main(String[] args) {
 //        SpringApplication.run(Application.class, args);
 //    }
 //

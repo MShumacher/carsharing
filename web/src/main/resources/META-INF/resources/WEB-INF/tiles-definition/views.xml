@@ -14,6 +14,27 @@
         <put-attribute name="body" value="/WEB-INF/view/brand/form.jsp" />
     </definition>
 
+	<definition name="model.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/model/list.jsp" />
+	</definition>
+	<definition name="model.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/model/form.jsp" />
+	</definition>
+
+	<definition name="gearbox.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/gearbox/list.jsp" />
+	</definition>
+	<definition name="gearbox.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/gearbox/form.jsp" />
+	</definition>
+
+	<definition name="bodytype.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/bodytype/list.jsp" />
+	</definition>
+	<definition name="bodytype.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/bodytype/form.jsp" />
+	</definition>
+
 	<definition name="login" extends="DefaultTemplate">
 		<put-attribute name="body" value="/WEB-INF/view/login.jsp" />
 	</definition>

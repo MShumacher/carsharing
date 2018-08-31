@@ -37,11 +37,11 @@
             <div class="col l3 offset-l5 s12">
                 <h5 class="white-text"></h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/resources/img/db-scheme.png" target="_blank">DB scheme</a></li>
-                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/resources/img/mindmup.png" target="_blank">mindmup</a></li>
-                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/resources/img/jmeter/jmeter1.png" target="_blank">jmeter1</a></li>
-                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/resources/img/jmeter/jmeter2.png" target="_blank">jmeter2</a></li>
-                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/resources/img/jmeter/jmeter3.png" target="_blank">jmeter3</a></li>
+                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/META-INF/resources/WEB-INF/resources/img/db-scheme.png" target="_blank">DB scheme</a></li>
+                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/META-INF/resources/WEB-INF/resources/img/mindmup.png" target="_blank">mindmup</a></li>
+                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/META-INF/resources/WEB-INF/resources/img/jmeter/jmeter1.png" target="_blank">jmeter1</a></li>
+                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/META-INF/resources/WEB-INF/resources/img/jmeter/jmeter2.png" target="_blank">jmeter2</a></li>
+                    <li><a class="grey-text text-lighten-3" href="${pageContext.request.contextPath}/META-INF/resources/WEB-INF/resources/img/jmeter/jmeter3.png" target="_blank">jmeter3</a></li>
                 </ul>
             </div>
         </div>

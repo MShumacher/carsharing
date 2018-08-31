@@ -1,8 +1,5 @@
 package com.training.carsharing.dto;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
-
 import java.util.List;
 
 public class ListDto<T> {

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 public class BaseDto {
 
     private Long id;
+    private int version;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
     private UserAccount createdBy;
@@ -18,6 +19,14 @@ public class BaseDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public LocalDateTime getCreatedDate() {

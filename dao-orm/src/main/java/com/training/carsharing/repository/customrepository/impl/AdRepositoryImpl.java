@@ -13,7 +13,6 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-
 @Repository
 public class AdRepositoryImpl extends AbstractRepositoryImpl<Ad, Long> implements AdRepositoryCustom {
 

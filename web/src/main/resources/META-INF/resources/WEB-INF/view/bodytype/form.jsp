@@ -20,7 +20,7 @@
     <h5 class="header red-text">ObjectOptimisticLockingFailureException</h5>
 </c:if>
 
-<c:set var="baseUrl" value="${pageContext.request.contextPath}/brand" />
+<c:set var="baseUrl" value="${pageContext.request.contextPath}/bodytype" />
 <div class="row">
     <form:form class="col s12" method="POST" action="${baseUrl}" modelAttribute="formModel">
         <form:input path="id" type="hidden" />

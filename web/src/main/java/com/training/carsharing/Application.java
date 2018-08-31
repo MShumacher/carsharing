@@ -4,15 +4,16 @@ import com.training.carsharing.impl.AuditorAwareImpl;
 import com.training.carsharing.model.impl.UserAccount;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
-import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @SpringBootApplication
 @EnableJpaAuditing
@@ -29,18 +30,25 @@ public class Application extends SpringBootServletInitializer {
         return new AuditorAwareImpl();
     }
 
-//    @Bean
+//    @Bean(name = "viewResolver")
 //    public InternalResourceViewResolver internalResourceViewResolver() {
 //        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-//        resolver.setPrefix("/WEB-INF/view");
+//        resolver.setPrefix("/WEB-INF/view/");
 //        resolver.setSuffix(".jsp");
 //        return resolver;
 //    }
 
     @Bean
     public ViewResolver viewResolver() {
-        return new TilesViewResolver();
+        UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+        resolver.setViewClass(TilesView.class);
+        return resolver;
     }
+
+//    @Bean
+//    public ViewResolver viewResolver() {
+//        return new TilesViewResolver();
+//    }
 
     @Bean
     public TilesConfigurer tilesConfigurer() {

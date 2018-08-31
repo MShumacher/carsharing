@@ -1,18 +1,19 @@
 
 CREATE TABLE model (
 	id serial NOT NULL,
-	name character varying(50) NOT NULL UNIQUE,
-	brand_id integer NOT NULL,
+	name character varying(50) NOT NULL,
+	brand_id integer NOT NULL REFERENCES brand(id),
 	version integer NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT,
 	last_modified_by_id BIGINT,
-	CONSTRAINT model_pk PRIMARY KEY (id)
+	CONSTRAINT model_pk PRIMARY KEY (id),
+	CONSTRAINT brand_id_name_key UNIQUE (brand_id, name)
 );
 
-ALTER TABLE model CONSTRAINT model_created_by_user foreign key (created_by_id) references user_account(id),
-ALTER TABLE model CONSTRAINT model_last_modified_by_user foreign key (last_modified_by_id) references user_account(id)
+ALTER TABLE model ADD CONSTRAINT foreign key created_by_id references user_account(id);
+ALTER TABLE model ADD CONSTRAINT foreign key last_modified_by_id references user_account(id);
 
 CREATE TABLE cars_photo (
 	id serial NOT NULL,

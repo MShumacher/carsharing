@@ -1,25 +1,21 @@
 package com.training.carsharing.converter;
 
-import com.training.carsharing.BrandService;
-import com.training.carsharing.dto.BrandDto;
-import com.training.carsharing.model.impl.Brand;
+import com.training.carsharing.AbstractService;
+import com.training.carsharing.model.impl.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.PersistenceException;
 import java.util.function.Function;
 
-@Component
-public class BrandFromDtoConverter implements Function<BrandDto, Brand> {
+public abstract class AbstractFromDtoConverter<DTO, ENTITY> implements Function<DTO, ENTITY> {
 
     @Autowired
-    private BrandService brandService;
+    private AbstractService<ENTITY, Long> service;
 
-    @Override
-    public Brand apply(final BrandDto dto) throws PersistenceException {
-        Brand entity = brandService.createEntity();
-        if (dto.getId() != null) {
-            Brand entityFromDb = brandService.findById(dto.getId());
+    protected ENTITY applyBaseEntity(Long id) throws PersistenceException {
+        BaseEntity entity = (BaseEntity) service.createEntity();
+        if (id != null) {
+            BaseEntity entityFromDb = (BaseEntity) service.findById(id);
             if (entityFromDb == null) {
                 // случай, когда кто-то удалил сущность, которую мы пытаемся перезаписать
                 throw new PersistenceException();
@@ -31,8 +27,6 @@ public class BrandFromDtoConverter implements Function<BrandDto, Brand> {
                 entity.setLastModifiedBy(entityFromDb.getLastModifiedBy().get());
             }
         }
-        entity.setName(dto.getName());
-        entity.setVersion(dto.getVersion());
-        return entity;
+        return(ENTITY) entity;
     }
 }

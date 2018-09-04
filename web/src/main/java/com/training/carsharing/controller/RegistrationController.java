@@ -94,11 +94,11 @@ public class RegistrationController {
     }
 
     @GetMapping(VERIFY_WITH_LINK_MAPPING)
-    public Object verifyWithLink(@PathVariable(name = "", required = false) final String verifyKey) {
+    public Object verifyWithLink(@PathVariable(name = PATH_VARIABLE_VERIFY_KEY, required = false) final String verifyKey) {
         final boolean verified = isVerifyingComplete(verifyKey);
         final Map<String, Object> hashMap = new HashMap<>();
         hashMap.put(VERIFIED, verified);
-        return new ModelAndView(PATH_VARIABLE_VERIFY_KEY, hashMap);
+        return new ModelAndView(VERIFYING_VIEW_NAME, hashMap);
     }
 
     @RequestMapping(value = VERIFY_WITH_KEY_MAPPING, method = {RequestMethod.POST, RequestMethod.GET})

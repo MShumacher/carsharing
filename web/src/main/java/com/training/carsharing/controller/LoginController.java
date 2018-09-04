@@ -16,7 +16,7 @@ public class LoginController {
         final ModelAndView model = new ModelAndView();
         model.setViewName("login");
         if (error != null) {
-            model.addObject("error", "Invalid username and password!");
+            model.addObject("error", "Invalid username and password or unverified email!");
         }
 
         if (logout != null) {

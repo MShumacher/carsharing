@@ -22,6 +22,11 @@
                     <li><a href="${baseUrl}/useraccount">User accounts</a></li>
                     <li><a href="${baseUrl}/passport">Passports</a></li>
                     <li><a href="${baseUrl}/drivinglicense">Driving licenses</a></li>
+                    <li><a href="${baseUrl}/message">Messages</a></li>
+                    <li><a href="${baseUrl}/calendar">Calendar</a></li>
+                    <li><a href="${baseUrl}/carsphoto">Cars photos</a></li>
+                    <li><a href="${baseUrl}/car">Cars</a></li>
+                    <li><a href="${baseUrl}/ad">Ads</a></li>
                     <li class="divider"></li>
                 </ul>
                 <ul class="left">

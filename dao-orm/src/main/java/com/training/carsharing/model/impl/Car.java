@@ -13,6 +13,7 @@ public class Car extends BaseEntity {
     @JoinTable(name = "car_2_car_parameter", joinColumns = {@JoinColumn(name = "car_id")}, inverseJoinColumns = {
             @JoinColumn(name = "car_parameter_id")})
     @ManyToMany(targetEntity = CarParameter.class, fetch = FetchType.LAZY)
+    //@ManyToMany(targetEntity = CarParameter.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 //    @OrderBy("title ASC")
     private Set<CarParameter> carParameter = new HashSet<>();
 

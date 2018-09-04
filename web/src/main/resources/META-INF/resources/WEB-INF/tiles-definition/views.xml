@@ -84,6 +84,41 @@
         <put-attribute name="body" value="/WEB-INF/view/drivinglicense/form.jsp" />
     </definition>
 
+	<definition name="message.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/message/list.jsp" />
+	</definition>
+	<definition name="message.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/message/form.jsp" />
+	</definition>
+
+    <definition name="calendar.list" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/view/calendar/list.jsp" />
+    </definition>
+    <definition name="calendar.edit" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/view/calendar/form.jsp" />
+    </definition>
+
+	<definition name="carsphoto.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/carsphoto/list.jsp" />
+	</definition>
+	<definition name="carsphoto.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/carsphoto/form.jsp" />
+	</definition>
+
+	<definition name="car.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/car/list.jsp" />
+	</definition>
+	<definition name="car.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/car/form.jsp" />
+	</definition>
+
+	<definition name="ad.list" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/ad/list.jsp" />
+	</definition>
+	<definition name="ad.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/ad/form.jsp" />
+	</definition>
+
 	<definition name="login" extends="DefaultTemplate">
 		<put-attribute name="body" value="/WEB-INF/view/login.jsp" />
 	</definition>

@@ -59,8 +59,12 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
     private static final String DRIVING_LICENSE_WITHOUT_USER_ACCOUNT_FORM_SELECT_NAME = "drivingLicenseWithoutUserAccountChoices";
     private static final String DRIVING_LICENSE_WITH_CURRENT_USER_ACCOUNT_OR_WITHOUT_FORM_SELECT_NAME = "drivingLicenseWithCurrentUserAccountOrWithoutChoices";
 
-    private static final String ROLE_FORM_SELECT_NAME = "roleChoices";
+    private static final String CAR_WITH_CURRENT_AD_OR_WITHOUT_FORM_SELECT_NAME= "carWithCurrentAdOrWithoutChoices";
 
+
+    private static final String ROLE_FORM_SELECT_NAME = "roleChoices";
+    private static final String AD_FORM_SELECT_NAME = "adChoices";
+    private static final String CAR_FORM_SELECT_NAME = "carChoices";
     @Autowired
     private AbstractToDtoConverter<ENTITY, DTO> toDtoConverter;
     @Autowired
@@ -89,6 +93,10 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
     private PassportService passportService;
     @Autowired
     private DrivingLicenseService drivingLicenseService;
+    @Autowired
+    private AdService adService;
+    @Autowired
+    private CarService carService;
 
     private final Class<? extends DTO> dtoClass;
 
@@ -230,7 +238,7 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
         hashMap.put(FUEL_FORM_SELECT_NAME, getSortedMapByValue(map));
     }
 
-    protected void loadCommonModels(final Map<String, Object> hashMap) {
+    protected void loadCommonFormModels(final Map<String, Object> hashMap) {
         final Map<Long, String> map = modelService.findAll().stream()
                 .collect(Collectors.toMap(Model::getId, Model::getName));
         hashMap.put(MODEL_FORM_SELECT_NAME, getSortedMapByValue(map));
@@ -328,6 +336,28 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
             map.put(drivingLicenseWithCurrentUserAccount.getId(), drivingLicenseWithCurrentUserAccount.getNumber());
         }
         hashMap.put(DRIVING_LICENSE_WITH_CURRENT_USER_ACCOUNT_OR_WITHOUT_FORM_SELECT_NAME, getSortedMapByValue(map));
+    }
+
+    protected void loadCommonFormCars(final Map<String, Object> hashMap) {
+        final Map<Long, String> map = carService.findAll().stream()
+                .collect(Collectors.toMap(Car::getId, Car::getPlate));
+        hashMap.put(CAR_FORM_SELECT_NAME, getSortedMapByValue(map));
+    }
+
+    protected void loadCommonFormAds(final Map<String, Object> hashMap) {
+        final Map<Long, Long> map = adService.findAll().stream().collect(Collectors.toMap(Ad::getId, Ad::getId));
+        //no sorted because id:id
+        hashMap.put(AD_FORM_SELECT_NAME, map);
+    }
+
+    protected void loadCommonFormCarsWithCurrentAdOrWithout(final Map<String, Object> hashMap, ID id) {
+        final Map<Long, String> map = carService.findWithoutAd().stream()
+                .collect(Collectors.toMap(Car::getId, Car::getPlate));
+        Car carWithCurrentAd = carService.findByAd((Long) id);
+        if (carWithCurrentAd != null) {
+            map.put(carWithCurrentAd.getId(), carWithCurrentAd.getPlate());
+        }
+        hashMap.put(CAR_WITH_CURRENT_AD_OR_WITHOUT_FORM_SELECT_NAME, getSortedMapByValue(map));
     }
 
     protected void loadCommonFormRoles(final Map<String, Object> hashMap) {

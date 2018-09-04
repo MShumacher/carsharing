@@ -324,6 +324,25 @@ public abstract class AbstractTest {
         return fields;
     }
 
+    protected void cleanAllTables() {
+        getCarsPhotoService().deleteAll();
+        getDrivingLicenseService().deleteAll();
+        getPassportService().deleteAll();
+        getCalendarService().deleteAll();
+        getMessageService().deleteAll();
+        getAdService().deleteAll();
+        getCarService().deleteAll();
+        getEngineTypeService().deleteAll();
+        getFuelService().deleteAll();
+        getDriveService().deleteAll();
+        getBodyTypeService().deleteAll();
+        getGearboxService().deleteAll();
+        getModelService().deleteAll();
+        getBrandService().deleteAll();
+        getCarParameterService().deleteAll();
+//        getUserAccountService().deleteAll();
+    }
+
     protected int getRandomPrefix() {
         return RANDOM.nextInt(99999);
     }

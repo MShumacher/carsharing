@@ -1,40 +1,35 @@
 package com.training.carsharing;
 
 import com.training.carsharing.impl.AuditorAwareImpl;
-import com.training.carsharing.model.impl.Brand;
 import com.training.carsharing.model.impl.UserAccount;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Random;
-
-//@SpringBootApplication
-//@EnableJpaAuditing
+@SpringBootApplication
+@EnableJpaAuditing
 public class Application implements CommandLineRunner {
 
-//    @Bean
-//    public AuditorAware<UserAccount> auditorProvider() {
-//        return new AuditorAwareImpl();
-//    }
+    @Bean
+    public AuditorAware<UserAccount> auditorProvider() {
+        return new AuditorAwareImpl();
+    }
 
-//    private resources final Logger LOGGER = LoggerFactory.getLogger("Application");
+    //    private resources final Logger LOGGER = LoggerFactory.getLogger("Application");
 //    private resources final Random RANDOM = new Random();
 //
 //    @Autowired
 //    BrandService brandService;
 //
-//    public resources void main(String[] args) {
-//        SpringApplication.run(Application.class, args);
-//    }
-//
-//    //@Transactional(readOnly = true)
+    public void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+    @Transactional(readOnly = true)
     @Override
     public void run(String... args) throws Exception {
 //

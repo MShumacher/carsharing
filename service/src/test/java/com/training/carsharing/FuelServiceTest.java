@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -14,22 +13,22 @@ public class FuelServiceTest extends AbstractTest {
 
     @Before
     @After
-    public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void cleanTables() {
         getFuelService().deleteAll();
     }
 
     @Test
-    public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testCreate() throws IllegalAccessException {
         final Fuel entity = saveNewFuel();
 
         final Fuel entityFromDB = getFuelService().findOneFullInfo(entity.getId());
 
-        assertEqualsFieldsExcept(entity,entityFromDB);
+        assertEqualsFieldsExcept(entity, entityFromDB);
         assertNotNullFieldsExcept(entityFromDB);
     }
 
     @Test
-    public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testUpdate() throws InterruptedException, IllegalAccessException {
         final Fuel entity = saveNewFuel();
 
         final Fuel entityFromDB = getFuelService().findOneFullInfo(entity.getId());
@@ -39,29 +38,29 @@ public class FuelServiceTest extends AbstractTest {
         getFuelService().save(entityFromDB);
 
         final Fuel updatedEntityFromDB = getFuelService().findOneFullInfo(entityFromDB.getId());
-        assertEqualsFieldsExcept(entity,updatedEntityFromDB,"version", "lastModifiedDate", "name");
-        assertEquals(entity.getVersion(),updatedEntityFromDB.getVersion(),1);
+        assertEqualsFieldsExcept(entity, updatedEntityFromDB, "version", "lastModifiedDate", "name");
+        assertEquals(entity.getVersion(), updatedEntityFromDB.getVersion(), 1);
         assertEquals(newName, updatedEntityFromDB.getName());
         assertTrue(updatedEntityFromDB.getLastModifiedDate().get().isAfter(entity.getLastModifiedDate().get()));
-     }
+    }
 
 
     @Test
-    public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDelete() {
         final Fuel entity = saveNewFuel();
         getFuelService().delete(entity);
         assertNull(getFuelService().findById(entity.getId()));
     }
 
     @Test
-    public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDeleteAll() {
         saveNewFuel();
         getFuelService().deleteAll();
         assertEquals(0, getFuelService().findAll().size());
     }
 
     @Test
-    public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testGetAll() throws IllegalAccessException {
         final int initialCount = getFuelService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();

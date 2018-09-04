@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -14,13 +13,13 @@ public class EngineTypeServiceTest extends AbstractTest {
 
     @Before
     @After
-    public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getFuelService().deleteAll();
+    public void cleanTables() {
         getEngineTypeService().deleteAll();
+        getFuelService().deleteAll();
     }
 
     @Test
-    public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testCreate() throws IllegalAccessException {
         final EngineType entity = saveNewEngineType();
 
         final EngineType entityFromDB = getEngineTypeService().findOneFullInfo(entity.getId());
@@ -31,7 +30,7 @@ public class EngineTypeServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testUpdate() throws InterruptedException, IllegalAccessException {
         final EngineType entity = saveNewEngineType();
 
         final EngineType entityFromDB = getEngineTypeService().findOneFullInfo(entity.getId());
@@ -50,21 +49,21 @@ public class EngineTypeServiceTest extends AbstractTest {
 
 
     @Test
-    public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDelete() {
         final EngineType entity = saveNewEngineType();
         getEngineTypeService().delete(entity);
         assertNull(getEngineTypeService().findById(entity.getId()));
     }
 
     @Test
-    public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDeleteAll() {
         saveNewEngineType();
         getEngineTypeService().deleteAll();
         assertEquals(0, getEngineTypeService().findAll().size());
     }
 
     @Test
-    public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testGetAll() throws IllegalAccessException {
         final int initialCount = getEngineTypeService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();

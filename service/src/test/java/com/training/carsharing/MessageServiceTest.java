@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -14,14 +13,12 @@ public class MessageServiceTest extends AbstractTest {
 
     @Before
     @After
-    public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getCarService().deleteAll();
-//        getUserAccountService().deleteAll();
-        getMessageService().deleteAll();
+    public void cleanTables() {
+        cleanAllTables();
     }
 
     @Test
-    public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testCreate() throws IllegalAccessException {
         final Message entity = saveNewMessage();
 
         final Message entityFromDB = getMessageService().findOneFullInfo(entity.getId());
@@ -34,7 +31,7 @@ public class MessageServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testUpdate() throws InterruptedException, IllegalAccessException {
         final Message entity = saveNewMessage();
 
         final Message entityFromDB = getMessageService().findOneFullInfo(entity.getId());
@@ -54,21 +51,21 @@ public class MessageServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDelete() {
         final Message entity = saveNewMessage();
         getMessageService().delete(entity);
         assertNull(getMessageService().findById(entity.getId()));
     }
 
     @Test
-    public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDeleteAll() {
         saveNewMessage();
         getMessageService().deleteAll();
         assertEquals(0, getMessageService().findAll().size());
     }
 
     @Test
-    public void testSelectAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testSelectAll() throws IllegalAccessException {
         final int initialCount = getMessageService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();

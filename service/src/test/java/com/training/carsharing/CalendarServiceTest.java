@@ -5,8 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -15,14 +13,12 @@ public class CalendarServiceTest extends AbstractTest {
 
     @Before
     @After
-    public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getCalendarService().deleteAll();
-        getCarService().deleteAll();
-//        getUserAccountService().deleteAll();
+    public void cleanTables() {
+        cleanAllTables();
     }
 
     @Test
-    public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testCreate() throws IllegalAccessException {
         final Calendar entity = saveNewCalendar();
 
         final Calendar entityFromDB = getCalendarService().findOneFullInfo(entity.getId());
@@ -34,7 +30,7 @@ public class CalendarServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testUpdate() throws InterruptedException, IllegalAccessException {
         final Calendar entity = saveNewCalendar();
 
         final Calendar entityFromDB = getCalendarService().findOneFullInfo(entity.getId());
@@ -53,21 +49,21 @@ public class CalendarServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDelete() {
         final Calendar entity = saveNewCalendar();
         getCalendarService().delete(entity);
         assertNull(getCalendarService().findById(entity.getId()));
     }
 
     @Test
-    public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDeleteAll() {
         saveNewCalendar();
         getCalendarService().deleteAll();
         assertEquals(0, getCalendarService().findAll().size());
     }
 
     @Test
-    public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testGetAll() throws IllegalAccessException {
         final int initialCount = getCalendarService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();

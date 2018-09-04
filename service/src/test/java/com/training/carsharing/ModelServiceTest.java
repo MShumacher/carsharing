@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -14,13 +13,13 @@ public class ModelServiceTest extends AbstractTest {
 
     @Before
     @After
-    public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getBrandService().deleteAll();
+    public void cleanTables() {
         getModelService().deleteAll();
+        getBrandService().deleteAll();
     }
 
     @Test
-    public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testCreate() throws IllegalAccessException {
         final Model entity = saveNewModel();
 
         final Model entityFromDB = getModelService().findOneFullInfo(entity.getId());
@@ -31,7 +30,7 @@ public class ModelServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testUpdate() throws InterruptedException, IllegalAccessException {
         final Model entity = saveNewModel();
 
         final Model entityFromDB = getModelService().findOneFullInfo(entity.getId());
@@ -50,21 +49,21 @@ public class ModelServiceTest extends AbstractTest {
 
 
     @Test
-    public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDelete() {
         final Model entity = saveNewModel();
         getModelService().delete(entity);
         assertNull(getModelService().findById(entity.getId()));
     }
 
     @Test
-    public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDeleteAll() {
         saveNewModel();
         getModelService().deleteAll();
         assertEquals(0, getModelService().findAll().size());
     }
 
     @Test
-    public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testGetAll() throws IllegalAccessException {
         final int initialCount = getModelService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();

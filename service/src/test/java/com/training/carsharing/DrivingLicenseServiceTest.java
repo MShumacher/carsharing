@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -14,12 +13,12 @@ public class DrivingLicenseServiceTest extends AbstractTest {
 
     @Before
     @After
-    public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void cleanTables() {
         getDrivingLicenseService().deleteAll();
     }
 
     @Test
-    public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testCreate() throws IllegalAccessException {
         final DrivingLicense entity = saveNewDrivingLicense();
 
         final DrivingLicense entityFromDB = getDrivingLicenseService().findOneFullInfo(entity.getId());
@@ -29,7 +28,7 @@ public class DrivingLicenseServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testUpdate() throws InterruptedException, IllegalAccessException {
         final DrivingLicense entity = saveNewDrivingLicense();
 
         final DrivingLicense entityFromDB = getDrivingLicenseService().findOneFullInfo(entity.getId());
@@ -48,21 +47,21 @@ public class DrivingLicenseServiceTest extends AbstractTest {
 
 
     @Test
-    public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDelete() {
         final DrivingLicense entity = saveNewDrivingLicense();
         getDrivingLicenseService().delete(entity);
         assertNull(getDrivingLicenseService().findById(entity.getId()));
     }
 
     @Test
-    public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDeleteAll() {
         saveNewDrivingLicense();
         getDrivingLicenseService().deleteAll();
         assertEquals(0, getDrivingLicenseService().findAll().size());
     }
 
     @Test
-    public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testGetAll() throws IllegalAccessException {
         final int initialCount = getDrivingLicenseService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();

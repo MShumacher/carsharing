@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -14,13 +13,12 @@ public class CarsPhotoServiceTest extends AbstractTest {
 
     @Before
     @After
-    public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getCarsPhotoService().deleteAll();
-        getCarService().deleteAll();
+    public void cleanTables() {
+        cleanAllTables();
     }
 
     @Test
-    public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testCreate() throws IllegalAccessException {
         final CarsPhoto entity = saveNewCarsPhoto();
 
         final CarsPhoto entityFromDB = getCarsPhotoService().findOneFullInfo(entity.getId());
@@ -31,7 +29,7 @@ public class CarsPhotoServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testUpdate() throws InterruptedException, IllegalAccessException {
         final CarsPhoto entity = saveNewCarsPhoto();
 
         final CarsPhoto entityFromDB = getCarsPhotoService().findOneFullInfo(entity.getId());
@@ -49,21 +47,21 @@ public class CarsPhotoServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDelete() {
         final CarsPhoto entity = saveNewCarsPhoto();
         getCarsPhotoService().delete(entity);
         assertNull(getCarsPhotoService().findById(entity.getId()));
     }
 
     @Test
-    public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDeleteAll() {
         saveNewCarsPhoto();
         getCarsPhotoService().deleteAll();
         assertEquals(0, getCarsPhotoService().findAll().size());
     }
 
     @Test
-    public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testGetAll() throws IllegalAccessException {
         final int initialCount = getCarsPhotoService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();

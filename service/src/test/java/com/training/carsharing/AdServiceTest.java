@@ -14,13 +14,12 @@ public class AdServiceTest extends AbstractTest {
 
     @Before
     @After
-    public void cleanTables() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        getAdService().deleteAll();
-        getCarService().deleteAll();
+    public void cleanTables() {
+        cleanAllTables();
     }
 
     @Test
-    public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testCreate() throws IllegalAccessException {
         final Ad entity = saveNewAd();
 
         final Ad entityFromDB = getAdService().findOneFullInfo(entity.getId());
@@ -32,7 +31,7 @@ public class AdServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testUpdate() throws InterruptedException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testUpdate() throws InterruptedException, IllegalAccessException {
         final Ad entity = saveNewAd();
 
         final Ad entityFromDB = getAdService().findOneFullInfo(entity.getId());
@@ -51,21 +50,21 @@ public class AdServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testDelete() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDelete() {
         final Ad entity = saveNewAd();
         getAdService().delete(entity);
         assertNull(getAdService().findById(entity.getId()));
     }
 
     @Test
-    public void testDeleteAll() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void testDeleteAll() {
         saveNewAd();
         getAdService().deleteAll();
         assertEquals(0, getAdService().findAll().size());
     }
 
     @Test
-    public void testSelectAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testSelectAll() throws IllegalAccessException {
         final int initialCount = getAdService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();

@@ -14,12 +14,12 @@ public class UserAccountServiceTest extends AbstractTest {
 
     @Before
     @After
-    public void cleanTables()throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void cleanTables() {
 //        getUserAccountService().deleteAll();
     }
 
     @Test
-    public void testCreate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testCreate() throws IllegalAccessException {
         final UserAccount entity = saveNewUserAccount();
 
         final UserAccount entityFromDB = getUserAccountService().findOneFullInfo(entity.getId());
@@ -29,7 +29,7 @@ public class UserAccountServiceTest extends AbstractTest {
     }
 
     @Test
-    public void testUpdate() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InterruptedException {
+    public void testUpdate() throws IllegalAccessException, InterruptedException {
         final UserAccount entity = saveNewUserAccount();
 
         final UserAccount entityFromDB = getUserAccountService().findOneFullInfo(entity.getId());
@@ -47,21 +47,21 @@ public class UserAccountServiceTest extends AbstractTest {
 
 
     @Test
-    public void testDelete() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testDelete() {
         final UserAccount entity = saveNewUserAccount();
         getUserAccountService().delete(entity);
         assertNull(getUserAccountService().findById(entity.getId()));
     }
 
 //    @Test
-//    public void testDeleteAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+//    public void testDeleteAll() throws IllegalAccessException {
 //        saveNewUserAccount();
 //        getUserAccountService().deleteAll();
 //        assertEquals(0, getUserAccountService().findAllFullInfo().size());
 //    }
 
     @Test
-    public void testGetAll() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testGetAll() throws IllegalAccessException {
         final int initialCount = getUserAccountService().findAllFullInfo().size();
 
         final int randomObjectsCount = getRandomObjectsCount();

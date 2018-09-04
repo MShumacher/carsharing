@@ -5,6 +5,9 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.4.RELEASE'
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.0.4.RELEASE'
+// https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs
+    compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.0.7.RELEASE'
+
 // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.8.RELEASE'
 //needs to format localDateTime in jsp

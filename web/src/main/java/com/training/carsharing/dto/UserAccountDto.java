@@ -1,10 +1,12 @@
 package com.training.carsharing.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserAccountDto extends BaseWithNameDto {
 
+    @Email
     @Size(min = 1, max = 100)
     private String email;
 
@@ -16,16 +18,21 @@ public class UserAccountDto extends BaseWithNameDto {
 
     @Size(min = 1, max = 50)
     private String phone;
-
     @Size(min = 1, max = 50)
     private String role;
 
-//    @NotNull
+    @Size(min = 1, max = 50)
+    private String verifyKey;
+
+    @NotNull
+    private boolean verified;
+
+    //    @NotNull
     private Long passportId;
 
     private String passportNumber;
 
-//    @NotNull
+    //    @NotNull
     private Long drivingLicenseId;
 
     private String drivingLicenseNumber;
@@ -68,6 +75,22 @@ public class UserAccountDto extends BaseWithNameDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getVerifyKey() {
+        return verifyKey;
+    }
+
+    public void setVerifyKey(String verifyKey) {
+        this.verifyKey = verifyKey;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     public Long getPassportId() {

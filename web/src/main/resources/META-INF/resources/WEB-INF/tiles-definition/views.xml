@@ -119,6 +119,13 @@
 		<put-attribute name="body" value="/WEB-INF/view/ad/form.jsp" />
 	</definition>
 
+	<definition name="registration.edit" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/registration/form.jsp" />
+	</definition>
+	<definition name="registration.verifying" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/view/registration/verifying.jsp" />
+	</definition>
+
 	<definition name="login" extends="DefaultTemplate">
 		<put-attribute name="body" value="/WEB-INF/view/login.jsp" />
 	</definition>

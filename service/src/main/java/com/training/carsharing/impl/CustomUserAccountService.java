@@ -51,8 +51,9 @@ public class CustomUserAccountService extends CustomAbstractService<UserAccount,
 
     @Override
     public boolean isPasswordCorrect(final UserAccount userAccount, final String password) {
+        return password.equals(userAccount.getPassword());
 //        return (passwordEncoder.matches(password, userAccount.getPassword()));
-        return true;
+ //       return true;
     }
 
     @Override
@@ -73,5 +74,10 @@ public class CustomUserAccountService extends CustomAbstractService<UserAccount,
     @Override
     public UserAccount findByPassport(Long id) {
         return userAccountRepository.findByPassportId(id);
+    }
+
+    @Override
+    public UserAccount findByVerifyKey(String verifyKey) {
+        return userAccountRepository.findByVerifyKey(verifyKey);
     }
 }

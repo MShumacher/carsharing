@@ -26,6 +26,12 @@ public class UserAccount extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column
+    private String verifyKey;
+
+    @Column
+    private boolean verified;
+
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "userAccount", targetEntity = Passport.class)
     private Passport passport;
 
@@ -80,6 +86,22 @@ public class UserAccount extends BaseEntity {
         this.role = role;
     }
 
+    public String getVerifyKey() {
+        return verifyKey;
+    }
+
+    public void setVerifyKey(String verifyKey) {
+        this.verifyKey = verifyKey;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
     public Passport getPassport() {
         return passport;
     }
@@ -105,6 +127,8 @@ public class UserAccount extends BaseEntity {
                 ", photoLink='" + photoLink + '\'' +
                 ", phone='" + phone + '\'' +
                 ", role='" + role + '\'' +
+                ", verifyKey='" + verifyKey + '\'' +
+                ", verified='" + verified + '\'' +
                 "}";
     }
 }

@@ -34,6 +34,7 @@
                             class="material-icons right">arrow_drop_down</i></a></li>
                 </ul>
                 <li><a href="${baseUrl}/">Home</a></li>
+                <li><a href="${baseUrl}/registration">Registration</a></li>
 
                 <li><a href="${baseUrl}?language=ru">RU</a></li>
                 <li><a href="${baseUrl}?language=en">EN</a></li>

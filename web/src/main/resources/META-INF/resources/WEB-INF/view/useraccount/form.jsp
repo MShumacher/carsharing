@@ -70,6 +70,22 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
+                <form:input path="verifyKey" type="text" disabled="${readonly}" />
+                <form:errors path="verifyKey" cssClass="red-text" />
+                <label for="verifyKey">verifyKey</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <div class="switch">
+                    <label>not verified<form:checkbox path="verified" disabled="${readonly}" />
+                        <span class="lever"></span>verified
+                </div>
+                <label class="switch-label">is email verified?</label> <br/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
                 <form:select path="passportId" disabled="${readonly}">
                     <form:options items="${passportWithCurrentUserAccountOrWithoutChoices}" />
                 </form:select>

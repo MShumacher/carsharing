@@ -25,6 +25,8 @@ public class UserAccountToDtoConverter extends AbstractToDtoConverter<UserAccoun
         dto.setPhone(entity.getPhone());
         dto.setPhotoLink(entity.getPhotoLink());
         dto.setRole(entity.getRole().name());
+        dto.setVerifyKey(entity.getVerifyKey());
+        dto.setVerified(entity.isVerified());
 
         final Passport passport = entity.getPassport();
         if (passport != null) {

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -37,14 +38,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         } else {
             // если гость не подтвердил e-mail доступа ему нет
-//            if ((user.getGuest() != null) && (!user.getGuest().getVerified())) {
-//                throw new DisabledException("1001");
-//            }
+            if ((user != null) && (!user.isVerified())) {
+                throw new DisabledException("1001");
+            }
             if (!userAccountService.isPasswordCorrect(user, password)) {
                 LOGGER.info("incorrect password for user {}", email);
                 throw new BadCredentialsException("1000");
             }
-            final Long userId = user.getId();
 
             final List<SimpleGrantedAuthority> roles = Arrays
                     .asList(new SimpleGrantedAuthority(user.getRole().toString()));

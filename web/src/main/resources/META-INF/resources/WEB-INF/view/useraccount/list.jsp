@@ -17,11 +17,13 @@
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="photoLink">photoLink</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="phone">phone</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="role">role</mytaglib:sort-link></th>
+        <th><mytaglib:sort-link pageUrl="${baseUrl}" column="verifyKey">verifyKey</mytaglib:sort-link></th>
+        <th><mytaglib:sort-link pageUrl="${baseUrl}" column="verified">verified</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="passportNumber">passportNumber</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="drivingLicenseNumber">drivingLicenseNumber</mytaglib:sort-link></th>
-        <th><mytaglib:sort-link pageUrl="${baseUrl}" column="version">version</mytaglib:sort-link></th>
-        <th><mytaglib:sort-link pageUrl="${baseUrl}" column="createdDate">createdDate</mytaglib:sort-link></th>
-        <th><mytaglib:sort-link pageUrl="${baseUrl}" column="lastModifiedDate">lastModifiedDate</mytaglib:sort-link></th>
+        <%--<th><mytaglib:sort-link pageUrl="${baseUrl}" column="version">version</mytaglib:sort-link></th>--%>
+        <%--<th><mytaglib:sort-link pageUrl="${baseUrl}" column="createdDate">createdDate</mytaglib:sort-link></th>--%>
+        <%--<th><mytaglib:sort-link pageUrl="${baseUrl}" column="lastModifiedDate">lastModifiedDate</mytaglib:sort-link></th>--%>
         <th></th>
     </tr>
     <c:forEach var="userAccount" items="${listDto.list}" varStatus="loopCounter">
@@ -35,9 +37,11 @@
             <td><c:out value="${userAccount.role}" /></td>
             <td><c:out value="${userAccount.passportNumber}" /></td>
             <td><c:out value="${userAccount.drivingLicenseNumber}" /></td>
-            <td><c:out value="${userAccount.version}" /></td>
-            <td><javatime:format value="${userAccount.createdDate}" pattern="dd.MM.yyyy / HH:mm:ss" /></td>
-            <td><javatime:format value="${userAccount.lastModifiedDate}" pattern="dd.MM.yyyy / HH:mm:ss" /></td>
+            <td><c:out value="${userAccount.verifyKey}" /></td>
+            <td><c:out value="${userAccount.verified}" /></td>
+            <%--<td><c:out value="${userAccount.version}" /></td>--%>
+            <%--<td><javatime:format value="${userAccount.createdDate}" pattern="dd.MM.yyyy / HH:mm:ss" /></td>--%>
+            <%--<td><javatime:format value="${userAccount.lastModifiedDate}" pattern="dd.MM.yyyy / HH:mm:ss" /></td>--%>
             <td class="right">
                 <a class="btn-floating"	href="${baseUrl}/${userAccount.id}">
                     <i class="material-icons">info</i>

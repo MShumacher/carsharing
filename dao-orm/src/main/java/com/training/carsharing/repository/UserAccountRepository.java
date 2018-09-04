@@ -24,4 +24,6 @@ public interface UserAccountRepository extends AbstractRepository<UserAccount, L
 
     @Query("SELECT u FROM UserAccount u WHERE u.id = (SELECT p.userAccount.id FROM Passport p WHERE p.id = :passportId)")
     UserAccount findByPassportId(@Param("passportId") Long passportId);
+
+    UserAccount findByVerifyKey(String verifyKey);
 }

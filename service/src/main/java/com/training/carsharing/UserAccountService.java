@@ -19,5 +19,7 @@ public interface UserAccountService extends AbstractService<UserAccount, Long> {
     UserAccount findByDrivingLicense(Long id);
 
     UserAccount findByPassport(Long id);
+
+    UserAccount findByVerifyKey(String verifyKey);
 }
 

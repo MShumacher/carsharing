@@ -2,9 +2,11 @@ package com.training.carsharing.impl;
 
 import com.training.carsharing.AbstractService;
 import com.training.carsharing.repository.AbstractRepository;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
@@ -33,13 +35,16 @@ public abstract class CustomAbstractService<ENTITY, ID> implements AbstractServi
     }
 
     @Override
-    public ENTITY save(ENTITY entity) throws ObjectOptimisticLockingFailureException, PersistenceException {
+    public ENTITY save(ENTITY entity) throws ObjectOptimisticLockingFailureException, PersistenceException, DataIntegrityViolationException {
         try {
             LOGGER.info("saved entity: {}", entity);
             return repository.save(entity);
-        } catch (ObjectOptimisticLockingFailureException | PersistenceException e) {
+            } catch (ObjectOptimisticLockingFailureException | PersistenceException e) {
             LOGGER.warn(e.getClass().getSimpleName()
-                    + "Row was updated/deleted by another transaction (or unsaved-value mapping was incorrect)");
+                    + ": Row was updated/deleted by another transaction (or unsaved-value mapping was incorrect)");
+            throw e;
+        } catch (DataIntegrityViolationException e) {
+            LOGGER.warn(e.getClass().getSimpleName()+ ": Duplicate entry");
             throw e;
         }
     }

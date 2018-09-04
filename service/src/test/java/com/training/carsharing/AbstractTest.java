@@ -171,6 +171,8 @@ public abstract class AbstractTest {
         entity.setName("Name-" + getRandomPrefix());
         entity.setPhotoLink("PhotoLink-" + getRandomPrefix());
         entity.setPhone("Phone-" + getRandomPrefix());
+        entity.setVerifyKey("VerifyKey-" + getRandomPrefix());
+        entity.setVerified(getRandomBoolean());
 
         final Role[] roles = Role.values();
         int randomIndex = Math.max(0, RANDOM.nextInt(roles.length) - 1);

@@ -1,6 +1,4 @@
 
-
-
 CREATE TABLE user_account (
 	id serial NOT NULL,
 	email character varying(100) NOT NULL UNIQUE,
@@ -9,7 +7,9 @@ CREATE TABLE user_account (
 	photo_link character varying(500) UNIQUE,
 	phone character varying(50) NOT NULL UNIQUE,
 	role character varying(50) NOT NULL,
-	version integer NOT NULL,
+	verify_key character varying(50) NOT NULL UNIQUE,
+	verified BOOLEAN NOT NULL DEFAULT FALSE,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -19,7 +19,7 @@ CREATE TABLE user_account (
 	CONSTRAINT FOREIGN KEY (last_modified_by_id) REFERENCES user_account(id) ON DELETE RESTRICT
 );
 
-    insert into user_account (email, password, name, phone, role, version, created_date) values ('admin@itools.ru', 'admin', 'admin', '911', 'ROLE_ADMIN', 1, now(3));
+    insert into user_account (email, password, name, phone, role, verify_key, verified, version, created_date) values ('admin@itools.ru', 'admin', 'admin', '911', 'ROLE_ADMIN', '1234567890', true, 0, now(3));
 
 
 CREATE TABLE passport (
@@ -31,7 +31,7 @@ CREATE TABLE passport (
 	issue_date DATETIME NOT NULL,
 	birth_place character varying(500) NOT NULL,
 	birthday DATETIME NOT NULL,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -51,7 +51,7 @@ CREATE TABLE driving_license (
 	number character varying(50) NOT NULL UNIQUE,
 	expiration_date DATETIME NOT NULL,
 	categories character varying(50) NOT NULL,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -67,7 +67,7 @@ CREATE TABLE driving_license (
 CREATE TABLE brand (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -82,7 +82,7 @@ CREATE TABLE brand (
 CREATE TABLE gearbox (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -97,7 +97,7 @@ CREATE TABLE gearbox (
 CREATE TABLE body_type (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -112,7 +112,7 @@ CREATE TABLE body_type (
 CREATE TABLE drive (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -127,7 +127,7 @@ CREATE TABLE drive (
 CREATE TABLE fuel (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -144,7 +144,7 @@ CREATE TABLE engine_type (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL UNIQUE,
 	fuel_id BIGINT UNSIGNED NOT NULL,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -160,7 +160,7 @@ CREATE TABLE engine_type (
 CREATE TABLE car_parameter (
 	id serial NOT NULL,
 	name character varying(300) NOT NULL UNIQUE,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -176,7 +176,7 @@ CREATE TABLE model(
 	id serial NOT NULL,
 	name character varying(50) NOT NULL,
 	brand_id BIGINT UNSIGNED NOT NULL,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -193,18 +193,18 @@ CREATE TABLE model(
 CREATE TABLE car (
 	id serial NOT NULL,
 	model_id BIGINT UNSIGNED NOT NULL,
-	year integer NOT NULL,
+	year INTEGER NOT NULL,
 	plate character varying(50) NOT NULL,
-	mileage integer,
-	seats integer,
+	mileage INTEGER,
+	seats INTEGER,
 	gearbox_id BIGINT UNSIGNED,
 	body_type_id BIGINT UNSIGNED,
 	drive_id BIGINT UNSIGNED,
 	engine_type_id BIGINT UNSIGNED NOT NULL,
-	charge numeric(4,2),
+	charge NUMERIC(4,2),
 	conditions character varying(1000) NOT NULL,
 	insurance character varying(500),
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -225,7 +225,7 @@ CREATE TABLE cars_photo (
 	id serial NOT NULL,
 	car_id BIGINT UNSIGNED NOT NULL,
 	link character varying(300) NOT NULL UNIQUE,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -254,8 +254,8 @@ CREATE TABLE calendar (
 	car_id BIGINT UNSIGNED NOT NULL,
 	start DATETIME NOT NULL,
 	end DATETIME NOT NULL,
-	total_price numeric(12,2) NOT NULL,
-	version integer NOT NULL,
+	total_price NUMERIC(12,2) NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -275,10 +275,10 @@ CREATE TABLE ad (
 	car_id BIGINT UNSIGNED NOT NULL,
 	user_account_id BIGINT UNSIGNED NOT NULL,
 	address character varying(500) NOT NULL,
-	price numeric(12,2) NOT NULL,
+	price NUMERIC(12,2) NOT NULL,
 	body character varying(1000) NOT NULL,
 	active BOOLEAN NOT NULL,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,
@@ -299,7 +299,7 @@ CREATE TABLE message (
 	sender_id BIGINT UNSIGNED NOT NULL,
 	recipient_id BIGINT UNSIGNED NOT NULL,
 	viewed BOOLEAN NOT NULL,
-	version integer NOT NULL,
+	version INTEGER NOT NULL,
 	created_date TIMESTAMP(3) NOT NULL,
 	last_modified_date TIMESTAMP(3) NOT NULL default now(3),
 	created_by_id BIGINT UNSIGNED,

@@ -36,6 +36,7 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
     private static final String PATH_VARIABLE_ID = "id";
     private static final String ERROR = "error";
     private static final String READONLY = "readonly";
+
     private static final String BRAND_FORM_SELECT_NAME = "brandChoices";
     private static final String GEARBOX_FORM_SELECT_NAME = "gearboxChoices";
     private static final String DRIVE_FORM_SELECT_NAME = "driveChoices";
@@ -44,8 +45,11 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
     private static final String MODEL_FORM_SELECT_NAME = "modelChoices";
     private static final String ENGINE_TYPE_FORM_SELECT_NAME = "engineTypeChoices";
     private static final String CAR_PARAMETER_FORM_SELECT_NAME = "carParameterChoices";
-    private static final String ALL_USER_ACCOUNT_FORM_SELECT_NAME = "userAccountChoices";
+    private static final String ROLE_FORM_SELECT_NAME = "roleChoices";
+    private static final String AD_FORM_SELECT_NAME = "adChoices";
+    private static final String CAR_FORM_SELECT_NAME = "carChoices";
 
+    private static final String ALL_USER_ACCOUNT_FORM_SELECT_NAME = "userAccountChoices";
     private static final String USER_ACCOUNT_WITHOUT_PASSWORD_FORM_SELECT_NAME = "userAccountWithoutPassportChoices";
     private static final String USER_ACCOUNT_WITHOUT_DRIVING_LICENSE_FORM_SELECT_NAME = "userAccountWithoutDrivingLicenseChoices";
     private static final String USER_ACCOUNT_WITH_CURRENT_PASSPORT_OR_WITHOUT_FORM_SELECT_NAME = "userAccountWithCurrentPassportOrWithoutChoices";
@@ -59,12 +63,8 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
     private static final String DRIVING_LICENSE_WITHOUT_USER_ACCOUNT_FORM_SELECT_NAME = "drivingLicenseWithoutUserAccountChoices";
     private static final String DRIVING_LICENSE_WITH_CURRENT_USER_ACCOUNT_OR_WITHOUT_FORM_SELECT_NAME = "drivingLicenseWithCurrentUserAccountOrWithoutChoices";
 
-    private static final String CAR_WITH_CURRENT_AD_OR_WITHOUT_FORM_SELECT_NAME= "carWithCurrentAdOrWithoutChoices";
+    private static final String CAR_WITH_CURRENT_AD_OR_WITHOUT_FORM_SELECT_NAME = "carWithCurrentAdOrWithoutChoices";
 
-
-    private static final String ROLE_FORM_SELECT_NAME = "roleChoices";
-    private static final String AD_FORM_SELECT_NAME = "adChoices";
-    private static final String CAR_FORM_SELECT_NAME = "carChoices";
     @Autowired
     private AbstractToDtoConverter<ENTITY, DTO> toDtoConverter;
     @Autowired
@@ -268,10 +268,10 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
         hashMap.put(USER_ACCOUNT_WITHOUT_PASSWORD_FORM_SELECT_NAME, getSortedMapByValue(map));
     }
 
-    protected void loadCommonFormUserAccountsWithCurrentPassportOrWithout(final Map<String, Object> hashMap, ID id) {
+    protected void loadCommonFormUserAccountsWithCurrentPassportOrWithout(final Map<String, Object> hashMap, Long id) {
         final Map<Long, String> map = userAccountService.findWithoutPassport().stream()
                 .collect(Collectors.toMap(UserAccount::getId, UserAccount::getEmail));
-        UserAccount userAccountWithCurrentPassport = userAccountService.findByPassport((Long) id);
+        UserAccount userAccountWithCurrentPassport = userAccountService.findByPassport(id);
         if (userAccountWithCurrentPassport != null) {
             map.put(userAccountWithCurrentPassport.getId(), userAccountWithCurrentPassport.getEmail());
         }
@@ -284,10 +284,10 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
         hashMap.put(USER_ACCOUNT_WITHOUT_DRIVING_LICENSE_FORM_SELECT_NAME, getSortedMapByValue(map));
     }
 
-    protected void loadCommonFormUserAccountsWithCurrentDrivingLicenseOrWithout(final Map<String, Object> hashMap, ID id) {
+    protected void loadCommonFormUserAccountsWithCurrentDrivingLicenseOrWithout(final Map<String, Object> hashMap, Long id) {
         final Map<Long, String> map = userAccountService.findWithoutDrivingLicense().stream()
                 .collect(Collectors.toMap(UserAccount::getId, UserAccount::getEmail));
-        UserAccount userAccountWithCurrentDrivingLicense = userAccountService.findByDrivingLicense((Long) id);
+        UserAccount userAccountWithCurrentDrivingLicense = userAccountService.findByDrivingLicense(id);
         if (userAccountWithCurrentDrivingLicense != null) {
             map.put(userAccountWithCurrentDrivingLicense.getId(), userAccountWithCurrentDrivingLicense.getEmail());
         }
@@ -306,10 +306,10 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
         hashMap.put(PASSPORT_WITHOUT_USER_ACCOUNT_FORM_SELECT_NAME, getSortedMapByValue(map));
     }
 
-    protected void loadCommonFormPassportsWithCurrentUserAccountOrWithout(final Map<String, Object> hashMap, ID id) {
+    protected void loadCommonFormPassportsWithCurrentUserAccountOrWithout(final Map<String, Object> hashMap, Long id) {
         final Map<Long, String> map = passportService.findByUserAccountIdIsNull().stream()
                 .collect(Collectors.toMap(Passport::getId, Passport::getNumber));
-        Passport passportWithCurrentUserAccount = passportService.findByUserAccountId((Long) id);
+        Passport passportWithCurrentUserAccount = passportService.findByUserAccountId(id);
         if (passportWithCurrentUserAccount != null) {
             map.put(passportWithCurrentUserAccount.getId(), passportWithCurrentUserAccount.getNumber());
         }
@@ -328,10 +328,10 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
         hashMap.put(DRIVING_LICENSE_WITHOUT_USER_ACCOUNT_FORM_SELECT_NAME, getSortedMapByValue(map));
     }
 
-    protected void loadCommonFormDrivingLicensesWithCurrentUserAccountOrWithout(final Map<String, Object> hashMap, ID id) {
+    protected void loadCommonFormDrivingLicensesWithCurrentUserAccountOrWithout(final Map<String, Object> hashMap, Long id) {
         final Map<Long, String> map = drivingLicenseService.findByUserAccountIsNull().stream()
                 .collect(Collectors.toMap(DrivingLicense::getId, DrivingLicense::getNumber));
-        DrivingLicense drivingLicenseWithCurrentUserAccount = drivingLicenseService.findByUserAccount((Long) id);
+        DrivingLicense drivingLicenseWithCurrentUserAccount = drivingLicenseService.findByUserAccount(id);
         if (drivingLicenseWithCurrentUserAccount != null) {
             map.put(drivingLicenseWithCurrentUserAccount.getId(), drivingLicenseWithCurrentUserAccount.getNumber());
         }
@@ -350,10 +350,10 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
         hashMap.put(AD_FORM_SELECT_NAME, map);
     }
 
-    protected void loadCommonFormCarsWithCurrentAdOrWithout(final Map<String, Object> hashMap, ID id) {
+    protected void loadCommonFormCarsWithCurrentAdOrWithout(final Map<String, Object> hashMap, Long id) {
         final Map<Long, String> map = carService.findWithoutAd().stream()
                 .collect(Collectors.toMap(Car::getId, Car::getPlate));
-        Car carWithCurrentAd = carService.findByAd((Long) id);
+        Car carWithCurrentAd = carService.findByAd(id);
         if (carWithCurrentAd != null) {
             map.put(carWithCurrentAd.getId(), carWithCurrentAd.getPlate());
         }

@@ -33,6 +33,8 @@ public class UserAccountFromDtoConverter extends AbstractFromDtoConverter<UserAc
 
         if (dto.getRole() != null) {
             entity.setRole(Role.valueOf(dto.getRole()));
+        } else{
+            entity.setRole(Role.valueOf("ROLE_USER"));
         }
 
         if (dto.getPassportId() != null) {
@@ -43,6 +45,8 @@ public class UserAccountFromDtoConverter extends AbstractFromDtoConverter<UserAc
             entity.setDrivingLicense(drivingLicenseService.findById(dto.getDrivingLicenseId()));
         }
 
+        entity.setVerifyKey(dto.getVerifyKey());
+        entity.setVerified(dto.isVerified());
         entity.setVersion(dto.getVersion());
         return entity;
     }

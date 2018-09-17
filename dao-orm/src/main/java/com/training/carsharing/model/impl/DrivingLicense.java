@@ -1,5 +1,8 @@
 package com.training.carsharing.model.impl;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +10,8 @@ import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 public class DrivingLicense extends BaseEntity {
 
     @Column
@@ -20,39 +25,6 @@ public class DrivingLicense extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false, targetEntity = UserAccount.class)
     private UserAccount userAccount;
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public Date getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public String getCategories() {
-        return categories;
-    }
-
-    public void setCategories(String categories) {
-        this.categories = categories;
-    }
-
-    public UserAccount getUserAccount() {
-        return userAccount;
-    }
-
-    public void setUserAccount(final UserAccount userAccount) {
-        this.userAccount = userAccount;
-    }
-
 
     @Override
     public String toString() {

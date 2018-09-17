@@ -7,41 +7,22 @@ dependencies {
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.0.4.RELEASE'
 // https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.0.7.RELEASE'
-
 // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.8.RELEASE'
 //needs to format localDateTime in jsp
     compile group: 'net.sargue', name: 'java-time-jsptags', version:'1.1.4'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.0.4.RELEASE'
-
-//// https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api
-//    provided group: 'javax.servlet.jsp', name: 'javax.servlet.jsp-api', version: '2.3.3'
-
 // https://mvnrepository.com/artifact/javax.servlet/jstl
     compile group: 'javax.servlet', name: 'jstl', version: '1.2'
-
-//// https://mvnrepository.com/artifact/jstl/jstl
-//    compile group: 'jstl', name: 'jstl', version: '1.2'
-//// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
-////    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.0.4.RELEASE'
 // https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.11'
-//// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat
-//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '2.0.4.RELEASE'
 // https://mvnrepository.com/artifact/org.apache.tiles/tiles-extras
     compile group: 'org.apache.tiles', name: 'tiles-extras', version: '3.0.8'
     configurations {
         compile group: 'org.apache.tiles', name: 'tiles-extras', version: '3.0.8'
         compile.exclude group: 'jboss', module: 'javassist' // get rid of hibernate-incompatible javassist
     }
-
-
-
-//    configurations {
-//        compile ('org.springframework.boot:spring-boot-starter-web:2.0.4.RELEASE') {
-//            compile.exclude module: 'spring-boot-starter-logging'
-//        }
-//    }
-
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
 }

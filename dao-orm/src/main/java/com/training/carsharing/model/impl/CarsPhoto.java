@@ -1,11 +1,16 @@
 package com.training.carsharing.model.impl;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Getter
+@Setter
 public class CarsPhoto extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Car.class)
@@ -13,22 +18,6 @@ public class CarsPhoto extends BaseEntity {
 
     @Column
     private String link;
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
 
     @Override
     public String toString() {

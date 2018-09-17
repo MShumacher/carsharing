@@ -13,14 +13,13 @@
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="id">id</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="name">name</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="email">email</mytaglib:sort-link></th>
-        <th><mytaglib:sort-link pageUrl="${baseUrl}" column="password">password</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="photoLink">photoLink</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="phone">phone</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="role">role</mytaglib:sort-link></th>
-        <th><mytaglib:sort-link pageUrl="${baseUrl}" column="verifyKey">verifyKey</mytaglib:sort-link></th>
-        <th><mytaglib:sort-link pageUrl="${baseUrl}" column="verified">verified</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="passportNumber">passportNumber</mytaglib:sort-link></th>
         <th><mytaglib:sort-link pageUrl="${baseUrl}" column="drivingLicenseNumber">drivingLicenseNumber</mytaglib:sort-link></th>
+        <th><mytaglib:sort-link pageUrl="${baseUrl}" column="verifyKey">verifyKey</mytaglib:sort-link></th>
+        <th><mytaglib:sort-link pageUrl="${baseUrl}" column="verified">verified</mytaglib:sort-link></th>
         <%--<th><mytaglib:sort-link pageUrl="${baseUrl}" column="version">version</mytaglib:sort-link></th>--%>
         <%--<th><mytaglib:sort-link pageUrl="${baseUrl}" column="createdDate">createdDate</mytaglib:sort-link></th>--%>
         <%--<th><mytaglib:sort-link pageUrl="${baseUrl}" column="lastModifiedDate">lastModifiedDate</mytaglib:sort-link></th>--%>
@@ -31,7 +30,6 @@
             <td><c:out value="${userAccount.id}" /></td>
             <td><c:out value="${userAccount.name}" /></td>
             <td><c:out value="${userAccount.email}" /></td>
-            <td><c:out value="${userAccount.password}" /></td>
             <td><c:out value="${userAccount.photoLink}" /></td>
             <td><c:out value="${userAccount.phone}" /></td>
             <td><c:out value="${userAccount.role}" /></td>

@@ -184,7 +184,8 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
     @GetMapping(VIEW_DETAILS_MAPPING)
     public ModelAndView getViewDetailsModelAndView(@PathVariable(name = PATH_VARIABLE_ID) final ID id) {
         String viewName = requestMapping + EDIT_VIEW_POSTFIX;
-        final ENTITY dbModel = service.findOneFullInfo(id);
+//        final ENTITY dbModel = service.findOneFullInfo(id);
+        final ENTITY dbModel = service.findById(id);
         final DTO dto = toDtoConverter.apply(dbModel);
         final Map<String, Object> hashMap = getHashMapWithAllCommonForms(id);
         hashMap.put(FORM_MODEL_ATTRIBUTE_NAME, dto);
@@ -196,7 +197,8 @@ public abstract class AbstractController<ENTITY, DTO, ID> implements DBControlle
     @GetMapping(EDIT_MAPPING)
     public ModelAndView getEditModelAndView(@PathVariable(name = PATH_VARIABLE_ID) final ID id) {
         String viewName = requestMapping + EDIT_VIEW_POSTFIX;
-        final DTO dto = toDtoConverter.apply(service.findOneFullInfo(id));
+//        final DTO dto = toDtoConverter.apply(service.findOneFullInfo(id));
+        final DTO dto = toDtoConverter.apply(service.findById(id));
         final Map<String, Object> hashMap = getHashMapWithAllCommonForms(id);
         hashMap.put(FORM_MODEL_ATTRIBUTE_NAME, dto);
         return new ModelAndView(viewName, hashMap);

@@ -1,5 +1,8 @@
 package com.training.carsharing.model.impl;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +10,8 @@ import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 public class Calendar extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserAccount.class)
@@ -23,46 +28,6 @@ public class Calendar extends BaseEntity {
 
     @Column
     private Double totalPrice;
-
-    public UserAccount getRenter() {
-        return renter;
-    }
-
-    public void setRenter(UserAccount renter) {
-        this.renter = renter;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public Date getStart() {
-        return start;
-    }
-
-    public void setStart(Date start) {
-        this.start = start;
-    }
-
-    public Date getEnd() {
-        return end;
-    }
-
-    public void setEnd(Date end) {
-        this.end = end;
-    }
-
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 
     @Override
     public String toString() {

@@ -21,6 +21,7 @@ public class Brand extends BaseEntity {
 
 
 
+
     @Override
     public String toString() {
         return "brand{" + super.toString() +

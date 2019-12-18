@@ -18,6 +18,7 @@ public abstract class BaseEntity extends AbstractAuditable<UserAccount, Long> {
     @Version
     private Integer version;
 
+
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;

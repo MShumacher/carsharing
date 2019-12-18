@@ -25,4 +25,5 @@ public class Brand extends BaseEntity {
                 ", name='" + name + '\'' +
                 "}";
     }
+
 }
